@@ -18,7 +18,17 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("game_rental")
 
-games = SHEET.worksheet("games")
+# games = SHEET.worksheet("games")
 
-data = games.get_all_values()
-print(data)
+# data = games.get_all_values()
+# print(data)
+
+def make_choice():
+    print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
+          "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
+    chosen_action = input("Please select from above by entering the "
+                          "corresponding number and pressing Enter: ")
+    # validate_chosen_action(chosen_action)
+
+
+make_choice()
