@@ -66,9 +66,9 @@ def add_game():
         platform = input("Add platform\n")
         genre = input("Add genre\n")
         min_age = input("Add minimum age\n")
-        number = input("Add how many\n")
+        quantity = input("Add how many\n")
 
-        new_game_info = [title, platform, genre, min_age, number]
+        new_game_info = [title, platform, genre, min_age, quantity]
 
         if validate_add_game(new_game_info):
             break
@@ -92,7 +92,7 @@ def validate_add_game(new_game_info):
         try:
             int(new_game_info[4])
         except:
-            print("number not a number, please try again")
+            print("quantity not a number, please try again")
             return False
 
     return True
