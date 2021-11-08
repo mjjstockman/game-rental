@@ -28,7 +28,22 @@ def make_choice():
           "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
     chosen_action = input("Please select from above by entering the "
                           "corresponding number and pressing Enter: ")
-    # validate_chosen_action(chosen_action)
+    validate_chosen_action(chosen_action)
 
+
+def validate_chosen_action(chosen_action):
+    try:
+        if chosen_action not in (1, 2, 3, 4, 5):
+            raise ValueError(
+                "Must be a whole num between 1 and 5"
+            )
+    except ValueError as e:
+        print(f"Invalid data: {e}, please try again")
+    
 
 make_choice()
+
+
+
+
+# Add validation to check for exactly 6 values in provided data
