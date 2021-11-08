@@ -24,6 +24,12 @@ SHEET = GSPREAD_CLIENT.open("game_rental")
 # print(data)
 
 def make_choice():
+    """
+    Get choice of action input from user.
+    Run a while loop to collect valid data from the user vi a the terminal, 
+    which must be an integer between 1 and 5. 
+    The loop will repeatedly request data, until it is valid.
+    """
     while True:
         print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
             "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
@@ -36,6 +42,11 @@ def make_choice():
 
 
 def validate_chosen_action(chosen_action):
+    """
+    Inside the try, convert user input to an integer.
+    Raises ValueError if input cannot be converted (ie, contains letter(s)) 
+    or if is not an integer between 1 and 5
+    """
     try:
         if int(chosen_action) not in (1, 2, 3, 4, 5):
             raise ValueError(
