@@ -79,13 +79,24 @@ def add_game():
 
 
 def validate_add_game(new_game_info):
+    # new_game_info = [title, platform, genre, min_age, number]
+    # title, platform, genre, min_age, number
     if not all(new_game_info):
         print("Missing element, please try again")
         return False
     else:
-        print("ALL ENTERED")
-        return True
+        try:
+            int(new_game_info[3])
+        except:
+            print("min age not a number, please try again")
+        try:
+            int(new_game_info[4])
+        except:
+            print("number not a number, please try again")
+            return False
 
+    return True
+ 
 
 make_choice()
 
