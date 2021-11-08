@@ -32,12 +32,13 @@ def make_choice():
     """
     while True:
         print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
-            "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
+              "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
         chosen_action = input("Please select from above by entering the "
-                            "corresponding number and pressing Enter: ")
+                              "corresponding number and pressing Enter: ")
     
         if validate_chosen_action(chosen_action):
-            print("GOOOOOOD CHOICE!!!")
+            if int(chosen_action) == 5:
+                add_game()
             break
 
 
@@ -59,5 +60,17 @@ def validate_chosen_action(chosen_action):
     return True
     
 
-make_choice()
+def add_game():
+    title = input("Add game title\n")
+    platform = input("Add platform\n")
+    genre = input("Add genre\n")
+    min_age = input("Add minimum age\n")
+    number = input("Add how many\n")
+
+    print(f"You entered...\n Title: {title}\n Platform: {platform}\n "
+        f"Genre: {genre}\n Minimum age: {min_age}\n How many: {number}")
+    
+  
+# make_choice()
+add_game()
 
