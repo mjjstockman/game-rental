@@ -24,26 +24,29 @@ SHEET = GSPREAD_CLIENT.open("game_rental")
 # print(data)
 
 def make_choice():
-    print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
-          "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
-    chosen_action = input("Please select from above by entering the "
-                          "corresponding number and pressing Enter: ")
-    validate_chosen_action(chosen_action)
+    while True:
+        print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
+            "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
+        chosen_action = input("Please select from above by entering the "
+                            "corresponding number and pressing Enter: ")
+    
+        if validate_chosen_action(chosen_action):
+            print("GOOOOOOD CHOICE!!!")
+            break
 
 
 def validate_chosen_action(chosen_action):
     try:
-        if chosen_action not in (1, 2, 3, 4, 5):
+        if int(chosen_action) not in (1, 2, 3, 4, 5):
             raise ValueError(
                 "Must be a whole num between 1 and 5"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again")
+        return False
+
+    return True
     
 
 make_choice()
 
-
-
-
-# Add validation to check for exactly 6 values in provided data
