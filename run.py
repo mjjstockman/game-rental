@@ -45,7 +45,7 @@ def make_choice():
 def validate_chosen_action(chosen_action):
     """
     Inside the try, convert user input to an integer.
-    Raises ValueError if input cannot be converted (ie, contains letter(s)) 
+    Raises ValueError if input cannot be converted (ie, contains letter/s) 
     or if is not an integer between 1 and 5
     """
     try:
@@ -61,16 +61,31 @@ def validate_chosen_action(chosen_action):
     
 
 def add_game():
-    title = input("Add game title\n")
-    platform = input("Add platform\n")
-    genre = input("Add genre\n")
-    min_age = input("Add minimum age\n")
-    number = input("Add how many\n")
+    while True:
+        title = input("Add game title\n")
+        platform = input("Add platform\n")
+        genre = input("Add genre\n")
+        min_age = input("Add minimum age\n")
+        number = input("Add how many\n")
 
-    print(f"You entered...\n Title: {title}\n Platform: {platform}\n "
-        f"Genre: {genre}\n Minimum age: {min_age}\n How many: {number}")
-    
-  
-# make_choice()
-add_game()
+        new_game_info = [title, platform, genre, min_age, number]
+
+        if validate_add_game(new_game_info):
+            break
+        # validate_add_game(new_game_info)
+
+    # print(f"You entered...\n Title: {title}\n Platform: {platform}\n "
+    #       f"Genre: {genre}\n Minimum age: {min_age}\n How many: {number}")
+
+
+def validate_add_game(new_game_info):
+    if not all(new_game_info):
+        print("Missing element, please try again")
+        return False
+    else:
+        print("ALL ENTERED")
+        return True
+
+
+make_choice()
 
