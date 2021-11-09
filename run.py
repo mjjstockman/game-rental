@@ -82,7 +82,7 @@ def add_game():
         new_game_info = [title, platform, genre, min_age, quantity]
 
         if validate_add_game(new_game_info):
-            update_games_worksheet(new_game_info)
+            update_worksheet(new_game_info, "games")
             break
         # validate_add_game(new_game_info)
 
@@ -117,17 +117,7 @@ def validate_add_game(new_game_info):
     return True
 
 
-def update_games_worksheet(new_game_info):
-    """
-    Convert min_age and quantity to integers and add new row to the games
-    worksheet with the list data provided.
-    """
-    new_game_info[3] = int(new_game_info[3])
-    new_game_info[4] = int(new_game_info[4])
-    print("Updating games worksheet...\n")
-    games_worksheet = SHEET.worksheet("games")
-    games_worksheet.append_row(new_game_info)
-    print("Games worksheet successfully updated.\n")
+
     
 
 def add_customer():
@@ -139,7 +129,8 @@ def add_customer():
         new_customer_info = [fname, lname, dob]
 
         if validate_add_customer(new_customer_info):
-            update_customer_worksheet(new_customer_info)
+            update_worksheet(new_customer_info, "customers")
+            # update_customer_worksheet(new_customer_info)
             break
             
         # if validate_add_game(new_game_info):
@@ -163,7 +154,8 @@ def validate_add_customer(new_customer_info):
             return False
         else:
             try:
-                formatted_dob = datetime.datetime.strptime(new_customer_info[2], "%d/%m/%Y")
+                # formatted_dob = datetime.datetime.strptime(new_customer_info[2], "%d/%m/%Y")
+                datetime.datetime.strptime(new_customer_info[2], "%d/%m/%Y")
             except:
                 print("wrong date format!!!")
                 return False 
@@ -171,14 +163,37 @@ def validate_add_customer(new_customer_info):
         return True
 
 
-def update_customer_worksheet(new_customer_info):
-    """
-    Add new row to customers worksheet with the list data provided.
-    """
-    print("Updating customer worksheet...\n")
-    customer_worksheet = SHEET.worksheet("customers")
-    customer_worksheet.append_row(new_customer_info)
-    print("Customer worksheet successfully updated.\n")
+def update_worksheet(data, worksheet):
+    if worksheet == "games":
+        data[3] = int(data[3])
+        data[4] = int(data[4])
+    print(f"Updating {worksheet} worksheet...")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    worksheet_to_update.append_row(data)
+    print(f"{worksheet} updated successfully.\n")
+
+
+
+# def update_games_worksheet(new_game_info):
+#     """
+#     Convert min_age and quantity to integers and add new row to the games
+#     worksheet with the list data provided.
+#     """
+#     new_game_info[3] = int(new_game_info[3])
+#     new_game_info[4] = int(new_game_info[4])
+#     print("Updating games worksheet...\n")
+#     games_worksheet = SHEET.worksheet("games")
+#     games_worksheet.append_row(new_game_info)
+#     print("Games worksheet successfully updated.\n")
+
+# def update_customer_worksheet(new_customer_info):
+#     """
+#     Add new row to customers worksheet with the list data provided.
+#     """
+#     print("Updating customer worksheet...\n")
+#     customer_worksheet = SHEET.worksheet("customers")
+#     customer_worksheet.append_row(new_customer_info)
+#     print("Customer worksheet successfully updated.\n")
 
 
 def check_stock():
@@ -189,6 +204,6 @@ def check_stock():
     pprint(stock)
 
 
-# # make_choice()
+make_choice()
 # # add_customer()
-check_stock()
+# check_stock()
