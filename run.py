@@ -76,6 +76,7 @@ def add_game():
         new_game_info = [title, platform, genre, min_age, quantity]
 
         if validate_add_game(new_game_info):
+            update_games_worksheet(new_game_info)
             break
         # validate_add_game(new_game_info)
 
@@ -108,7 +109,24 @@ def validate_add_game(new_game_info):
             return False
 
     return True
+    
  
+ 
+
+def update_games_worksheet(new_game_info):
+    """
+    Convert min_age and quantity to integers and add new row with the list
+    data provided.
+    """
+    new_game_info[3] = int(new_game_info[3])
+    new_game_info[4] = int(new_game_info[4])
+    print("Updating games worksheet...\n")
+    games_worksheet = SHEET.worksheet("games")
+    games_worksheet.append_row(new_game_info)
+    print("Games worksheet successfully updated.\n")
+    
+
+
 
 make_choice()
 
