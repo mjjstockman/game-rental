@@ -40,6 +40,8 @@ def make_choice():
         if validate_chosen_action(chosen_action):
             if int(chosen_action) == 5:
                 add_game()
+            elif int(chosen_action) == 4:
+                add_customer()
             break
 
 
@@ -114,8 +116,8 @@ def validate_add_game(new_game_info):
 
 def update_games_worksheet(new_game_info):
     """
-    Convert min_age and quantity to integers and add new row with the list
-    data provided.
+    Convert min_age and quantity to integers and add new row to the games
+    worksheet with the list data provided.
     """
     new_game_info[3] = int(new_game_info[3])
     new_game_info[4] = int(new_game_info[4])
@@ -131,18 +133,18 @@ def add_customer():
         lname = input("Add last name\n")
         dob = input("Add date of birth\n")
 
-        new_cust_info = [fname, lname, dob]
+        new_customer_info = [fname, lname, dob]
 
-        if validate_add_customer(new_cust_info):
-            # update_games_worksheet(new_game_info)
+        if validate_add_customer(new_customer_info):
+            update_customer_worksheet(new_customer_info)
             break
-
+            
         # if validate_add_game(new_game_info):
         #     update_games_worksheet(new_game_info)
         #     break
 
 
-def validate_add_customer(new_cust_info):
+def validate_add_customer(new_customer_info):
     """
     Check that all fields have been entered.
     Inside the try, convert min_age and quantity to an integer.
@@ -153,17 +155,28 @@ def validate_add_customer(new_cust_info):
     # new_game_info = [title, platform, genre, min_age, number]
     # title, platform, genre, min_age, number
     while True:
-        if not all(new_cust_info):
+        if not all(new_customer_info):
             print("Missing element, please try again")
             return False
         else:
             try:
-                formatted_dob = datetime.datetime.strptime(new_cust_info[2], "%d/%m/%Y")
-
+                formatted_dob = datetime.datetime.strptime(new_customer_info[2], "%d/%m/%Y")
             except:
                 print("wrong date format!!!")
-                return False
+                return False 
 
         return True
+
+
+def update_customer_worksheet(new_customer_info):
+    """
+    Add new row to customers worksheet with the list data provided.
+    """
+    print("Updating customer worksheet...\n")
+    customer_worksheet = SHEET.worksheet("customers")
+    customer_worksheet.append_row(new_customer_info)
+    print("Customer worksheet successfully updated.\n")
+
+
 # make_choice()
 add_customer()
