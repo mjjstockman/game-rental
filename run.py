@@ -142,5 +142,28 @@ def add_customer():
         #     break
 
 
+def validate_add_customer(new_cust_info):
+    """
+    Check that all fields have been entered.
+    Inside the try, convert min_age and quantity to an integer.
+    If they cannot be converted (ie, contains letter/s) print error message
+    and continue to run add_game() 
+    
+    """
+    # new_game_info = [title, platform, genre, min_age, number]
+    # title, platform, genre, min_age, number
+    while True:
+        if not all(new_cust_info):
+            print("Missing element, please try again")
+            return False
+        else:
+            try:
+                formatted_dob = datetime.datetime.strptime(new_cust_info[2], "%d/%m/%Y")
+
+            except:
+                print("wrong date format!!!")
+                return False
+
+        return True
 # make_choice()
 add_customer()
