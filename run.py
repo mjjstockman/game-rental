@@ -103,6 +103,11 @@ def validate_add_game(new_game_info):
     if not all(new_game_info):
         print("Missing element, please try again")
         return False
+    if new_game_info[1] not in ("switch", "ps5", "xbox one"):
+        print("Platform must be either switch, ps5 or xbox one. "
+                    f"You entered {new_game_info[1]}")
+        print("Please enter info again")
+        return False       
     else:
         try:
             int(new_game_info[3])
@@ -112,13 +117,15 @@ def validate_add_game(new_game_info):
             int(new_game_info[4])
         except:
             print("quantity not a number, please try again")
-            return False
+        try:
+            if new_game_info[1] not in ("switch", "ps5", "xbox one"):   
+                return False    
+        except:
+            print("Platform must be either switch, PS5 or xbox one. "
+                    f"You entered {new_game_info[1]}")
+                
+        return True
 
-    return True
-
-
-
-    
 
 def add_customer():
     while True:
@@ -133,9 +140,6 @@ def add_customer():
             # update_customer_worksheet(new_customer_info)
             break
             
-        # if validate_add_game(new_game_info):
-        #     update_games_worksheet(new_game_info)
-        #     break
 
 
 def validate_add_customer(new_customer_info):
@@ -172,28 +176,6 @@ def update_worksheet(data, worksheet):
     worksheet_to_update.append_row(data)
     print(f"{worksheet} updated successfully.\n")
 
-
-
-# def update_games_worksheet(new_game_info):
-#     """
-#     Convert min_age and quantity to integers and add new row to the games
-#     worksheet with the list data provided.
-#     """
-#     new_game_info[3] = int(new_game_info[3])
-#     new_game_info[4] = int(new_game_info[4])
-#     print("Updating games worksheet...\n")
-#     games_worksheet = SHEET.worksheet("games")
-#     games_worksheet.append_row(new_game_info)
-#     print("Games worksheet successfully updated.\n")
-
-# def update_customer_worksheet(new_customer_info):
-#     """
-#     Add new row to customers worksheet with the list data provided.
-#     """
-#     print("Updating customer worksheet...\n")
-#     customer_worksheet = SHEET.worksheet("customers")
-#     customer_worksheet.append_row(new_customer_info)
-#     print("Customer worksheet successfully updated.\n")
 
 
 def check_stock():
