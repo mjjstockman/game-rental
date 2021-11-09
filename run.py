@@ -5,6 +5,7 @@
 # needed for google sheets api
 import gspread
 from google.oauth2.service_account import Credentials
+import datetime
 
 # IAM config allowing user access 
 SCOPE = [
@@ -109,9 +110,7 @@ def validate_add_game(new_game_info):
             return False
 
     return True
-    
- 
- 
+
 
 def update_games_worksheet(new_game_info):
     """
@@ -126,7 +125,22 @@ def update_games_worksheet(new_game_info):
     print("Games worksheet successfully updated.\n")
     
 
+def add_customer():
+    while True:
+        fname = input("Add first name\n")
+        lname = input("Add last name\n")
+        dob = input("Add date of birth\n")
+
+        new_cust_info = [fname, lname, dob]
+
+        if validate_add_customer(new_cust_info):
+            # update_games_worksheet(new_game_info)
+            break
+
+        # if validate_add_game(new_game_info):
+        #     update_games_worksheet(new_game_info)
+        #     break
 
 
-make_choice()
-
+# make_choice()
+add_customer()
