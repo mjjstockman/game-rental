@@ -43,6 +43,8 @@ def make_choice():
                 add_game()
             elif int(chosen_action) == 4:
                 add_customer()
+            elif int(chosen_action) == 3:
+                check_stock()
             break
 
 
