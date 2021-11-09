@@ -6,6 +6,7 @@
 import gspread
 from google.oauth2.service_account import Credentials
 import datetime
+from pprint import pprint
 
 # IAM config allowing user access 
 SCOPE = [
@@ -178,5 +179,14 @@ def update_customer_worksheet(new_customer_info):
     print("Customer worksheet successfully updated.\n")
 
 
-# make_choice()
-add_customer()
+def check_stock():
+    """
+    Pretty print the games worksheet to the terminal
+    """
+    stock = SHEET.worksheet("games").get_all_values()
+    pprint(stock)
+
+
+# # make_choice()
+# # add_customer()
+check_stock()
