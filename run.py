@@ -26,7 +26,7 @@ SHEET = GSPREAD_CLIENT.open("game_rental")
 def make_choice():
     """
     Get choice of action input from user.
-    Run a while loop to collect valid data from the user vi a the terminal, 
+    Run a while loop to collect valid data from the user via the terminal,
     which must be an integer between 1 and 5. 
     The loop will repeatedly request data, until it is valid.
     """
@@ -61,6 +61,11 @@ def validate_chosen_action(chosen_action):
     
 
 def add_game():
+    """
+    Get game information input from user.
+    Run a while loop to collect valid data from the user via the terminal.
+    The loop will repeatedly request data, until it is valid.
+    """
     while True:
         title = input("Add game title\n")
         platform = input("Add platform\n")
@@ -79,6 +84,13 @@ def add_game():
 
 
 def validate_add_game(new_game_info):
+    """
+    Check that all fields have been entered.
+    Inside the try, convert min_age and quantity to an integer.
+    If they cannot be converted (ie, contains letter/s) print error message
+    and continue to run add_game() 
+    
+    """
     # new_game_info = [title, platform, genre, min_age, number]
     # title, platform, genre, min_age, number
     if not all(new_game_info):
