@@ -89,10 +89,10 @@ def add_game():
                   f"How many: {quantity}\n")
             print("Is this correct?\n")
             confirm = input("Enter Y for yes, N for No\n")
-            if confirm == "N" or "n":
+            if confirm == "N" or confirm == "n":
                 validate_add_game(new_game_info)
-            elif confirm == "Y" or "y":
-                print("Please renter the correct details")
+            elif confirm == "Y" or confirm == "y":
+                # print("Please renter the correct details")
                 update_worksheet(new_game_info, "games")
                 break
             
@@ -172,10 +172,21 @@ def add_customer():
 
         new_customer_info = [fname, lname, dob]
 
+        # if validate_add_customer(new_customer_info):
+        #     update_worksheet(new_customer_info, "customers")
+        #     break
         if validate_add_customer(new_customer_info):
-            update_worksheet(new_customer_info, "customers")
-            break
-            
+            print(f"\nYou entered...\n First Name: {fname}\n "
+                  f"Last Name: {lname}\n "
+                  f"Date of Birth: {dob}\n")
+            print("Is this correct?\n")
+            confirm = input("Enter Y for yes, N for No\n")
+            if confirm == "N" or confirm == "n":
+                validate_add_customer(new_customer_info)
+            elif confirm == "Y" or confirm == "y":
+                # print("Please renter the correct details")
+                update_worksheet(new_customer_info, "customers")
+                break    
 
 
 def validate_add_customer(new_customer_info):
