@@ -25,6 +25,8 @@ SHEET = GSPREAD_CLIENT.open("game_rental")
 # data = games.get_all_values()
 # print(data)
 
+
+
 def make_choice():
     """
     Get choice of action input from user.
@@ -34,7 +36,7 @@ def make_choice():
     """
     while True:
         print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
-              "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
+             "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
         chosen_action = input("Please select from above by entering the "
                               "corresponding number and pressing Enter: ")
     
@@ -82,9 +84,44 @@ def add_game():
         new_game_info = [title, platform, genre, min_age, quantity]
 
         if validate_add_game(new_game_info):
-            update_worksheet(new_game_info, "games")
-            break
-        # validate_add_game(new_game_info)
+            print(f"\nYou entered...\n Title: {title}\n Platform: {platform}\n "
+                  f"Genre: {genre}\n Minimum age: {min_age}\n "
+                  f"How many: {quantity}\n")
+            print("Is this correct?\n")
+            confirm = input("Enter Y for yes, N for No\n")
+            if confirm == "N" or "n":
+                validate_add_game(new_game_info)
+            elif confirm == "Y" or "y":
+                print("Please renter the correct details")
+                update_worksheet(new_game_info, "games")
+                break
+            
+
+
+
+                
+
+        # if validate_add_game(new_game_info):
+        #     update_worksheet(new_game_info, "games")
+        #     print(f"You entered...\n Title: {title}\n Platform: {platform}\n "
+        #           f"Genre: {genre}\n Minimum age: {min_age}\n "
+        #           f"How many: {quantity}")
+        #     break
+
+
+
+
+
+            # if validate_add_game(new_game_info):
+            # update_worksheet(new_game_info, "games")
+            # print(f"You entered...\n Title: {title}\n Platform: {platform}\n "
+            #       f"Genre: {genre}\n Minimum age: {min_age}\n "
+            #       f"How many: {number}")
+            # print("Is this correct?")
+            # confirm = input("Enter Y for yes, N for No\n")
+            # if confirm == "Y":
+            #     break
+            # elif confirm == "N":
 
     # print(f"You entered...\n Title: {title}\n Platform: {platform}\n "
     #       f"Genre: {genre}\n Minimum age: {min_age}\n How many: {number}")
@@ -118,7 +155,7 @@ def validate_add_game(new_game_info):
         except:
             print("quantity not a number, please try again")
         try:
-            if new_game_info[1] not in ("switch", "ps5", "xbox one"):   
+            if new_game_info[1] not in ("switch", "ps5", "xbox one"):  
                 return False    
         except:
             print("Platform must be either switch, PS5 or xbox one. "
@@ -137,7 +174,6 @@ def add_customer():
 
         if validate_add_customer(new_customer_info):
             update_worksheet(new_customer_info, "customers")
-            # update_customer_worksheet(new_customer_info)
             break
             
 
@@ -158,7 +194,6 @@ def validate_add_customer(new_customer_info):
             return False
         else:
             try:
-                # formatted_dob = datetime.datetime.strptime(new_customer_info[2], "%d/%m/%Y")
                 datetime.datetime.strptime(new_customer_info[2], "%d/%m/%Y")
             except:
                 print("wrong date format!!!")
