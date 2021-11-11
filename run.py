@@ -27,6 +27,11 @@ SHEET = GSPREAD_CLIENT.open("game_rental")
 
 
 
+# PUT CUST INFO IN RENTAL
+# ADD ID THROUGH PYTHON
+# LIBRARY TO PRINT TABLES
+
+
 def make_choice():
     """
     Get choice of action input from user.
@@ -40,6 +45,8 @@ def make_choice():
         chosen_action = input("Please select from above by entering the "
                               "corresponding number and pressing Enter: ")
     
+
+        # HOW TIDT UP, BRIAN??
         if validate_chosen_action(chosen_action):
             if int(chosen_action) == 5:
                 add_game()
@@ -57,6 +64,8 @@ def validate_chosen_action(chosen_action):
     or if is not an integer between 1 and 5
     """
     try:
+        # USE A SET
+        # if int(chosen_action) not in set[(1, 2, 3, 4, 5)]:
         if int(chosen_action) not in (1, 2, 3, 4, 5):
             raise ValueError(
                 "Must be a whole num between 1 and 5"
@@ -83,6 +92,7 @@ def add_game():
 
         new_game_info = [title, platform, genre, min_age, quantity]
 
+        # REFRACTOR validate_add_customer AND validate_add_game INTO ONE FUNCTION?????
         if validate_add_game(new_game_info):
             print(f"\nYou entered...\n Title: {title}\n Platform: {platform}\n "
                   f"Genre: {genre}\n Minimum age: {min_age}\n "
@@ -92,39 +102,12 @@ def add_game():
             if confirm == "N" or confirm == "n":
                 validate_add_game(new_game_info)
             elif confirm == "Y" or confirm == "y":
+                # GET LAST ID ENTRY
+                # values_list = worksheet.row_values(1)
                 # print("Please renter the correct details")
                 update_worksheet(new_game_info, "games")
                 break
             
-
-
-
-                
-
-        # if validate_add_game(new_game_info):
-        #     update_worksheet(new_game_info, "games")
-        #     print(f"You entered...\n Title: {title}\n Platform: {platform}\n "
-        #           f"Genre: {genre}\n Minimum age: {min_age}\n "
-        #           f"How many: {quantity}")
-        #     break
-
-
-
-
-
-            # if validate_add_game(new_game_info):
-            # update_worksheet(new_game_info, "games")
-            # print(f"You entered...\n Title: {title}\n Platform: {platform}\n "
-            #       f"Genre: {genre}\n Minimum age: {min_age}\n "
-            #       f"How many: {number}")
-            # print("Is this correct?")
-            # confirm = input("Enter Y for yes, N for No\n")
-            # if confirm == "Y":
-            #     break
-            # elif confirm == "N":
-
-    # print(f"You entered...\n Title: {title}\n Platform: {platform}\n "
-    #       f"Genre: {genre}\n Minimum age: {min_age}\n How many: {number}")
 
 
 def validate_add_game(new_game_info):
@@ -213,12 +196,25 @@ def validate_add_customer(new_customer_info):
         return True
 
 
+def create_id(worksheet):
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    get_id_list = worksheet_to_update.col_values(1)
+    last_id = get_id_list[-1]
+    new_id = int(last_id) + 1
+    return new_id
+    # print(new_id)
+
+
+
+
 def update_worksheet(data, worksheet):
     if worksheet == "games":
         data[3] = int(data[3])
         data[4] = int(data[4])
     print(f"Updating {worksheet} worksheet...")
     worksheet_to_update = SHEET.worksheet(worksheet)
+    id = create_id(worksheet)
+    data.insert(0, id)
     worksheet_to_update.append_row(data)
     print(f"{worksheet} updated successfully.\n")
 
@@ -235,3 +231,5 @@ def check_stock():
 make_choice()
 # # add_customer()
 # check_stock()
+
+# create_id("games")
