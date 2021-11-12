@@ -59,6 +59,15 @@ def make_choice():
             break
 
 
+# refractor below and get_customer_id into one function
+def get_game_id():
+    data_list = SHEET.worksheet("games").col_values(1)
+    id = data_list[-1]
+    print(id)
+    # get_game_id()
+
+
+
 def validate_chosen_action(chosen_action):
     """
     Inside the try, convert user input to an integer.
@@ -83,19 +92,18 @@ def make_sale():
     get_sale_info()
     
 
-# def get_sale_info():
-#     customer = input("Please enter the customer name:\n")
-#     game = input("Please enter the game title:\n")
 
-#     print(f"You entered:\n Customer: {customer} \n Game: {game}")
-
-#     # ask for confirmation
+def get_game_id():
+    data_list = SHEET.worksheet("games").col_values(1)
+    id = data_list[-1]
+    print(f"game id is {id}")
 
 
 def get_customer_id():
     data_list = SHEET.worksheet("customers").col_values(1)
     id = data_list[-1]
-    print(id)
+    print(f"customer id is {id}")
+    get_game_id()
 
 
 def get_sale_info():
