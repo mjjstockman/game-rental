@@ -83,13 +83,27 @@ def make_sale():
     get_sale_info()
     
 
+# def get_sale_info():
+#     customer = input("Please enter the customer name:\n")
+#     game = input("Please enter the game title:\n")
+
+#     print(f"You entered:\n Customer: {customer} \n Game: {game}")
+
+#     # ask for confirmation
+
+
+def get_customer_id():
+    data_list = SHEET.worksheet("customers").col_values(1)
+    id = data_list[-1]
+    print(id)
+
+
 def get_sale_info():
     customer = input("Please enter the customer name:\n")
     game = input("Please enter the game title:\n")
-
     print(f"You entered:\n Customer: {customer} \n Game: {game}")
-
     # ask for confirmation
+    get_customer_id()
 
 
 make_sale()
