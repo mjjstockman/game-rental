@@ -59,11 +59,26 @@ def make_choice():
             break
 
 
+def update_rental_worksheet():
+    # data_list = SHEET.worksheet("games").col_values(1)
+    worksheet_to_update = SHEET.worksheet("rentals")
+    # id = create_id(worksheet)
+
+    
+    
+    # data.insert(0, id)
+    # worksheet_to_update.append_row(data)
+    # print(f"{worksheet} updated successfully.\n")
+
+
 # refractor below and get_customer_id into one function
 def get_game_id():
     data_list = SHEET.worksheet("games").col_values(1)
     id = data_list[-1]
-    print(id)
+    # print(id)
+    # update worksheet
+    update_rental_worksheet()
+
     # get_game_id()
 
 
@@ -93,10 +108,38 @@ def make_sale():
     
 
 
+# # change name to add_rental
+# def update_rental_worksheet():
+#     # connect to rental worksheet
+#     #  data_list = SHEET.worksheet("customers").col_values(1)
+#      worksheet_to_update = SHEET.worksheet("rentals")
+#     #  need data for customer name and game name
+
+#      worksheet_to_update.append_row(data)
+
+
+
+
+# update_rental_worksheet()
+
+
+# def update_worksheet(data, worksheet):
+#     if worksheet == "games":
+#         data[3] = int(data[3])
+#         data[4] = int(data[4])
+#     print(f"Updating {worksheet} worksheet...")
+#     worksheet_to_update = SHEET.worksheet(worksheet)
+#     id = create_id(worksheet)
+#     data.insert(0, id)
+#     worksheet_to_update.append_row(data)
+#     print(f"{worksheet} updated successfully.\n")
+
 def get_game_id():
     data_list = SHEET.worksheet("games").col_values(1)
     id = data_list[-1]
     print(f"game id is {id}")
+    update_rental_worksheet()
+
 
 
 def get_customer_id():
@@ -107,11 +150,16 @@ def get_customer_id():
 
 
 def get_sale_info():
+    global customer
+    global game
     customer = input("Please enter the customer name:\n")
     game = input("Please enter the game title:\n")
     print(f"You entered:\n Customer: {customer} \n Game: {game}")
     # ask for confirmation
     get_customer_id()
+
+
+
 
 
 make_sale()
