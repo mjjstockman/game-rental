@@ -54,6 +54,8 @@ def make_choice():
                 add_customer()
             elif int(chosen_action) == 3:
                 check_stock()
+            elif int(chosen_action) == 1:
+                make_sale()
             break
 
 
@@ -76,6 +78,22 @@ def validate_chosen_action(chosen_action):
 
     return True
     
+
+def make_sale():
+    get_sale_info()
+    
+
+def get_sale_info():
+    customer = input("Please enter the customer name:\n")
+    game = input("Please enter the game title:\n")
+
+    print(f"You entered:\n Customer: {customer} \n Game: {game}")
+
+    # ask for confirmation
+
+
+make_sale()
+
 
 def add_game():
     """
@@ -197,22 +215,20 @@ def validate_add_customer(new_customer_info):
 
 
 def create_id(worksheet):
+    """
+    Create id for column 1 in worksheet.
+    EXPLAIN THE LOGIC???
+    """
     worksheet_to_update = SHEET.worksheet(worksheet)
     get_id_list = worksheet_to_update.col_values(1)
-    # print(get_id_list)
     if get_id_list == ["id"]:
-        # print("no entries")
         new_id = 1
-    # if get_id_list[1] == "":
-    #     print("nothing in it maaaaaate")
-    # print(get_id_list)
     else:
         last_id = get_id_list[-1]
         new_id = int(last_id) + 1
     return new_id
-    # print("BOTH")
 
-create_id("customers")
+
 
 def update_worksheet(data, worksheet):
     if worksheet == "games":
@@ -226,7 +242,7 @@ def update_worksheet(data, worksheet):
     print(f"{worksheet} updated successfully.\n")
 
 
-
+#  change to show stock
 def check_stock():
     """
     Pretty print the games worksheet to the terminal
@@ -235,7 +251,7 @@ def check_stock():
     pprint(stock)
 
 
-make_choice()
+# make_choice()
 # # add_customer()
 # check_stock()
 
