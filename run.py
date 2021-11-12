@@ -199,13 +199,20 @@ def validate_add_customer(new_customer_info):
 def create_id(worksheet):
     worksheet_to_update = SHEET.worksheet(worksheet)
     get_id_list = worksheet_to_update.col_values(1)
-    last_id = get_id_list[-1]
-    new_id = int(last_id) + 1
+    # print(get_id_list)
+    if get_id_list == ["id"]:
+        # print("no entries")
+        new_id = 1
+    # if get_id_list[1] == "":
+    #     print("nothing in it maaaaaate")
+    # print(get_id_list)
+    else:
+        last_id = get_id_list[-1]
+        new_id = int(last_id) + 1
     return new_id
-    # print(new_id)
+    # print("BOTH")
 
-
-
+create_id("customers")
 
 def update_worksheet(data, worksheet):
     if worksheet == "games":
