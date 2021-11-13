@@ -113,8 +113,23 @@ def input_sale_data():
     print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n "
             f" Game: {game}")
     # ask for confirmation
-    # check_stock(fname, lname, game)
+    check_game_data(fname, lname, game)
 
+
+def check_game_data(fname, lname, game):
+    """
+    Check the game title is in games worksheet
+    """
+    games = SHEET.worksheet("games").col_values(2)
+    # pprint(games)
+    if game in games:
+        print("GAME IS IN SHEET!!!")
+    else:
+        print("WE DONT HAVE THAT GAME")
+        
+        # is title in title list?
+            #  check the stock
+            # if has stock check customer in customers_list
 
 # # change name to add_rental
 # def update_rental_worksheet():
