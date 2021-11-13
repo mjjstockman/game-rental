@@ -55,7 +55,7 @@ def make_choice():
             elif int(chosen_action) == 3:
                 print_stock()
             elif int(chosen_action) == 1:
-                make_sale()
+                input_sale_data()
             break
 
 
@@ -103,9 +103,17 @@ def validate_chosen_action(chosen_action):
     return True
     
 
-def make_sale():
-    get_sale_info()
-    
+def input_sale_data():
+    # HAVE BELOW AS GLOBAL OR PASS BETWEEN FUNCTIONS??
+    # global customer
+    # global game
+    fname = input("Please enter the customer First Name:\n")
+    lname = input("Please enter the customer Last Name:\n")
+    game = input("Please enter the game title:\n")
+    print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n "
+            f" Game: {game}")
+    # ask for confirmation
+    # check_stock(fname, lname, game)
 
 
 # # change name to add_rental
@@ -157,12 +165,6 @@ def get_sale_info():
     print(f"You entered:\n Customer: {customer} \n Game: {game}")
     # ask for confirmation
     get_customer_id()
-
-
-
-
-
-make_sale()
 
 
 def add_game():
@@ -320,9 +322,4 @@ def print_stock():
     stock = SHEET.worksheet("games").get_all_values()
     pprint(stock)
 
-
-# make_choice()
-# # add_customer()
-# check_stock()
-
-# create_id("games")
+input_sale_data()
