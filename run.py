@@ -53,7 +53,7 @@ def make_choice():
             elif int(chosen_action) == 4:
                 add_customer()
             elif int(chosen_action) == 3:
-                check_stock()
+                print_stock()
             elif int(chosen_action) == 1:
                 make_sale()
             break
@@ -312,8 +312,8 @@ def update_worksheet(data, worksheet):
     print(f"{worksheet} updated successfully.\n")
 
 
-#  change to show stock
-def check_stock():
+
+def print_stock():
     """
     Pretty print the games worksheet to the terminal
     """
