@@ -20,15 +20,8 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("game_rental")
 
-# games = SHEET.worksheet("games")
-
-# data = games.get_all_values()
-# print(data)
-
-
 
 # PUT CUST INFO IN RENTAL
-# ADD ID THROUGH PYTHON
 # LIBRARY TO PRINT TABLES
 
 
@@ -60,26 +53,15 @@ def make_choice():
 
 
 def update_rental_worksheet():
-    # data_list = SHEET.worksheet("games").col_values(1)
     worksheet_to_update = SHEET.worksheet("rentals")
     # id = create_id(worksheet)
-
-    
-    
-    # data.insert(0, id)
-    # worksheet_to_update.append_row(data)
-    # print(f"{worksheet} updated successfully.\n")
 
 
 # refractor below and get_customer_id into one function
 def get_game_id():
     data_list = SHEET.worksheet("games").col_values(1)
     id = data_list[-1]
-    # print(id)
-    # update worksheet
     update_rental_worksheet()
-
-    # get_game_id()
 
 
 
@@ -116,46 +98,29 @@ def input_sale_data():
     check_game_data(fname, lname, game)
 
 
+def check_customer_data(fname, lname):
+    """
+    only checking fname
+    """
+    worksheet_fname = SHEET.worksheet("customers").col_values(2)
+    pprint(worksheet_fname)
+    if fname in worksheet_fname:
+        print("first name IS IN SHEET!!!")
+    else:
+        print("first name not in sheet")
+
 def check_game_data(fname, lname, game):
     """
     Check the game title is in games worksheet
     """
     games = SHEET.worksheet("games").col_values(2)
-    # pprint(games)
     if game in games:
         print("GAME IS IN SHEET!!!")
+        check_customer_data(fname, lname)
     else:
         print("WE DONT HAVE THAT GAME")
         
-        # is title in title list?
-            #  check the stock
-            # if has stock check customer in customers_list
 
-# # change name to add_rental
-# def update_rental_worksheet():
-#     # connect to rental worksheet
-#     #  data_list = SHEET.worksheet("customers").col_values(1)
-#      worksheet_to_update = SHEET.worksheet("rentals")
-#     #  need data for customer name and game name
-
-#      worksheet_to_update.append_row(data)
-
-
-
-
-# update_rental_worksheet()
-
-
-# def update_worksheet(data, worksheet):
-#     if worksheet == "games":
-#         data[3] = int(data[3])
-#         data[4] = int(data[4])
-#     print(f"Updating {worksheet} worksheet...")
-#     worksheet_to_update = SHEET.worksheet(worksheet)
-#     id = create_id(worksheet)
-#     data.insert(0, id)
-#     worksheet_to_update.append_row(data)
-#     print(f"{worksheet} updated successfully.\n")
 
 def get_game_id():
     data_list = SHEET.worksheet("games").col_values(1)
@@ -207,9 +172,6 @@ def add_game():
             if confirm == "N" or confirm == "n":
                 validate_add_game(new_game_info)
             elif confirm == "Y" or confirm == "y":
-                # GET LAST ID ENTRY
-                # values_list = worksheet.row_values(1)
-                # print("Please renter the correct details")
                 update_worksheet(new_game_info, "games")
                 break
             
@@ -223,8 +185,6 @@ def validate_add_game(new_game_info):
     and continue to run add_game() 
     
     """
-    # new_game_info = [title, platform, genre, min_age, number]
-    # title, platform, genre, min_age, number
     if not all(new_game_info):
         print("Missing element, please try again")
         return False
@@ -260,9 +220,6 @@ def add_customer():
 
         new_customer_info = [fname, lname, dob]
 
-        # if validate_add_customer(new_customer_info):
-        #     update_worksheet(new_customer_info, "customers")
-        #     break
         if validate_add_customer(new_customer_info):
             print(f"\nYou entered...\n First Name: {fname}\n "
                   f"Last Name: {lname}\n "
@@ -285,8 +242,7 @@ def validate_add_customer(new_customer_info):
     and continue to run add_game() 
     
     """
-    # new_game_info = [title, platform, genre, min_age, number]
-    # title, platform, genre, min_age, number
+
     while True:
         if not all(new_customer_info):
             print("Missing element, please try again")
