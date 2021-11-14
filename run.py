@@ -102,6 +102,39 @@ def check_customer_data(fname, lname):
         print("first name not in sheet")
 
 
+def is_game_in_sheet(game):
+    """
+    Get stock of entered game
+    """
+    worksheet_games = SHEET.worksheet("games").col_values(2)
+    pprint(worksheet_games)
+    try:
+        game_index = worksheet_games.index(game)
+    except:
+        print("game is not in list")
+    
+
+
+
+
+
+
+    # ["foo", "bar", "baz"].index("bar")
+    # IN PYTHON FIND GAME IN LIST
+    # GET IT'S INDEX NUMBER IN LIST
+    # FIND ROW NUMBER
+    # GET ALL VALUES
+    # CHECK STOCK COLUMN
+
+
+
+    # get game in column
+    # games = SHEET.worksheet("games").col_values(2)
+    # cell = games.find(game) #Find a cell with exact string value
+    # print("Text found at R%sC%s" % (cell.row, cell.col))
+
+
+
 def check_game_data(fname, lname, game):
     """
     Check the game title is in games worksheet
@@ -109,7 +142,8 @@ def check_game_data(fname, lname, game):
     games = SHEET.worksheet("games").col_values(2)
     if game in games:
         print("GAME IS IN SHEET!!!")
-        check_customer_data(fname, lname)
+        # REANAME BELOW FUNCTION
+        check_game_is_in_sheet(game)
     else:
         print("WE DONT HAVE THAT GAME")
         
@@ -127,15 +161,20 @@ def get_customer_id():
     print(f"customer id is {id}")
     get_game_id()
 
+# get_customer_id()
 
 def get_sale_info():
     global customer
     global game
-    customer = input("Please enter the customer name:\n")
+    fname = input("Please enter the customer First Name:\n")
+    lname = input("Please enter the customer Last Name:\n")
     game = input("Please enter the game title:\n")
-    print(f"You entered:\n Customer: {customer} \n Game: {game}")
+    print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n"
+        f"Game: {game}")
     # ask for confirmation
     get_customer_id()
+
+# get_sale_info()
 
 
 def add_game():
@@ -283,4 +322,4 @@ def print_stock():
     stock = SHEET.worksheet("games").get_all_values()
     pprint(stock)
 
-input_sale_data()
+
