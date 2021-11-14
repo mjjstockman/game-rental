@@ -57,14 +57,6 @@ def update_rental_worksheet():
     # id = create_id(worksheet)
 
 
-# refractor below and get_customer_id into one function
-def get_game_id():
-    data_list = SHEET.worksheet("games").col_values(1)
-    id = data_list[-1]
-    update_rental_worksheet()
-
-
-
 def validate_chosen_action(chosen_action):
     """
     Inside the try, convert user input to an integer.
@@ -109,6 +101,7 @@ def check_customer_data(fname, lname):
     else:
         print("first name not in sheet")
 
+
 def check_game_data(fname, lname, game):
     """
     Check the game title is in games worksheet
@@ -121,13 +114,11 @@ def check_game_data(fname, lname, game):
         print("WE DONT HAVE THAT GAME")
         
 
-
 def get_game_id():
     data_list = SHEET.worksheet("games").col_values(1)
     id = data_list[-1]
     print(f"game id is {id}")
     update_rental_worksheet()
-
 
 
 def get_customer_id():
@@ -175,7 +166,6 @@ def add_game():
                 update_worksheet(new_game_info, "games")
                 break
             
-
 
 def validate_add_game(new_game_info):
     """
