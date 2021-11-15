@@ -384,9 +384,9 @@ def add_customer():
     """Gets user input for first name, last name, date of birth, display inputed data, ask for confirmation
     """
     while True:
-        fname = input("Add first name\n")
-        lname = input("Add last name\n")
-        dob = input("Add date of birth\n")
+        fname = input("\nAdd first name")
+        lname = input("\nAdd last name")
+        dob = input("\nAdd date of birth")
 
         new_customer_info = [fname, lname, dob]
 
@@ -395,7 +395,7 @@ def add_customer():
                   f"Last Name: {lname}\n "
                   f"Date of Birth: {dob}\n")
             print("Is this correct?\n")
-            confirm = input("Enter Y for yes, N for No\n")
+            confirm = input("Enter Y for yes, N for No")
             if confirm == "N" or confirm == "n":
                 validate_add_customer(new_customer_info)
             elif confirm == "Y" or confirm == "y":
@@ -457,12 +457,12 @@ def update_worksheet(data, worksheet):
     if worksheet == "games":
         data[3] = int(data[3])
         data[4] = int(data[4])
-    print(f"Updating {worksheet} worksheet...")
+    print(f"\nUpdating {worksheet} worksheet...")
     worksheet_to_update = SHEET.worksheet(worksheet)
     # id = create_id(worksheet)
     # data.insert(0, id)
     worksheet_to_update.append_row(data)
-    print(f"{worksheet} updated successfully.\n")
+    print(f"\n{worksheet} updated successfully.")
 
 
 
