@@ -56,7 +56,7 @@ def make_choice():
         print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
              "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
         chosen_action = input("Please select from above by entering the "
-                              "corresponding number and pressing Enter: ")
+                              "corresponding number and pressing Enter:\n")
     
         # HOW TIDT UP, BRIAN??
         if validate_chosen_action(chosen_action):
@@ -70,7 +70,7 @@ def make_choice():
                 input_sale_data()
             break
 
-
+# update_rental_worksheet(fname, lname, game, platform, format_date)
 
 def update_rental_worksheet(fname, lname, game, platform, format_date):
     """Updates the rentals worksheet
@@ -85,13 +85,13 @@ def update_rental_worksheet(fname, lname, game, platform, format_date):
         platform (str) : The platform (console type) the customer is trying 
             to rent
 
-        format_date (str) : A formated date the rental is due back
+        ADD FOMAT_DATE
     """
     rental_data = [fname, lname, game, platform, format_date]
-    print(f"from 75, rental_data is {rental_data}")
+    # print(f"from 75, rental_data is {rental_data}")
     worksheet_to_update = SHEET.worksheet("rentals")
     # WHY BELOW NOT WORKING????????????????????
-    # worksheet_to_update.append_row(fname, lname, game, platform, format_date)
+    worksheet_to_update.append_row(fname, lname, game, platform, format_date)
 
 
 def calculate_return_date(fname, lname, game, platform):
@@ -107,14 +107,11 @@ def calculate_return_date(fname, lname, game, platform):
         platform (str) : The platform (console type) the customer is trying 
             to rent
     """
+    # print("from 110 calculate_return_date called")
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
     format_date = return_date.strftime("%d-%m-%Y")
     update_rental_worksheet(fname, lname, game, platform, format_date)
-    # print(format_date)
-    # ADD UPDATE_RENTAL_SHEET
-    # update_rental_worksheet(fname, lname, game, platform, format_date)
-    # id = create_id(worksheet)
 
 
 # MOVE INTO MAKE_CHOICE, 
@@ -168,13 +165,13 @@ def input_sale_data():
     # global customer
     # global game
     # global platform
-    fname = input("Please enter the customer First Name:\n")
-    lname = input("Please enter the customer Last Name:\n")
-    game = input("Please enter the game title:\n")
-    platform = input("Please enter platform:\n")
+    fname = input("\nPlease enter the customer First Name:\n")
+    lname = input("\nPlease enter the customer Last Name:\n")
+    game = input("\nPlease enter the game title:\n")
+    platform = input("\nPlease enter platform:\n")
     # ADD PLTFORM VALIDATION
-    print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n "
-            f" Game: {game} \n Platform: {platform}")
+    print(f"\nYou entered:\n First Name: {fname} \n Last Name: {lname} \n "
+            f"Game: {game} \n Platform: {platform}")
     # ask for confirmation
     is_game_in_sheet(fname, lname, game, platform)
 
@@ -224,10 +221,10 @@ def check_stock(fname, lname, game, platform):
         platform (str) : The platform (console type) the customer is trying 
             to rent
     """
-    worksheet_stock = SHEET.worksheet("games").col_values(2)
+    worksheet_stock = SHEET.worksheet("games").col_values(1)
     game_index = worksheet_stock.index(game) + 1
     worksheet_game_data = SHEET.worksheet("games").row_values(game_index)
-    stock = worksheet_game_data[5]
+    stock = worksheet_game_data[4]
     check_platform(fname, lname, game, platform, worksheet_game_data)
 
 
@@ -247,17 +244,19 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
             to rent
     """
     # print(game_data)
-    worksheet_platform = worksheet_game_data[2]
+    worksheet_platform = worksheet_game_data[1]
     if worksheet_platform == platform:
-        print("PLATFORM IS GOOD")
+        # print("PLATFORM IS GOOD")
         calculate_return_date(fname, lname, game, platform)
         # update_rental_worksheet(fname, lname, game_data)
-        print("check_platform finished, 151")
+        # print("check_platform finished, 151")
         
     else:
         print("wrong platform")
+    print(fname, lname, gam,e)
     # print(platform)
-        print("check_platform finished, 156")
+        # print("check_platform finished, 156")
+    # print(worksheet_platform)
 
 
 
@@ -280,7 +279,7 @@ def is_game_in_sheet(fname, lname, game, platform):
         platform (str) : The platform (console type) the customer is trying 
             to rent
     """
-    worksheet_games = SHEET.worksheet("games").col_values(2)
+    worksheet_games = SHEET.worksheet("games").col_values(1)
     pprint(worksheet_games)
     try:
         game_index = worksheet_games.index(game)
@@ -310,7 +309,8 @@ def is_game_in_sheet(fname, lname, game, platform):
 def get_sale_info():
     # global customer
     # global game
-    fname = input("Please enter the customer First Name:\n")
+    fname = input("Please enter the customer First Name: \n")
+    # print("\n")
     lname = input("Please enter the customer Last Name:\n")
     game = input("Please enter the game title:\n")
     print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n"
@@ -384,7 +384,6 @@ def add_customer():
     """Gets user input for first name, last name, date of birth, display inputed data, ask for confirmation
     """
     while True:
-
         fname = input("Add first name\n")
         lname = input("Add last name\n")
         dob = input("Add date of birth\n")
