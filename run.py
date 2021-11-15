@@ -52,11 +52,13 @@ def make_choice():
             break
 
 
+
 def update_rental_worksheet():
     worksheet_to_update = SHEET.worksheet("rentals")
     # id = create_id(worksheet)
 
 
+# MOVE INTO MAKE_CHOICE, 
 def validate_chosen_action(chosen_action):
     """
     Inside the try, convert user input to an integer.
@@ -87,7 +89,8 @@ def input_sale_data():
     print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n "
             f" Game: {game}")
     # ask for confirmation
-    check_game_data(fname, lname, game)
+    # check_game_data(fname, lname, game)
+    is_game_in_sheet(fname, lname, game)
 
 
 def check_customer_data(fname, lname):
@@ -101,8 +104,17 @@ def check_customer_data(fname, lname):
     else:
         print("first name not in sheet")
 
+def check_stock(fname, lname, game):
+    worksheet_stock = SHEET.worksheet("games").col_values(2)
+    game_index = worksheet_stock.index(game) + 1
+    game_data = SHEET.worksheet("games").row_values(game_index)
+    stock = game_data[5]
+    print(stock)
 
-def is_game_in_sheet(game):
+
+
+# PASS BOTH FNAME, LNAME, GAME AS ARGUMENTS??
+def is_game_in_sheet(fname, lname, game):
     """
     Get stock of entered game
     """
@@ -112,6 +124,20 @@ def is_game_in_sheet(game):
         game_index = worksheet_games.index(game)
     except:
         print("game is not in list")
+    check_stock(fname, lname, game)
+
+
+# def check_game_data(fname, lname, game):
+#     """
+#     Check the game title is in games worksheet
+#     """
+#     games = SHEET.worksheet("games").col_values(2)
+#     if game in games:
+#         print("GAME IS IN SHEET!!!")
+#         # REANAME BELOW FUNCTION
+#         is_game_in_sheet(game)
+#     else:
+#         print("WE DONT HAVE THAT GAME")
     
 
 
@@ -135,17 +161,8 @@ def is_game_in_sheet(game):
 
 
 
-def check_game_data(fname, lname, game):
-    """
-    Check the game title is in games worksheet
-    """
-    games = SHEET.worksheet("games").col_values(2)
-    if game in games:
-        print("GAME IS IN SHEET!!!")
-        # REANAME BELOW FUNCTION
-        check_game_is_in_sheet(game)
-    else:
-        print("WE DONT HAVE THAT GAME")
+
+
         
 
 def get_game_id():
@@ -323,3 +340,4 @@ def print_stock():
     pprint(stock)
 
 
+make_choice()
