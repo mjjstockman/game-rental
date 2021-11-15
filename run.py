@@ -53,8 +53,26 @@ def make_choice():
 
 
 
-def update_rental_worksheet():
+def calculate_return_date():
+    today = datetime.datetime.now().date()
+    return_date = today + datetime.timedelta(days=3)
+    format_date = return_date.strftime("%d-%m-%Y")
+    print(format_date)
+
+
+update_rental_worksheet (rental_data list)
+
+
+calculate_return_date()
+
+def update_rental_worksheet(fname, lname, game_data):
     worksheet_to_update = SHEET.worksheet("rentals")
+    game = game_data[2]
+    rental_data = [fname, lname, game]
+    worksheet_to_update.append_row(rental_data)
+    calculate_return_date()
+
+
     # id = create_id(worksheet)
 
 
@@ -83,14 +101,16 @@ def input_sale_data():
     # HAVE BELOW AS GLOBAL OR PASS BETWEEN FUNCTIONS??
     # global customer
     # global game
+    # global platform
     fname = input("Please enter the customer First Name:\n")
     lname = input("Please enter the customer Last Name:\n")
     game = input("Please enter the game title:\n")
+    platform = input("Please enter platform:\n")
+    # ADD PLTFORM VALIDATION
     print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n "
-            f" Game: {game}")
+            f" Game: {game} \n Platform: {platform}")
     # ask for confirmation
-    # check_game_data(fname, lname, game)
-    is_game_in_sheet(fname, lname, game)
+    is_game_in_sheet(fname, lname, game, platform)
 
 
 def check_customer_data(fname, lname):
@@ -104,17 +124,28 @@ def check_customer_data(fname, lname):
     else:
         print("first name not in sheet")
 
-def check_stock(fname, lname, game):
+def check_stock(fname, lname, game, platform):
     worksheet_stock = SHEET.worksheet("games").col_values(2)
     game_index = worksheet_stock.index(game) + 1
     game_data = SHEET.worksheet("games").row_values(game_index)
     stock = game_data[5]
-    print(stock)
+    # print(stock)
+    check_platform(fname, lname, game_data, platform)
+
+def check_platform(fname, lname, game_data, platform):
+    # print(game_data)
+    worksheet_platform = game_data[2]
+    if worksheet_platform == platform:
+        print("PLATFORM IS GOOD")
+        update_rental_worksheet(fname, lname, game_data)
+    else:
+        print("wrong platform")
+    # print(platform)
 
 
 
 # PASS BOTH FNAME, LNAME, GAME AS ARGUMENTS??
-def is_game_in_sheet(fname, lname, game):
+def is_game_in_sheet(fname, lname, game, platform):
     """
     Get stock of entered game
     """
@@ -124,46 +155,8 @@ def is_game_in_sheet(fname, lname, game):
         game_index = worksheet_games.index(game)
     except:
         print("game is not in list")
-    check_stock(fname, lname, game)
+    check_stock(fname, lname, game, platform)
 
-
-# def check_game_data(fname, lname, game):
-#     """
-#     Check the game title is in games worksheet
-#     """
-#     games = SHEET.worksheet("games").col_values(2)
-#     if game in games:
-#         print("GAME IS IN SHEET!!!")
-#         # REANAME BELOW FUNCTION
-#         is_game_in_sheet(game)
-#     else:
-#         print("WE DONT HAVE THAT GAME")
-    
-
-
-
-
-
-
-    # ["foo", "bar", "baz"].index("bar")
-    # IN PYTHON FIND GAME IN LIST
-    # GET IT'S INDEX NUMBER IN LIST
-    # FIND ROW NUMBER
-    # GET ALL VALUES
-    # CHECK STOCK COLUMN
-
-
-
-    # get game in column
-    # games = SHEET.worksheet("games").col_values(2)
-    # cell = games.find(game) #Find a cell with exact string value
-    # print("Text found at R%sC%s" % (cell.row, cell.col))
-
-
-
-
-
-        
 
 def get_game_id():
     data_list = SHEET.worksheet("games").col_values(1)
@@ -178,11 +171,10 @@ def get_customer_id():
     print(f"customer id is {id}")
     get_game_id()
 
-# get_customer_id()
 
 def get_sale_info():
-    global customer
-    global game
+    # global customer
+    # global game
     fname = input("Please enter the customer First Name:\n")
     lname = input("Please enter the customer Last Name:\n")
     game = input("Please enter the game title:\n")
@@ -191,7 +183,6 @@ def get_sale_info():
     # ask for confirmation
     get_customer_id()
 
-# get_sale_info()
 
 
 def add_game():
@@ -340,4 +331,4 @@ def print_stock():
     pprint(stock)
 
 
-make_choice()
+# make_choice()
