@@ -53,24 +53,26 @@ def make_choice():
 
 
 
-def calculate_return_date():
+
+
+def update_rental_worksheet(fname, lname, game, platform, format_date):
+    rental_data = [fname, lname, game, platform, format_date]
+    print(f"from 75, rental_data is {rental_data}")
+    worksheet_to_update = SHEET.worksheet("rentals")
+    worksheet_to_update.append_row(fname, lname, game, platform, format_date)
+
+
+def calculate_return_date(fname, lname, game, platform):
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
     format_date = return_date.strftime("%d-%m-%Y")
-    print(format_date)
+    # print(format_date)
+    # ADD UPDATE_RENTAL_SHEET
+    update_rental_worksheet(fname, lname, game, platform, format_date)
 
 
-update_rental_worksheet (rental_data list)
 
-
-calculate_return_date()
-
-def update_rental_worksheet(fname, lname, game_data):
-    worksheet_to_update = SHEET.worksheet("rentals")
-    game = game_data[2]
-    rental_data = [fname, lname, game]
-    worksheet_to_update.append_row(rental_data)
-    calculate_return_date()
+    
 
 
     # id = create_id(worksheet)
@@ -127,20 +129,29 @@ def check_customer_data(fname, lname):
 def check_stock(fname, lname, game, platform):
     worksheet_stock = SHEET.worksheet("games").col_values(2)
     game_index = worksheet_stock.index(game) + 1
-    game_data = SHEET.worksheet("games").row_values(game_index)
-    stock = game_data[5]
+    worksheet_game_data = SHEET.worksheet("games").row_values(game_index)
+    stock = worksheet_game_data[5]
     # print(stock)
-    check_platform(fname, lname, game_data, platform)
+    print("check_stock finished, 137")
 
-def check_platform(fname, lname, game_data, platform):
+    check_platform(fname, lname, game, platform, worksheet_game_data)
+
+
+
+
+def check_platform(fname, lname, game, platform, worksheet_game_data):
     # print(game_data)
-    worksheet_platform = game_data[2]
+    worksheet_platform = worksheet_game_data[2]
     if worksheet_platform == platform:
         print("PLATFORM IS GOOD")
-        update_rental_worksheet(fname, lname, game_data)
+        calculate_return_date(fname, lname, game, platform)
+        # update_rental_worksheet(fname, lname, game_data)
+        print("check_platform finished, 151")
     else:
         print("wrong platform")
     # print(platform)
+        print("check_platform finished, 156")
+
 
 
 
@@ -155,14 +166,16 @@ def is_game_in_sheet(fname, lname, game, platform):
         game_index = worksheet_games.index(game)
     except:
         print("game is not in list")
+    print("is_game_in_sheet finished, 166")
     check_stock(fname, lname, game, platform)
 
 
-def get_game_id():
-    data_list = SHEET.worksheet("games").col_values(1)
-    id = data_list[-1]
-    print(f"game id is {id}")
-    update_rental_worksheet()
+# IS THIS BEING USED???
+# def get_game_id():
+#     data_list = SHEET.worksheet("games").col_values(1)
+#     id = data_list[-1]
+#     print(f"game id is {id}")
+#     update_rental_worksheet()
 
 
 def get_customer_id():
@@ -331,4 +344,4 @@ def print_stock():
     pprint(stock)
 
 
-# make_choice()
+make_choice()
