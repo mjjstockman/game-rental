@@ -39,17 +39,7 @@ GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open("game_rental")
 
 
-# PUT CUST INFO IN RENTAL
-# LIBRARY TO PRINT TABLES
-
-
 def make_choice():
-    # """
-    # Get choice of action input from user.
-    # Run a while loop to collect valid data from the user via the terminal,
-    # which must be an integer between 1 and 5. 
-    # The loop will repeatedly request data, until it is valid.
-    # """
     """Get choice of action as an input from user
     """
     while True:
@@ -70,7 +60,6 @@ def make_choice():
                 input_sale_data()
             break
 
-# update_rental_worksheet(fname, lname, game, platform, format_date)
 
 def update_rental_worksheet(fname, lname, game, platform, format_date):
     """Updates the rentals worksheet
@@ -88,7 +77,6 @@ def update_rental_worksheet(fname, lname, game, platform, format_date):
         ADD FOMAT_DATE
     """
     rental_data = [fname, lname, game, platform, format_date]
-    # print(f"from 75, rental_data is {rental_data}")
     worksheet_to_update = SHEET.worksheet("rentals")
     # WHY BELOW NOT WORKING????????????????????
     worksheet_to_update.append_row(fname, lname, game, platform, format_date)
@@ -107,7 +95,6 @@ def calculate_return_date(fname, lname, game, platform):
         platform (str) : The platform (console type) the customer is trying 
             to rent
     """
-    # print("from 110 calculate_return_date called")
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
     format_date = return_date.strftime("%d-%m-%Y")
@@ -243,22 +230,13 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
         platform (str) : The platform (console type) the customer is trying 
             to rent
     """
-    # print(game_data)
     worksheet_platform = worksheet_game_data[1]
     if worksheet_platform == platform:
-        # print("PLATFORM IS GOOD")
-        calculate_return_date(fname, lname, game, platform)
-        # update_rental_worksheet(fname, lname, game_data)
-        # print("check_platform finished, 151")
-        
+        calculate_return_date(fname, lname, game, platform)        
     else:
         print("wrong platform")
     print(fname, lname, gam,e)
-    # print(platform)
-        # print("check_platform finished, 156")
-    # print(worksheet_platform)
-
-
+  
 
 
 # PASS BOTH FNAME, LNAME, GAME AS ARGUMENTS??
@@ -310,7 +288,6 @@ def get_sale_info():
     # global customer
     # global game
     fname = input("Please enter the customer First Name: \n")
-    # print("\n")
     lname = input("Please enter the customer Last Name:\n")
     game = input("Please enter the game title:\n")
     print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n"
@@ -384,7 +361,7 @@ def add_customer():
     """Gets user input for first name, last name, date of birth, display inputed data, ask for confirmation
     """
     while True:
-        fname = input("\nAdd first name")
+        fname = input("\nAdd first name:")
         lname = input("\nAdd last name")
         dob = input("\nAdd date of birth")
 
@@ -399,7 +376,6 @@ def add_customer():
             if confirm == "N" or confirm == "n":
                 validate_add_customer(new_customer_info)
             elif confirm == "Y" or confirm == "y":
-                # print("Please renter the correct details")
                 update_worksheet(new_customer_info, "customers")
                 break    
 
@@ -474,4 +450,3 @@ def print_stock():
 
 
 make_choice()
-# print_stock()
