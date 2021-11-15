@@ -321,30 +321,8 @@ def get_sale_info():
 
 
 def add_game():
+    """Adds new game data to games worksheet if data is verified
     """
-    Get game information input from user.
-    Run a while loop to collect valid data from the user via the terminal.
-    The loop will repeatedly request data, until it is valid.
-    """
-
-
-    """Description of what it does
-
-Args:
-    arg_name (data type) : Description of arg_name
-        indent next line of description if need to
-
-Returns:
-    data_type : Optional description of return value
-    Extra lines are not indented
-
-Raises:
-    TypeOfError : Include error types intentianally
-        raised
-
-Notes:
-    See ......... for more info
-"""
     while True:
         title = input("Add game title\n")
         platform = input("Add platform\n")
@@ -369,12 +347,10 @@ Notes:
             
 
 def validate_add_game(new_game_info):
-    """
-    Check that all fields have been entered.
-    Inside the try, convert min_age and quantity to an integer.
-    If they cannot be converted (ie, contains letter/s) print error message
-    and continue to run add_game() 
-    
+    """Checks all data has been entered and is valid
+
+    Returns:
+        bool : True if data validates, False if not
     """
     if not all(new_game_info):
         print("Missing element, please try again")
@@ -403,8 +379,12 @@ def validate_add_game(new_game_info):
         return True
 
 
+# SPLIT INTO SEPERATE FUNCTIONS TO GET INFO AND THEN VALIDATE
 def add_customer():
+    """Gets user input for first name, last name, date of birth, display inputed data, ask for confirmation
+    """
     while True:
+
         fname = input("Add first name\n")
         lname = input("Add last name\n")
         dob = input("Add date of birth\n")
@@ -426,14 +406,12 @@ def add_customer():
 
 
 def validate_add_customer(new_customer_info):
-    """
-    Check that all fields have been entered.
-    Inside the try, convert min_age and quantity to an integer.
-    If they cannot be converted (ie, contains letter/s) print error message
-    and continue to run add_game() 
-    
-    """
+    """Checks all data has been entered and is valid
 
+    Returns:
+        bool : True if data validates, False if not
+
+    """
     while True:
         if not all(new_customer_info):
             print("Missing element, please try again")
@@ -448,41 +426,53 @@ def validate_add_customer(new_customer_info):
         return True
 
 
-def create_id(worksheet):
-    """
-    Create id for column 1 in worksheet.
-    EXPLAIN THE LOGIC???
-    """
-    worksheet_to_update = SHEET.worksheet(worksheet)
-    get_id_list = worksheet_to_update.col_values(1)
-    if get_id_list == ["id"]:
-        new_id = 1
-    else:
-        last_id = get_id_list[-1]
-        new_id = int(last_id) + 1
-    return new_id
+# NOT USED, NEED????????????????????
+# def create_id(worksheet):
+#     """
+#     Create id for column 1 in worksheet.
+#     EXPLAIN THE LOGIC???
+#     """
+#     worksheet_to_update = SHEET.worksheet(worksheet)
+#     get_id_list = worksheet_to_update.col_values(1)
+#     if get_id_list == ["id"]:
+#         new_id = 1
+#     else:
+#         last_id = get_id_list[-1]
+#         new_id = int(last_id) + 1
+#     return new_id
 
 
 
 def update_worksheet(data, worksheet):
+    """Updates a worksheet
+
+    Args:
+        data (list) : The data to input into the worksheet
+
+        worksheet (str) : Name of the worksheet to update
+
+    Returns:
+        data_type : Optional description of return value
+        Extra lines are not indented
+    """
     if worksheet == "games":
         data[3] = int(data[3])
         data[4] = int(data[4])
     print(f"Updating {worksheet} worksheet...")
     worksheet_to_update = SHEET.worksheet(worksheet)
-    id = create_id(worksheet)
-    data.insert(0, id)
+    # id = create_id(worksheet)
+    # data.insert(0, id)
     worksheet_to_update.append_row(data)
     print(f"{worksheet} updated successfully.\n")
 
 
 
 def print_stock():
-    """
-    Pretty print the games worksheet to the terminal
+    """Pretty print the games worksheet to the terminal
     """
     stock = SHEET.worksheet("games").get_all_values()
     pprint(stock)
 
 
 make_choice()
+# print_stock()
