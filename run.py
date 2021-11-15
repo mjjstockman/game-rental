@@ -32,6 +32,26 @@ def make_choice():
     which must be an integer between 1 and 5. 
     The loop will repeatedly request data, until it is valid.
     """
+
+    """Description of what it does
+
+    Args:
+        arg_name (data type) : Description of arg_name
+            indent next line of description if need to
+
+    Returns:
+        data_type : Optional description of return value
+        Extra lines are not indented
+
+    Raises:
+        TypeOfError : Include error types intentianally
+            raised
+
+    Notes:
+        See ......... for more info
+    """
+
+ 
     while True:
         print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
              "3) Check stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
@@ -66,9 +86,10 @@ def calculate_return_date(fname, lname, game, platform):
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
     format_date = return_date.strftime("%d-%m-%Y")
+    update_rental_worksheet(fname, lname, game, platform, format_date)
     # print(format_date)
     # ADD UPDATE_RENTAL_SHEET
-    update_rental_worksheet(fname, lname, game, platform, format_date)
+    # update_rental_worksheet(fname, lname, game, platform, format_date)
 
 
 
@@ -147,6 +168,7 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
         calculate_return_date(fname, lname, game, platform)
         # update_rental_worksheet(fname, lname, game_data)
         print("check_platform finished, 151")
+        
     else:
         print("wrong platform")
     # print(platform)
