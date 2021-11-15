@@ -1,20 +1,20 @@
- """Description of what it does
+"""Description of what it does
 
-    Args:
-        arg_name (data type) : Description of arg_name
-            indent next line of description if need to
+Args:
+    arg_name (data type) : Description of arg_name
+        indent next line of description if need to
 
-    Returns:
-        data_type : Optional description of return value
-        Extra lines are not indented
+Returns:
+    data_type : Optional description of return value
+    Extra lines are not indented
 
-    Raises:
-        TypeOfError : Include error types intentianally
-            raised
+Raises:
+    TypeOfError : Include error types intentianally
+        raised
 
-    Notes:
-        See ......... for more info
-    """
+Notes:
+    See ......... for more info
+"""
 
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
@@ -73,7 +73,7 @@ def make_choice():
 
 
 def update_rental_worksheet(fname, lname, game, platform, format_date):
-      """Updates the rentals worksheet
+    """Updates the rentals worksheet
 
     Args:
         fname (str) : Customers first name
@@ -90,10 +90,23 @@ def update_rental_worksheet(fname, lname, game, platform, format_date):
     rental_data = [fname, lname, game, platform, format_date]
     print(f"from 75, rental_data is {rental_data}")
     worksheet_to_update = SHEET.worksheet("rentals")
-    worksheet_to_update.append_row(fname, lname, game, platform, format_date)
+    # WHY BELOW NOT WORKING????????????????????
+    # worksheet_to_update.append_row(fname, lname, game, platform, format_date)
 
 
 def calculate_return_date(fname, lname, game, platform):
+    """Adds three days to todays date
+
+    Args:
+        fname (str) : Customers first name
+
+        lname (str) : Customers last name
+
+        game (str) : The game the customer is trying to rent
+
+        platform (str) : The platform (console type) the customer is trying 
+            to rent
+    """
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
     format_date = return_date.strftime("%d-%m-%Y")
@@ -101,12 +114,6 @@ def calculate_return_date(fname, lname, game, platform):
     # print(format_date)
     # ADD UPDATE_RENTAL_SHEET
     # update_rental_worksheet(fname, lname, game, platform, format_date)
-
-
-
-    
-
-
     # id = create_id(worksheet)
 
 
@@ -116,6 +123,20 @@ def validate_chosen_action(chosen_action):
     Inside the try, convert user input to an integer.
     Raises ValueError if input cannot be converted (ie, contains letter/s) 
     or if is not an integer between 1 and 5
+
+
+    """
+    """Checks chosen_action input was an integer between 1 and 5
+
+    Args:
+        chosen_action (int) : The input the user entered when choosing 
+            an action
+
+    Raises:
+        ValueError : If chosen_action is not a full number between 1 and 5
+
+    Notes:
+        Converts chosen_Action to a string before testing for inclusion
     """
     try:
         # USE A SET
@@ -132,7 +153,18 @@ def validate_chosen_action(chosen_action):
     
 
 def input_sale_data():
-    # HAVE BELOW AS GLOBAL OR PASS BETWEEN FUNCTIONS??
+    """Asks user for customers first name, last name, game title and
+      its platform (INDENT????????????????????????????????)
+
+    Args:
+        arg_name (data type) : Description of arg_name
+            indent next line of description if need to
+
+    Returns:
+        SHOULD THE PRINT RETURN BE HERE, OR JUST EXPLICIT RETURNS??????????????????????????
+
+    """
+    # HAVE BELOW AS GLOBAL OR PASS BETWEEN FUNCTIONS??????????????????????????
     # global customer
     # global game
     # global platform
@@ -147,10 +179,30 @@ def input_sale_data():
     is_game_in_sheet(fname, lname, game, platform)
 
 
+# NOT BEING CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 def check_customer_data(fname, lname):
     """
     only checking fname
     """
+
+    """Description of what it does
+
+    Args:
+        arg_name (data type) : Description of arg_name
+        i   ndent next line of description if need to
+
+    Returns:
+        data_type : Optional description of return value
+        Extra lines are not indented
+
+    Raises:
+        TypeOfError : Include error types intentianally
+            raised
+
+    Notes:
+        See ......... for more info
+    """
+    print("CHECKING CUST FROM 181")
     worksheet_fname = SHEET.worksheet("customers").col_values(2)
     pprint(worksheet_fname)
     if fname in worksheet_fname:
@@ -158,20 +210,42 @@ def check_customer_data(fname, lname):
     else:
         print("first name not in sheet")
 
+
 def check_stock(fname, lname, game, platform):
+    """Checks the game to be rented is in stock
+
+    Args:
+        fname (str) : Customers first name
+
+        lname (str) : Customers last name
+
+        game (str) : The game the customer is trying to rent
+
+        platform (str) : The platform (console type) the customer is trying 
+            to rent
+    """
     worksheet_stock = SHEET.worksheet("games").col_values(2)
     game_index = worksheet_stock.index(game) + 1
     worksheet_game_data = SHEET.worksheet("games").row_values(game_index)
     stock = worksheet_game_data[5]
-    # print(stock)
-    print("check_stock finished, 137")
-
     check_platform(fname, lname, game, platform, worksheet_game_data)
 
 
 
 
 def check_platform(fname, lname, game, platform, worksheet_game_data):
+    """Description of what it does
+
+    Args:
+        fname (str) : Customers first name
+
+        lname (str) : Customers last name
+
+        game (str) : The game the customer is trying to rent
+
+        platform (str) : The platform (console type) the customer is trying 
+            to rent
+    """
     # print(game_data)
     worksheet_platform = worksheet_game_data[2]
     if worksheet_platform == platform:
@@ -191,7 +265,20 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
 # PASS BOTH FNAME, LNAME, GAME AS ARGUMENTS??
 def is_game_in_sheet(fname, lname, game, platform):
     """
-    Get stock of entered game
+    See if the game to be rented is in the games worksheet
+    """
+
+    """See if the game to be rented is in the games worksheet
+
+    Args:
+        fname (str) : Customers first name
+
+        lname (str) : Customers last name
+
+        game (str) : The game the customer is trying to rent
+
+        platform (str) : The platform (console type) the customer is trying 
+            to rent
     """
     worksheet_games = SHEET.worksheet("games").col_values(2)
     pprint(worksheet_games)
@@ -211,13 +298,15 @@ def is_game_in_sheet(fname, lname, game, platform):
 #     update_rental_worksheet()
 
 
-def get_customer_id():
-    data_list = SHEET.worksheet("customers").col_values(1)
-    id = data_list[-1]
-    print(f"customer id is {id}")
-    get_game_id()
+# NOT BEING USED, NEED ID_NuMBERS???????????????????????????????
+# def get_customer_id():
+#     data_list = SHEET.worksheet("customers").col_values(1)
+#     id = data_list[-1]
+#     print(f"customer id is {id}")
+#     get_game_id()
 
 
+# NOT BEING USED, NEED?????????????????????????
 def get_sale_info():
     # global customer
     # global game
@@ -237,6 +326,25 @@ def add_game():
     Run a while loop to collect valid data from the user via the terminal.
     The loop will repeatedly request data, until it is valid.
     """
+
+
+    """Description of what it does
+
+Args:
+    arg_name (data type) : Description of arg_name
+        indent next line of description if need to
+
+Returns:
+    data_type : Optional description of return value
+    Extra lines are not indented
+
+Raises:
+    TypeOfError : Include error types intentianally
+        raised
+
+Notes:
+    See ......... for more info
+"""
     while True:
         title = input("Add game title\n")
         platform = input("Add platform\n")
