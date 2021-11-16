@@ -79,7 +79,8 @@ def update_rental_worksheet(fname, lname, game, platform, format_date):
     rental_data = [fname, lname, game, platform, format_date]
     worksheet_to_update = SHEET.worksheet("rentals")
     # WHY BELOW NOT WORKING????????????????????
-    worksheet_to_update.append_row(fname, lname, game, platform, format_date)
+    print(rental_data)
+    worksheet_to_update.append_row(rental_data)
 
 
 def calculate_return_date(fname, lname, game, platform):
@@ -235,7 +236,7 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
         calculate_return_date(fname, lname, game, platform)        
     else:
         print("wrong platform")
-    print(fname, lname, gam,e)
+    # print(fname, lname, game)
   
 
 
