@@ -301,11 +301,11 @@ def add_game():
     """Adds new game data to games worksheet if data is verified
     """
     while True:
-        title = input("Add game title\n")
-        platform = input("Add platform\n")
-        genre = input("Add genre\n")
-        min_age = input("Add minimum age\n")
-        quantity = input("Add how many\n")
+        title = input("\nAdd game title:\n")
+        platform = input("\nAdd platform:\n")
+        genre = input("\nAdd genre:\n")
+        min_age = input("\nAdd minimum age:\n")
+        quantity = input("\nAdd how many:\n")
 
         new_game_info = [title, platform, genre, min_age, quantity]
 
