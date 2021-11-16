@@ -127,7 +127,7 @@ def validate_chosen_action(chosen_action):
     try:
         # USE A SET
         # if int(chosen_action) not in set[(1, 2, 3, 4, 5)]:
-        if int(chosen_action) not in (1, 2, 3, 4, 5):
+        if int(chosen_action) not in {1, 2, 3, 4, 5}:
             raise ValueError(
                 "Must be a whole num between 1 and 5"
             )
