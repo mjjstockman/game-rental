@@ -163,38 +163,6 @@ def input_sale_data():
     is_game_in_sheet(fname, lname, game, platform)
 
 
-# NOT BEING CALLED!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-def check_customer_data(fname, lname):
-    """
-    only checking fname
-    """
-
-    """Description of what it does
-
-    Args:
-        arg_name (data type) : Description of arg_name
-        i   ndent next line of description if need to
-
-    Returns:
-        data_type : Optional description of return value
-        Extra lines are not indented
-
-    Raises:
-        TypeOfError : Include error types intentianally
-            raised
-
-    Notes:
-        See ......... for more info
-    """
-    print("CHECKING CUST FROM 181")
-    worksheet_fname = SHEET.worksheet("customers").col_values(2)
-    pprint(worksheet_fname)
-    if fname in worksheet_fname:
-        print("first name IS IN SHEET!!!")
-    else:
-        print("first name not in sheet")
-
-
 def check_stock(fname, lname, game, platform):
     """Checks the game to be rented is in stock
 
@@ -212,7 +180,12 @@ def check_stock(fname, lname, game, platform):
     game_index = worksheet_stock.index(game) + 1
     worksheet_game_data = SHEET.worksheet("games").row_values(game_index)
     stock = worksheet_game_data[4]
-    check_platform(fname, lname, game, platform, worksheet_game_data)
+    stock_int = int(stock)
+    if stock_int <= 0:
+        print("from 184, game not in stock")
+    else:
+        print("from 188, GAME IS IN STOCK")
+ 
 
 
 def check_customer_lname(fname, lname, game, platform, worksheet_game_data, fname_index):
@@ -257,7 +230,6 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
   
 
 
-# PASS BOTH FNAME, LNAME, GAME AS ARGUMENTS??
 def is_game_in_sheet(fname, lname, game, platform):
     """
     See if the game to be rented is in the games worksheet
@@ -300,20 +272,6 @@ def is_game_in_sheet(fname, lname, game, platform):
 #     get_game_id()
 
 
-# NOT BEING USED, NEED?????????????????????????
-# def get_sale_info():
-#     # global customer
-#     # global game
-#     fname = input("Please enter the customer First Name: \n")
-#     lname = input("Please enter the customer Last Name:\n")
-#     game = input("Please enter the game title:\n")
-#     print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n"
-#         f"Game: {game}")
-#     # ask for confirmation
-#     get_customer_id()
-
-
-
 def add_game():
     """Adds new game data to games worksheet if data is verified
     """
@@ -341,37 +299,6 @@ def add_game():
                 update_worksheet(new_game_info, "games")
                 break
           
-
-            # print(confirm_strip_lcase)
-         
-            # if confirm_strip.lower == "y":
-            #     print("Y WAS ENTERED")
-            #     break
-
-
-
-            # if confirm.strip().lower == "n":
-            #     # validate_add_game(new_game_info)
-            #     print("from 339 confirm says no")
-            # elif confirm.strip().lower == "y":
-            #     print("from 339 confirm says YES!!!!")
-            # else:
-            #     print("neither")
-
-
-
-
-
-            # print(f"from 337, confirmation is {confirm}")
-            # print(f"from 338, confirmation_strip is {confirm_strip}")
-
-            # break
-            # if confirm.strip().lower == "n":
-            #     validate_add_game(new_game_info)
-            # elif confirm.strip().lower == "y":
-            #     update_worksheet(new_game_info, "games")
-            #     break
-            
 
 def validate_add_game(new_game_info):
     """Checks all data has been entered and is valid
@@ -423,6 +350,7 @@ def add_customer():
                   f"Last Name: {lname}\n "
                   f"Date of Birth: {dob}\n")
             print("Is this correct?\n")
+            # ADD FUNCTION FOR THIS AND VALIDATE_ADD_GAME, DRY
             confirm = input("Enter Y for yes, N for No:\n")
             confirm_strip_lcase = confirm.strip().lower()
             if confirm_strip_lcase == "n":
