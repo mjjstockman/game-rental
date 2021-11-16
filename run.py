@@ -74,12 +74,14 @@ def update_rental_worksheet(fname, lname, game, platform, format_date):
         platform (str) : The platform (console type) the customer is trying 
             to rent
 
-        format_date (datetime.datetime) : The date the rental is due back,
+        format_date (datetime) : The date the rental is due back,
             formatted to DD/MM/YYYY
     """
+    print("Updating rentals worksheet...")
     rental_data = [fname, lname, game, platform, format_date]
     worksheet_to_update = SHEET.worksheet("rentals")
     worksheet_to_update.append_row(rental_data)
+    print("Worksheet updated successfully")
 
 
 def calculate_return_date(fname, lname, game, platform):
@@ -215,32 +217,25 @@ def check_stock(fname, lname, game, platform):
     check_platform(fname, lname, game, platform, worksheet_game_data)
 
 
-# def check_customer_lname(fname, lname, game, platform, worksheet_game_data):
-#     worksheet_lnames = SHEET.worksheet("customers").col_values(2)
-#     if fname not in worksheet_fnames:
-#         print("No record of customers First Name")
-#     else:
-#         fname
-#         check_customer_lname(fname, lname, game, platform, worksheet_game_data)
-
+def check_customer_lname(fname, lname, game, platform, worksheet_game_data, fname_index):
+    worksheet_lnames = SHEET.worksheet("customers").col_values(2)
+    customer_lname = worksheet_lnames[fname_index]
+    if customer_lname == lname:
+        print("names match")
+        calculate_return_date(fname, lname, game, platform)
+    else:
+        print("wrong last name")
+   
 
 def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
     worksheet_fnames = SHEET.worksheet("customers").col_values(1)
     if fname not in worksheet_fnames:
         print("No record of customers First Name")
     else:
-        fname_index = worksheet_fnames.index(fname) + 1
+        fname_index = worksheet_fnames.index(fname)
         print(fname_index)
-        # check_customer_lname(fname, lname, game, platform, worksheet_game_data)
+        check_customer_lname(fname, lname, game, platform, worksheet_game_data, fname_index)
 
-  
-
-
-
-
-
-
-    # calculate_return_date(fname, lname, game, platform) 
 
 
 def check_platform(fname, lname, game, platform, worksheet_game_data):
@@ -259,10 +254,8 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
     worksheet_platform = worksheet_game_data[1]
     if worksheet_platform == platform:
         check_customer_fname(fname, lname, game, platform, worksheet_game_data)
-        # calculate_return_date(fname, lname, game, platform)        
     else:
         print("wrong platform")
-    # print(fname, lname, game)
   
 
 
@@ -292,13 +285,6 @@ def is_game_in_sheet(fname, lname, game, platform):
     else:
         print("game is not in sheet")
         
-    # try:
-    #     game_index = worksheet_games.index(game)
-    #     # check_stock(fname, lname, game, platform)
-    # except:
-    #     print("game is not in list")
-    # # check_stock(fname, lname, game, platform)
-
 
 # IS THIS BEING USED???
 # def get_game_id():
@@ -317,16 +303,16 @@ def is_game_in_sheet(fname, lname, game, platform):
 
 
 # NOT BEING USED, NEED?????????????????????????
-def get_sale_info():
-    # global customer
-    # global game
-    fname = input("Please enter the customer First Name: \n")
-    lname = input("Please enter the customer Last Name:\n")
-    game = input("Please enter the game title:\n")
-    print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n"
-        f"Game: {game}")
-    # ask for confirmation
-    get_customer_id()
+# def get_sale_info():
+#     # global customer
+#     # global game
+#     fname = input("Please enter the customer First Name: \n")
+#     lname = input("Please enter the customer Last Name:\n")
+#     game = input("Please enter the game title:\n")
+#     print(f"You entered:\n First Name: {fname} \n Last Name: {lname} \n"
+#         f"Game: {game}")
+#     # ask for confirmation
+#     get_customer_id()
 
 
 
