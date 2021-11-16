@@ -48,7 +48,7 @@ def make_choice():
         chosen_action = input("Please select from above by entering the "
                               "corresponding number and pressing Enter:\n")
     
-        # HOW TIDT UP, BRIAN??
+        # HOW TIDY UP, BRIAN??
         if validate_chosen_action(chosen_action):
             if int(chosen_action) == 5:
                 add_game()
@@ -74,12 +74,11 @@ def update_rental_worksheet(fname, lname, game, platform, format_date):
         platform (str) : The platform (console type) the customer is trying 
             to rent
 
-        ADD FOMAT_DATE
+        format_date (datetime.datetime) : The date the rental is due back,
+            formatted to DD/MM/YYYY
     """
     rental_data = [fname, lname, game, platform, format_date]
     worksheet_to_update = SHEET.worksheet("rentals")
-    # WHY BELOW NOT WORKING????????????????????
-    print(rental_data)
     worksheet_to_update.append_row(rental_data)
 
 
@@ -216,6 +215,32 @@ def check_stock(fname, lname, game, platform):
     check_platform(fname, lname, game, platform, worksheet_game_data)
 
 
+# def check_customer_lname(fname, lname, game, platform, worksheet_game_data):
+#     worksheet_lnames = SHEET.worksheet("customers").col_values(2)
+#     if fname not in worksheet_fnames:
+#         print("No record of customers First Name")
+#     else:
+#         fname
+#         check_customer_lname(fname, lname, game, platform, worksheet_game_data)
+
+
+def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
+    worksheet_fnames = SHEET.worksheet("customers").col_values(1)
+    if fname not in worksheet_fnames:
+        print("No record of customers First Name")
+    else:
+        fname_index = worksheet_fnames.index(fname) + 1
+        print(fname_index)
+        # check_customer_lname(fname, lname, game, platform, worksheet_game_data)
+
+  
+
+
+
+
+
+
+    # calculate_return_date(fname, lname, game, platform) 
 
 
 def check_platform(fname, lname, game, platform, worksheet_game_data):
@@ -233,7 +258,8 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
     """
     worksheet_platform = worksheet_game_data[1]
     if worksheet_platform == platform:
-        calculate_return_date(fname, lname, game, platform)        
+        check_customer_fname(fname, lname, game, platform, worksheet_game_data)
+        # calculate_return_date(fname, lname, game, platform)        
     else:
         print("wrong platform")
     # print(fname, lname, game)
@@ -260,12 +286,18 @@ def is_game_in_sheet(fname, lname, game, platform):
     """
     worksheet_games = SHEET.worksheet("games").col_values(1)
     pprint(worksheet_games)
-    try:
-        game_index = worksheet_games.index(game)
-    except:
-        print("game is not in list")
-    print("is_game_in_sheet finished, 166")
-    check_stock(fname, lname, game, platform)
+    if game in worksheet_games:
+        print("GAME IS IN SHEET!!!!")
+        check_stock(fname, lname, game, platform)
+    else:
+        print("game is not in sheet")
+        
+    # try:
+    #     game_index = worksheet_games.index(game)
+    #     # check_stock(fname, lname, game, platform)
+    # except:
+    #     print("game is not in list")
+    # # check_stock(fname, lname, game, platform)
 
 
 # IS THIS BEING USED???
