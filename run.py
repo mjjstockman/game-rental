@@ -333,11 +333,44 @@ def add_game():
                   f"How many: {quantity}\n")
             print("Is this correct?\n")
             confirm = input("Enter Y for yes, N for No\n")
-            if confirm == "N" or confirm == "n":
+            confirm_strip_lcase = confirm.strip().lower()
+            if confirm_strip_lcase == "n":
                 validate_add_game(new_game_info)
-            elif confirm == "Y" or confirm == "y":
+                print("from 339 confirm says no")
+            elif confirm_strip_lcase == "y":
                 update_worksheet(new_game_info, "games")
                 break
+          
+
+            # print(confirm_strip_lcase)
+         
+            # if confirm_strip.lower == "y":
+            #     print("Y WAS ENTERED")
+            #     break
+
+
+
+            # if confirm.strip().lower == "n":
+            #     # validate_add_game(new_game_info)
+            #     print("from 339 confirm says no")
+            # elif confirm.strip().lower == "y":
+            #     print("from 339 confirm says YES!!!!")
+            # else:
+            #     print("neither")
+
+
+
+
+
+            # print(f"from 337, confirmation is {confirm}")
+            # print(f"from 338, confirmation_strip is {confirm_strip}")
+
+            # break
+            # if confirm.strip().lower == "n":
+            #     validate_add_game(new_game_info)
+            # elif confirm.strip().lower == "y":
+            #     update_worksheet(new_game_info, "games")
+            #     break
             
 
 def validate_add_game(new_game_info):
