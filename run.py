@@ -447,6 +447,7 @@ def print_stock():
     """Pretty print the games worksheet to the terminal
     """
     stock = SHEET.worksheet("games").get_all_values()
+    print("\n")
     pprint(stock)
 
 
