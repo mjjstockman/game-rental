@@ -356,14 +356,15 @@ def validate_add_game(new_game_info):
         return True
 
 
-# SPLIT INTO SEPERATE FUNCTIONS TO GET INFO AND THEN VALIDATE
+
 def add_customer():
     """Gets user input for first name, last name, date of birth, display inputed data, ask for confirmation
     """
     while True:
-        fname = input("\nAdd first name:")
-        lname = input("\nAdd last name")
-        dob = input("\nAdd date of birth")
+        fname = input("\nAdd first name:\n")
+        lname = input("\nAdd last name:\n")
+        # give example of format
+        dob = input("\nAdd date of birth\n")
 
         new_customer_info = [fname, lname, dob]
 
@@ -372,7 +373,7 @@ def add_customer():
                   f"Last Name: {lname}\n "
                   f"Date of Birth: {dob}\n")
             print("Is this correct?\n")
-            confirm = input("Enter Y for yes, N for No")
+            confirm = input("Enter Y for yes, N for No:\n")
             if confirm == "N" or confirm == "n":
                 validate_add_customer(new_customer_info)
             elif confirm == "Y" or confirm == "y":
