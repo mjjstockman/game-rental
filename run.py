@@ -184,7 +184,7 @@ def check_stock(fname, lname, game, platform):
     if stock_int <= 0:
         print("from 184, game not in stock")
     else:
-        print("from 188, GAME IS IN STOCK")
+        check_platform(fname, lname, game, platform, worksheet_game_data)
  
 
 
