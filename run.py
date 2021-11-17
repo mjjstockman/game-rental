@@ -148,10 +148,6 @@ def input_sale_data():
         SHOULD THE PRINT RETURN BE HERE, OR JUST EXPLICIT RETURNS??????????????????????????
 
     """
-    # HAVE BELOW AS GLOBAL OR PASS BETWEEN FUNCTIONS??????????????????????????
-    # global customer
-    # global game
-    # global platform
     fname = input("\nPlease enter the customer First Name:\n")
     lname = input("\nPlease enter the customer Last Name:\n")
     game = input("\nPlease enter the game title:\n")
@@ -196,8 +192,6 @@ def check_customer_lname(fname, lname, game, platform, worksheet_game_data, fnam
     if customer_lname == lname:
         print("197 reached")
         calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_dob)
-    #     # need to find customer dob from customers worksheet
-    #     # calculate_return_date(fname, lname, game, platform)
     else:
         print("wrong last name")
    
@@ -205,7 +199,6 @@ def check_customer_lname(fname, lname, game, platform, worksheet_game_data, fnam
 def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
     worksheet_fnames = SHEET.worksheet("customers").col_values(1)
     print(worksheet_fnames)
-    # print fname
     if fname not in worksheet_fnames:
         print("No record of customers First Name")
     else:
@@ -246,11 +239,7 @@ def check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob
     else:
         print("SORRY TOO YOUNG!!!!!!")
 
-    # print(f"game age is {worksheet_game_data[3]}")
-    # print(age_in_years)
-
   
-
 def calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_dob):
     today = datetime.datetime.now().date()
     today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
@@ -258,97 +247,6 @@ def calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_
     dob_date = datetime.datetime.strptime(customer_dob, "%d/%m/%Y")
     check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob_date)
 
-    # print(today_date)
-    # print(dob_date)
-    # print(type(today_date))
-    # print(type(dob_date))
-
-    # today_datetime = datetime.datetime.strptime(today_string, "%d/%m/%Y")
-    # date_object = datetime.strptime(str, '%m/%d/%y')
-    # print(today_string)
-    # print(type(today_string))
-
-
-    # today_format = datetime.datetime.strftime(today, '%d/%m/%Y')
-    # today_datetime = datetime.datetime.strptime(today, '%d/%m/%Y').date()
-
-
-    # today_format = datetime.datetime.strptime(today, '%d/%m/%Y')
-    # today_datetime = datetime.datetime.strptime(today, '%d/%m/%Y')
-    # turn today_format back to datetime
-    # today_datetime = datetime.datetime.strptime(today_format, "%d/%m/%Y").date()
-    # print(today_datetime)
-    # print(type(today_datetime))
-# datetime.strptime(date_string, format)
-
-    # today_format = datetime.datetime.strftime(today, '%Y-%m-%d')
-
-    # print(type(today))
-    # print(today)
-    # today_format = datetime.datetime.strftime(today, "%d/%m/%Y")
-    # today_format = datetime.datetime.strftime(today, "%d/%m/%Y")
-
-    # today_format = datetime.strptime('2014-12-04', '%Y-%m-%d').date()
-
-    # today_datetime = 
-    # print(today_format)
-    # print(type(today_format))
-
-
-#     from datetime import datetime
-# >>> datetime.strptime('2014-12-04', '%Y-%m-%d').date()
-# datetime.date(2014, 12, 4)
-    # today_format = datetime.datetime.today().strptime(today_format, '%d/%m/%Y')
-    # today = datetime.datetime.now().date()
-    # today_mdy = today.strftime(today, '%Y-%m-%d')
-    # dob = datetime.datetime.strptime(dob, '%Y-%m-%d')
-    # today_datetime = today_format
-    # print(today_format)
-    # print(type(today_format))
-    # print("239 reached")
-    # dob = datetime.datetime.strptime(customer_dob, '%Y-%m-%d')
-    # print(f"from 237, fname_index is {fname_index}, fname is {fname}")
-    # print(f"from 239, dob is {customer_dob}")
-    # work out age from customer_dob
-    # today = date.today()
-    # today = datetime.datetime.now().date()
-    # today_format = today.strftime("%d/%m/%Y")
-    # print(f"today_format is {today_format}")
-    # print(type(today_format))
-    # dob = datetime.datetime.strptime(customer_dob, '%d-%m-%Y')
-    
-    # today = datetime.today().strftime('%d-%m-%Y')
-    # today_format = today
-    # datetime.strptime
-    # datetime.today().strftime('%Y-%m-%d')
-    # print(f"cust dob is {dob}")
-    # print(type(dob))
-    # print("255 reached")
-
-    # HOW WORK OUT AGE WITH STRINGS??
-    # NEED TO CONVER TO DATETIME???
-
-    # print(today)
-    # print(type(today))
-    # print(type(today))
-    # dob_date = datetime.datetime.strptime(customer_dob)
-    # print(type(dob_date))
-    # dob = datetime.datetime.strptime(dob, '%Y-%m-%d')
-    # return_date = today + datetime.timedelta(days=3)
-    # format_today = today.strftime("%d-%m-%Y")
-    # age = today.Y - customer_dob.Y
-    # print(age)
-
-    # def calculate_age(born):
-    # today = date.today()
-    # return today.year - born.year - ((today.month, today.day) < (born.month, born.day))
-    
-    
-    # connect to customer worksheet
-    # get 
-    # get index of customer
-    # get their row
-    # get dob
 
 def is_game_in_sheet(fname, lname, game, platform):
     """
@@ -368,7 +266,6 @@ def is_game_in_sheet(fname, lname, game, platform):
             to rent
     """
     worksheet_games = SHEET.worksheet("games").col_values(1)
-    # pprint(worksheet_games)
     if game in worksheet_games:
         print("GAME IS IN SHEET!!!!")
         check_stock(fname, lname, game, platform)
