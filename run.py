@@ -9,7 +9,7 @@ Returns:
     Extra lines are not indented
 
 Raises:
-    TypeOfError : Include error types intentianally
+    TypeOfError : Include error types intentianally 
         raised
 
 Notes:
@@ -84,6 +84,12 @@ def update_rental_worksheet(fname, lname, game, platform, format_date):
     print("Worksheet updated successfully")
 
 
+def reduce_stock(fname, lname, game, platform, format_date):
+    # get game
+    # reduce stock
+
+
+
 def calculate_return_date(fname, lname, game, platform):
     """Adds three days to todays date
 
@@ -100,7 +106,8 @@ def calculate_return_date(fname, lname, game, platform):
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
     format_date = return_date.strftime("%d-%m-%Y")
-    update_rental_worksheet(fname, lname, game, platform, format_date)
+    reduce_stock(fname, lname, game, platform, format_date)
+    
 
 
 # MOVE INTO MAKE_CHOICE, 
