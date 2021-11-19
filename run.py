@@ -84,13 +84,18 @@ def update_rental_worksheet(fname, lname, game, platform, format_date):
     print("Worksheet updated successfully")
 
 
-def reduce_stock(fname, lname, game, platform, format_date):
-    # get game
-    # reduce stock
+def reduce_stock(fname, lname, game, platform, worksheet_game_data, format_date):
+    current_stock = worksheet_game_data[4]
+    updated_stock = int(current_stock) - 1
+    worksheet_to_update = SHEET.worksheet("games")
+    cell = worksheet_to_update.find(worksheet_game_data[0])
+    worksheet_to_update.update(f"E{cell.row}", updated_stock)
+    update_rental_worksheet(fname, lname, game, platform, format_date)
 
 
 
-def calculate_return_date(fname, lname, game, platform):
+
+def calculate_return_date(fname, lname, game, platform, worksheet_game_data):
     """Adds three days to todays date
 
     Args:
@@ -106,7 +111,7 @@ def calculate_return_date(fname, lname, game, platform):
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
     format_date = return_date.strftime("%d-%m-%Y")
-    reduce_stock(fname, lname, game, platform, format_date)
+    reduce_stock(fname, lname, game, platform, worksheet_game_data, format_date)
     
 
 
@@ -182,6 +187,7 @@ def check_stock(fname, lname, game, platform):
     worksheet_stock = SHEET.worksheet("games").col_values(1)
     game_index = worksheet_stock.index(game) + 1
     worksheet_game_data = SHEET.worksheet("games").row_values(game_index)
+    # print(f"from 185, worksheet_game_data is {worksheet_game_data}")
     stock = worksheet_game_data[4]
     stock_int = int(stock)
     if stock_int <= 0:
@@ -242,7 +248,7 @@ def check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob
     if today.month < dob_date.month or (today.month == dob_date.month and today.day < dob_date.day):
         age_in_years -= 1
     if age_in_years >= int(worksheet_game_data[3]):
-        calculate_return_date(fname, lname, game, platform)
+        calculate_return_date(fname, lname, game, platform, worksheet_game_data)
     else:
         print("SORRY TOO YOUNG!!!!!!")
 
