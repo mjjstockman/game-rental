@@ -2,7 +2,13 @@
 
 Args:
     arg_name (data type) : Description of arg_name
-        indent next line of description if need to
+
+
+Returns:
+    data_type : Optional description of return value
+    Extra lines are not indented
+
+
 
 Returns:
     data_type : Optional description of return value
@@ -200,7 +206,7 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
         print("wrong platform")
 
 
-def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
+def check_customer_fname(fname, lname, game, platform, *worksheet_game_data):
     worksheet_fnames = SHEET.worksheet("customers").col_values(1)
     print(worksheet_fnames)
     if fname not in worksheet_fnames:
@@ -235,12 +241,17 @@ def calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_
 def check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob_date):
     today = datetime.date.today()
     age_in_years = today.year - dob_date.year
-    if today.month < dob_date.month or (today.month == dob_date.month and today.day < dob_date.day):
-        age_in_years -= 1
-    if age_in_years >= int(worksheet_game_data[3]):
-        calculate_return_date(fname, lname, game, platform, worksheet_game_data)
-    else:
-        print("SORRY TOO YOUNG!!!!!!")
+    # int(worksheet_game_data)
+    # print(f"worksheet_game_data[3] is {worksheet_game_data[3]}")
+    # WHY WORKSHEET_DATA NOW A TUPLE????????????????????????????
+    print(f"worksheet_game_data is {type(worksheet_game_data)}")
+    print(worksheet_game_data[0][3])
+    # if today.month < dob_date.month or (today.month == dob_date.month and today.day < dob_date.day):
+    #     age_in_years -= 1
+    # if age_in_years >= int(worksheet_game_data[3]):
+    #     calculate_return_date(fname, lname, game, platform, worksheet_game_data)
+    # else:
+    #     print("SORRY TOO YOUNG!!!!!!")
 
 
 def calculate_return_date(fname, lname, game, platform, worksheet_game_data):
@@ -318,8 +329,42 @@ def update_worksheet(data, worksheet):
 
 
 def return_sale(fname, lname, game, platform):
-    pass
-    
+    rentals_worksheet = SHEET.worksheet("rentals")
+    # worksheet_games = SHEET.worksheet("games").col_values(1)
+    rentals_games = rentals_worksheet.col_values(3)
+    game_index = rentals_games.index(game) + 1
+    print(game_index)
+    worksheet_rental_data = rentals_worksheet.row_values(game_index)
+    print(worksheet_rental_data)
+    if worksheet_rental_data[0] == fname and worksheet_rental_data[1] == lname and worksheet_rental_data[2] == game and worksheet_rental_data[3] == platform:
+        # print("rental info is all in sheet!!!!!")
+        rentals_worksheet.delete_rows(game_index)
+        add_to_stock(game, platform)
+    else:
+        print("NOT IN SHEET")
+        # rentals_worksheet.delete_rows(game_index)
+        # add_to_stock(game, platform)
+
+
+    # rentals_worksheet = SHEET.worksheet("rentals")
+    # # worksheet_games = SHEET.worksheet("games").col_values(1)
+    # rentals_games = rentals_worksheet.col_values(3)
+    # game_index = rentals_games.index(game) + 1
+    # print(game_index) 
+
+def add_to_stock(game, platform):
+    games_worksheet = SHEET.worksheet("games")
+    games_titles = games_worksheet.col_values(1)
+    game_index = games_titles.index(game) + 1
+    worksheet_game_data = games_worksheet.row_values(game_index)
+    if worksheet_game_data[0] == game and worksheet_game_data[1] == platform:
+        int_stock = int(worksheet_game_data[4])
+        new_stock = int_stock + 1
+        games_worksheet.update_cell(game_index, 5, new_stock)
+    else:
+        print("Incorrect values")
+
+
 
 
 def print_stock():
