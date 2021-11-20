@@ -244,8 +244,10 @@ def check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob
     # int(worksheet_game_data)
     # print(f"worksheet_game_data[3] is {worksheet_game_data[3]}")
     # WHY WORKSHEET_DATA NOW A TUPLE????????????????????????????
-    print(f"worksheet_game_data is {type(worksheet_game_data)}")
+    # print(f"worksheet_game_data is {type(worksheet_game_data)}")
+   
     print(worksheet_game_data[0][3])
+    
     # if today.month < dob_date.month or (today.month == dob_date.month and today.day < dob_date.day):
     #     age_in_years -= 1
     # if age_in_years >= int(worksheet_game_data[3]):
@@ -330,27 +332,18 @@ def update_worksheet(data, worksheet):
 
 def return_sale(fname, lname, game, platform):
     rentals_worksheet = SHEET.worksheet("rentals")
-    # worksheet_games = SHEET.worksheet("games").col_values(1)
     rentals_games = rentals_worksheet.col_values(3)
     game_index = rentals_games.index(game) + 1
     print(game_index)
     worksheet_rental_data = rentals_worksheet.row_values(game_index)
     print(worksheet_rental_data)
     if worksheet_rental_data[0] == fname and worksheet_rental_data[1] == lname and worksheet_rental_data[2] == game and worksheet_rental_data[3] == platform:
-        # print("rental info is all in sheet!!!!!")
+        print("rental info is all in sheet!!!!!")
         rentals_worksheet.delete_rows(game_index)
         add_to_stock(game, platform)
     else:
         print("NOT IN SHEET")
-        # rentals_worksheet.delete_rows(game_index)
-        # add_to_stock(game, platform)
-
-
-    # rentals_worksheet = SHEET.worksheet("rentals")
-    # # worksheet_games = SHEET.worksheet("games").col_values(1)
-    # rentals_games = rentals_worksheet.col_values(3)
-    # game_index = rentals_games.index(game) + 1
-    # print(game_index) 
+    
 
 def add_to_stock(game, platform):
     games_worksheet = SHEET.worksheet("games")
