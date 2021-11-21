@@ -464,41 +464,15 @@ def calculate_fine(overdue_items_row, days_late_list):
 
 
 
-
-# worksheet_to_update = SHEET.worksheet("games")
-#     cell = worksheet_to_update.find(worksheet_game_data[0])
-#     worksheet_to_update.update(f"E{cell.row}", updated_stock)
-#     update_rental_worksheet(fname, lname, game, platform, format_date)
-
 def add_fine(overdue_items_row, fines_list):
     print(f"from 467, overdue_items_row is {overdue_items_row}")
     print(f"from 468, fines_list is {fines_list}")
     worksheet_to_update = SHEET.worksheet("rentals")
-    for row in overdue_items_row:
-        print(f"from 471, row of overdue items is {row}")
-        worksheet_to_update.update(f"F{row}", 5)
-        # update row fine with any number
+    for i in range(len(overdue_items_row)):
+        print(f"row is {overdue_items_row[i]}")
+        print(f"fine is {fines_list[i]}")
+        worksheet_to_update.update_cell(overdue_items_row[i], 6, fines_list[i])
 
-        # get overdue_items_row platform
-
-
-    # for overdue_row in overdue_items_row:
-    #     for fine_amount in fines_list:
-    #         print(f"from 472, {overdue_row}, {fine_amount}")
-            # worksheet_to_update.update(f"F{cell.overdue_row}", updated_stock)
-            # cell = worksheet_to_update
-            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-            # cell = worksheet_to_update.find(worksheet_game_data[0])
-            # print(fine_amount, overdue_row)
-            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
-        # update row(fines) with data from fines list
-            # need to loop in loop??
-            # need the amount from fines_list
-        # print(row)
-
-    
-    # cell = worksheet_to_update.find(worksheet_game_data[0])
-    # worksheet_to_update.update(f"E{cell.row}", updated_stock)
 
 
 if __name__ == "__main__":
