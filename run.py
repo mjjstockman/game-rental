@@ -172,7 +172,6 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
             to rent
     """
     worksheet_platform = worksheet_game_data[1]
-    print("from 175, check_platform called")
     if worksheet_platform == platform:
         check_customer_fname(fname, lname, game, platform, worksheet_game_data)
     else:
@@ -188,7 +187,7 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
         fname_index = worksheet_fnames.index(fname)
         print(fname_index)
         check_customer_lname(fname, lname, game, platform, worksheet_game_data, fname_index)
-        print(f"{worksheet_game_data}, from 191")
+        print(worksheet_game_data)
 
 
 def check_customer_lname(fname, lname, game, platform, worksheet_game_data, fname_index):
@@ -208,18 +207,12 @@ def calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_
     today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
     today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y")
     dob_date = datetime.datetime.strptime(customer_dob, "%d/%m/%Y")
-    print("calculate dates finished, 210")
     check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob_date)
 
 
 def check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob_date):
     today = datetime.date.today()
     age_in_years = today.year - dob_date.year
-    # int(worksheet_game_data)
-    # print(f"worksheet_game_data[3] is {worksheet_game_data[3]}")
-    # WHY WORKSHEET_DATA NOW A TUPLE????????????????????????????
-    print(f"worksheet_game_data is {type(worksheet_game_data)}")
-    print(worksheet_game_data[3])
     if today.month < dob_date.month or (today.month == dob_date.month and today.day < dob_date.day):
         age_in_years -= 1
     if age_in_years >= int(worksheet_game_data[3]):
@@ -292,27 +285,19 @@ def update_worksheet(data, worksheet):
 
 def return_sale(fname, lname, game, platform):
     rentals_worksheet = SHEET.worksheet("rentals")
-    # worksheet_games = SHEET.worksheet("games").col_values(1)
     rentals_games = rentals_worksheet.col_values(3)
-    game_index = rentals_games.index(game) + 1
-    print(game_index)
+    print(f"from 289, rentals_games is {rentals_games}")
+    game_index = rentals_games.index(game) + 2
+    print(f"from 291, game index is {game_index}")
     worksheet_rental_data = rentals_worksheet.row_values(game_index)
     print(worksheet_rental_data)
     if worksheet_rental_data[0] == fname and worksheet_rental_data[1] == lname and worksheet_rental_data[2] == game and worksheet_rental_data[3] == platform:
-        # print("rental info is all in sheet!!!!!")
+        print("rental info is all in sheet!!!!!")
         rentals_worksheet.delete_rows(game_index)
         add_to_stock(game, platform)
     else:
         print("NOT IN SHEET")
-        # rentals_worksheet.delete_rows(game_index)
-        # add_to_stock(game, platform)
-
-
-    # rentals_worksheet = SHEET.worksheet("rentals")
-    # # worksheet_games = SHEET.worksheet("games").col_values(1)
-    # rentals_games = rentals_worksheet.col_values(3)
-    # game_index = rentals_games.index(game) + 1
-    # print(game_index) 
+    
 
 def add_to_stock(game, platform):
     games_worksheet = SHEET.worksheet("games")
