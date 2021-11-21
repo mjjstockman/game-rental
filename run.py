@@ -48,7 +48,9 @@ def make_choice():
     
         # HOW TIDY UP, BRIAN??
         if validate_chosen_action(chosen_action):
-            if int(chosen_action) == 5:
+            if int(chosen_action) == 6
+                update_fines()
+            elif int(chosen_action) == 5:
                 add_game()
             elif int(chosen_action) == 4:
                 add_customer()
@@ -78,9 +80,9 @@ def validate_chosen_action(chosen_action):
         Converts chosen_Action to a string before testing for inclusion
     """
     try:
-        if int(chosen_action) not in {1, 2, 3, 4, 5}:
+        if int(chosen_action) not in {1, 2, 3, 4, 5, 6}:
             raise ValueError(
-                "Must be a whole num between 1 and 5"
+                "Must be a whole num between 1 and 6"
             )
     except ValueError as e:
         print(f"Invalid data: {e}, please try again")
@@ -421,6 +423,10 @@ def validate_add_game(new_game_info):
                     f"You entered {new_game_info[1]}")
                 
         return True
+
+
+def update_fines():
+    pass
 
 
 if __name__ == "__main__":
