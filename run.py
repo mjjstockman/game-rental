@@ -427,7 +427,8 @@ def validate_add_game(new_game_info):
 
 
 def get_overdue_items():
-    overdue_items = []
+    overdue_items_row = []
+    days_late_list = []
     today = datetime.datetime.now().date()
     today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
     today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y").date()
@@ -442,15 +443,26 @@ def get_overdue_items():
         # print(type(days_late))
         if days_late > 0:
             int_overdue_row = int(rentals_return_date.index(date)) + 2
-            overdue_items.append(int_overdue_row)
+            overdue_items_row.append(int_overdue_row)
+            days_late_list.append(days_late)
             # print(overdue_items)
-            calculate_fine(overdue_items, days_late)
+            calculate_fine(overdue_items_row, days_late_list)
 
 
-def calculate_fine(overdue_items, days_late):
-    print(f"from 451 index of overdue is {overdue_items}")
-    print(f"from 452 number of days {days_late}")
-    # need number of days
+def calculate_fine(overdue_items_row, days_late_list):
+    fines_list = []
+    fine_per_day = 4
+    print(f"from 451 index of overdue is {overdue_items_row}")
+    print(f"from 452 number of days {days_late_list}")
+    # use zip?????
+        # need list of row number and list of days late
+    for days in days_late_list:
+        amount = days * fine_per_day
+        fines_list.append(amount)
+    print(fines_list)
+
+    # get overdue_items_row and add fines
+    
 
            
 
