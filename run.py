@@ -1,19 +1,3 @@
-"""Description of what it does
-Args:
-    arg_name (data type) : Description of arg_name
-Returns:
-    data_type : Optional description of return value
-    Extra lines are not indented
-Returns:
-    data_type : Optional description of return value
-    Extra lines are not indented
-Raises:
-    TypeOfError : Include error types intentianally 
-        raised
-Notes:
-    See ......... for more info
-"""
-
 # Your code goes here.
 # You can delete these comments, but do not change the name of this file
 # Write your code to expect a terminal of 80 characters wide and 24 rows high
@@ -24,7 +8,7 @@ from google.oauth2.service_account import Credentials
 import datetime
 from pprint import pprint
 
-# IAM config allowing user access 
+# IAM config allowing user access
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -39,15 +23,13 @@ SHEET = GSPREAD_CLIENT.open("game_rental")
 
 def make_choice():
     """Get choice of action as an input from user
-    
     """
     while True:
         print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
-              "3) Print stock?\n 4) Add a new customer?\n 5) Add a new title?\n " 
-              "6) Update fines?\n")
+              "3) Print stock?\n 4) Add a new customer?\n "
+              "5) Add a new title?\n 6) Update fines?\n")
         chosen_action = input("Please select from above by entering the "
                               "corresponding number and pressing Enter:\n")
-    
         # HOW TIDY UP, BRIAN??
         if validate_chosen_action(chosen_action):
             if int(chosen_action) == 6:
@@ -65,12 +47,12 @@ def make_choice():
             break
 
 
-# MOVE INTO MAKE_CHOICE, 
+# MOVE INTO MAKE_CHOICE??
 def validate_chosen_action(chosen_action):
     """Checks chosen_action input was an integer between 1 and 6
     Args:
-        chosen_action (int) : The input the user entered when choosing 
-            an action
+        chosen_action (int) : The input the user entered when choosing
+        an action
     Raises:
         ValueError : If chosen_action is not a full number between 1 and 5
     Notes:
@@ -102,7 +84,7 @@ def input_data(choice):
     platform = input("\nPlease enter platform:\n")
     # ADD PLTFORM VALIDATION
     print(f"\nYou entered:\n First Name: {fname} \n Last Name: {lname} \n "
-            f"Game: {game} \n Platform: {platform}")
+          f"Game: {game} \n Platform: {platform}")
     # ask for confirmation
     int_choice = int(choice)
     # print(choice)
@@ -113,9 +95,6 @@ def input_data(choice):
         # print("return_sale called, RETURNING SALE")
         return_sale(fname, lname, game, platform)
 
-        
-    # is_game_in_sheet(fname, lname, game, platform)
-
 
 def is_game_in_sheet(fname, lname, game, platform):
     """See if the game to be rented is in the games worksheet
@@ -123,8 +102,7 @@ def is_game_in_sheet(fname, lname, game, platform):
         fname (str) : Customers first name
         lname (str) : Customers last name
         game (str) : The game the customer is trying to rent
-        platform (str) : The platform (console type) the customer is trying 
-            to rent
+        platform (str) : The platform the customer is trying to rent
     """
     worksheet_games = SHEET.worksheet("games").col_values(1)
     if game in worksheet_games:
@@ -140,8 +118,7 @@ def check_stock(fname, lname, game, platform):
         fname (str) : Customers first name
         lname (str) : Customers last name
         game (str) : The game the customer is trying to rent
-        platform (str) : The platform (console type) the customer is trying 
-            to rent
+        platform (str) : The platform the customer is trying to rent
     """
     worksheet_stock = SHEET.worksheet("games").col_values(1)
     game_index = worksheet_stock.index(game) + 1
@@ -161,9 +138,8 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
         fname (str) : Customers first name
         lname (str) : Customers last name
         game (str) : The game the customer is trying to rent
-        platform (str) : The platform (console type) the customer is trying 
-            to rent
-        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        platform (str) : The platform the customer is trying to rent
+        worksheet_game_data (list) : The chosen games data from games worksheet
     """
     worksheet_platform = worksheet_game_data[1]
     if worksheet_platform == platform:
@@ -179,9 +155,8 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
         fname (str) : Customers first name
         lname (str) : Customers last name
         game (str) : The game the customer is trying to rent
-        platform (str) : The platform (console type) the customer is trying 
-            to rent
-        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        platform (str) : The platform the customer is trying to rent
+        worksheet_game_data (list) : The chosen games data from games worksheet
     """
     worksheet_fnames = SHEET.worksheet("customers").col_values(1)
     print(worksheet_fnames)
@@ -190,19 +165,20 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
     else:
         fname_index = worksheet_fnames.index(fname)
         print(fname_index)
+        # BRIAN, HOW FIX LINE LENGTH BELOW???
         check_customer_lname(fname, lname, game, platform, worksheet_game_data, fname_index)
         print(worksheet_game_data)
 
 
+# BRIAN, HOW FIX LINE LENGTH BELOW???
 def check_customer_lname(fname, lname, game, platform, worksheet_game_data, fname_index):
     """Checks wether the correct data for the customers last name has been entered
     Args:
         fname (str) : Customers first name
         lname (str) : Customers last name
         game (str) : The game the customer is trying to rent
-        platform (str) : The platform (console type) the customer is trying 
-            to rent
-        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        platform (str) : The platform the customer is trying to rent
+        worksheet_game_data (list) : The chosen games data from games worksheet
         fname_index (int) : The row number of the customers first name
     """
     worksheet_lnames = SHEET.worksheet("customers").col_values(2)
@@ -222,9 +198,8 @@ def calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_
         fname (str) : Customers first name
         lname (str) : Customers last name
         game (str) : The game the customer is trying to rent
-        platform (str) : The platform (console type) the customer is trying 
-            to rent
-        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        platform (str) : The platform the customer is trying to rent
+        worksheet_game_data (list) : The chosen games data from games worksheet
         customer_dob (str) : The customers date of birth
     """
     today = datetime.datetime.now().date()
@@ -240,9 +215,8 @@ def check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob
         fname (str) : Customers first name
         lname (str) : Customers last name
         game (str) : The game the customer is trying to rent
-        platform (str) : The platform (console type) the customer is trying 
-            to rent
-        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        platform (str) : The platform the customer is trying to rent
+        worksheet_game_data (list) : The chosen games data from games worksheet
         today_date (datetime.datetime) : The date the programe is run
         dob_date (datetime.datetime) : The customers date of birth
     """
@@ -266,7 +240,7 @@ def calculate_return_date(fname, lname, game, platform, worksheet_game_data):
         game (str) : The game the customer is trying to rent
         platform (str) : The platform (console type) the customer is trying 
             to rent
-        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        worksheet_game_data (list) : The chosen games data from games worksheet
     """
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
@@ -282,7 +256,7 @@ def reduce_stock(fname, lname, game, platform, worksheet_game_data, format_date)
         game (str) : The game the customer is trying to rent
         platform (str) : The platform (console type) the customer is trying 
             to rent
-        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        worksheet_game_data (list) : The chosen games data from games worksheet
         format_date (str) : The date the item is due to be returned
     """
     print(format_date)
@@ -555,9 +529,22 @@ def add_fine(overdue_items_row, fines_list):
 
 
 if __name__ == "__main__":
-    """Calls make_choice at the begining
+    """Calls make_choice to begin
     """
-   make_choice()
+    make_choice()
+
+
+# QUESTIONS FOR BRIAN
+# need try for every poss incorrect input?
+# probs searching just for fname (FIND WHERE). correct or add in README as limitation
+# tidy up choose_action
+# readme need flow chart for all action choices and outcomes??
+# how sort 80 chars max (   FIND EXAMPLES)
+
+
+# TO ADD
+#  confirmation of all inputs (enter Y or N??)
+
 
  
 # IS THIS BEING USED???
