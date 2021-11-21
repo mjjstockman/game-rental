@@ -427,6 +427,7 @@ def validate_add_game(new_game_info):
 
 
 def update_fines():
+    overdue_items = []
     today = datetime.datetime.now().date()
     today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
     today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y").date()
@@ -438,7 +439,12 @@ def update_fines():
         return_date = datetime.datetime.strptime(date, "%d/%m/%Y").date()
         # format_date = date.datetime.datetime.strftime("%d/%m/%Y")
         if today_date > return_date:
-            print("IT IS LAAAAAATE")
+            # print("IT IS LAAAAAATE")
+            # get row number
+            int_overdue_row = int(rentals_return_date.index(date)) + 2
+            overdue_items.append(int_overdue_row)
+            print(overdue_items)
+
         
             
 
