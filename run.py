@@ -460,65 +460,45 @@ def calculate_fine(overdue_items_row, days_late_list):
         amount = days * fine_per_day
         fines_list.append(amount)
     print(fines_list)
+    add_fine(overdue_items_row, fines_list)
 
-    # get overdue_items_row and add fines
+
+
+
+# worksheet_to_update = SHEET.worksheet("games")
+#     cell = worksheet_to_update.find(worksheet_game_data[0])
+#     worksheet_to_update.update(f"E{cell.row}", updated_stock)
+#     update_rental_worksheet(fname, lname, game, platform, format_date)
+
+def add_fine(overdue_items_row, fines_list):
+    print(f"from 467, overdue_items_row is {overdue_items_row}")
+    print(f"from 468, fines_list is {fines_list}")
+    worksheet_to_update = SHEET.worksheet("rentals")
+    for row in overdue_items_row:
+        print(f"from 471, row of overdue items is {row}")
+        worksheet_to_update.update(f"F{row}", 5)
+        # update row fine with any number
+
+        # get overdue_items_row platform
+
+
+    # for overdue_row in overdue_items_row:
+    #     for fine_amount in fines_list:
+    #         print(f"from 472, {overdue_row}, {fine_amount}")
+            # worksheet_to_update.update(f"F{cell.overdue_row}", updated_stock)
+            # cell = worksheet_to_update
+            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+            # cell = worksheet_to_update.find(worksheet_game_data[0])
+            # print(fine_amount, overdue_row)
+            # print("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
+        # update row(fines) with data from fines list
+            # need to loop in loop??
+            # need the amount from fines_list
+        # print(row)
+
     
-
-           
-
-            # calculate_fine()
-        # print(type(days_late.days))
-        # days_late = today_date - return_date
-
-        # print(days_late)
-        # if days_late > 0:
-        #     print("IT IS LAAAAAATE")
-            # get row number
-            # int_overdue_row = int(rentals_return_date.index(date)) + 2
-            # overdue_items.append(int_overdue_row)
-            # print(overdue_items)
-
-        
-            
-
-
-        # today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y")
-    # dob_date = datetime.datetime.strptime(customer_dob, "%d/%m/%Y")
-
-    # print(rentals_return_date)
-    # print(f"from 431, return date is {rentals_return_date}")
-    # for date in 
-    # newlist = [x for x in fruits if "a" in x]
-    # today = datetime.datetime.now().date()
-    # print(type(today))
-    # print(f"from 437, {rentals_return_date}")
-    # LOOP TO SEE WHICH DATES LESS THAN TODAY
-    # for i in range(len(rentals_return_date)):
-    #     # TURN RETURN INTO DATETIME
-    #     datetime.datetime.strptime(rentals_return_date[i], '%d/%m/Y')
-        # int(rentals_return_date[i])
-        # print(type(date))
-        
-        # if rentals_return_date[i] < today:
-        #     print(i)
-        # print(rentals_return_date[i])
-
-   
-
-    # for date in rentals_return_date:
-    #     datetime.datetime.strptime(date, "%d/%m/%Y")
-    #     print(date)
-
-    # datetime_object = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
-        
-    # if rentals_return_date 
-    # overdue = [date for date in rentals_return_date if date < today]
-    # print(overdue)
-    # game_index = rentals_games.index(game) + 2
-    # print(f"from 291, game index is {game_index}")
-    # get return date list
-    # any in past??
-    # pass
+    # cell = worksheet_to_update.find(worksheet_game_data[0])
+    # worksheet_to_update.update(f"E{cell.row}", updated_stock)
 
 
 if __name__ == "__main__":
