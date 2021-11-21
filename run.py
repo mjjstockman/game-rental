@@ -334,6 +334,14 @@ def update_worksheet(data, worksheet):
 
 
 def return_sale(fname, lname, game, platform):
+    """Deletes the returned item from the rentals worksheet
+    Args:
+        fname (str) : Customers first name
+        lname (str) : Customers last name
+        game (str) : The game the customer is trying to return
+        platform (str) : The platform (console type) the customer is trying 
+            to return
+    """
     rentals_worksheet = SHEET.worksheet("rentals")
     rentals_games = rentals_worksheet.col_values(3)
     print(f"from 289, rentals_games is {rentals_games}")
@@ -350,6 +358,12 @@ def return_sale(fname, lname, game, platform):
     
 
 def add_to_stock(game, platform):
+    """Adds 1 to the stock of the returned game in the games worksheet
+    Args:
+        game (str) : The game the customer is trying to return
+        platform (str) : The platform (console type) the customer is trying 
+            to return
+    """
     games_worksheet = SHEET.worksheet("games")
     games_titles = games_worksheet.col_values(1)
     game_index = games_titles.index(game) + 1
@@ -474,6 +488,8 @@ def validate_add_game(new_game_info):
 
 
 def get_overdue_items():
+    """Gets the row number of overdue items
+    """
     overdue_items_row = []
     days_late_list = []
     today = datetime.datetime.now().date()
@@ -497,6 +513,17 @@ def get_overdue_items():
 
 
 def calculate_fine(overdue_items_row, days_late_list):
+    """Calculates the fine amount for overdue rentals
+    Args:
+        overdue_items_row (list) : The row number of overdue items
+        days_late_list (list) : The number of days overdue
+    """
+    # print(f"from 522, overdue items row is {overdue_items_row}")
+    # print(f"from 523, overdue items row type is {type(overdue_items_row)}")
+    # print(f"from 524, days late list is {days_late_list}")
+    # print(f"from 525, overdue items row type is {type(days_late_list)}")
+    # print(type(overdue_items_row))
+    # print(type(days_late_list))
     fines_list = []
     fine_per_day = 4
     print(f"from 451 index of overdue is {overdue_items_row}")
@@ -512,8 +539,13 @@ def calculate_fine(overdue_items_row, days_late_list):
 
 
 def add_fine(overdue_items_row, fines_list):
-    print(f"from 467, overdue_items_row is {overdue_items_row}")
-    print(f"from 468, fines_list is {fines_list}")
+    """Adds the calculated fine to the rentals worksheet
+    Args:
+        overdue_items_row (list) : The row number of overdue items
+        fines_list (list) : The amount of the fine
+    """
+    # print(f"from 467, overdue_items_row is {overdue_items_row}")
+    # print(f"from 468, fines_list is {fines_list}")
     worksheet_to_update = SHEET.worksheet("rentals")
     for i in range(len(overdue_items_row)):
         print(f"row is {overdue_items_row[i]}")
@@ -523,6 +555,8 @@ def add_fine(overdue_items_row, fines_list):
 
 
 if __name__ == "__main__":
+    """Calls make_choice at the begining
+    """
    make_choice()
 
  
