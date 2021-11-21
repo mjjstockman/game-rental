@@ -42,13 +42,14 @@ def make_choice():
     """
     while True:
         print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
-             "3) Print stock?\n 4) Add a new customer?\n 5) Add a new title?\n")
+              "3) Print stock?\n 4) Add a new customer?\n 5) Add a new title?\n " 
+              "6) Update fines?\n")
         chosen_action = input("Please select from above by entering the "
                               "corresponding number and pressing Enter:\n")
     
         # HOW TIDY UP, BRIAN??
         if validate_chosen_action(chosen_action):
-            if int(chosen_action) == 6
+            if int(chosen_action) == 6:
                 update_fines()
             elif int(chosen_action) == 5:
                 add_game()
@@ -234,7 +235,7 @@ def calculate_return_date(fname, lname, game, platform, worksheet_game_data):
     """
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
-    format_date = return_date.strftime("%d-%m-%Y")
+    format_date = return_date.strftime("%d/%m/%Y")
     reduce_stock(fname, lname, game, platform, worksheet_game_data, format_date)
    
 
@@ -426,7 +427,59 @@ def validate_add_game(new_game_info):
 
 
 def update_fines():
-    pass
+    today = datetime.datetime.now().date()
+    today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
+    today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y").date()
+    rentals_worksheet = SHEET.worksheet("rentals")
+    rentals_return_date = rentals_worksheet.col_values(5)
+    rentals_return_date.pop(0)
+    print(type(today_date))
+    for date in rentals_return_date:
+        return_date = datetime.datetime.strptime(date, "%d/%m/%Y").date()
+        # format_date = date.datetime.datetime.strftime("%d/%m/%Y")
+        if today_date > return_date:
+            print("IT IS LAAAAAATE")
+        else:
+            print("all good")
+
+
+        # today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y")
+    # dob_date = datetime.datetime.strptime(customer_dob, "%d/%m/%Y")
+
+    # print(rentals_return_date)
+    # print(f"from 431, return date is {rentals_return_date}")
+    # for date in 
+    # newlist = [x for x in fruits if "a" in x]
+    # today = datetime.datetime.now().date()
+    # print(type(today))
+    # print(f"from 437, {rentals_return_date}")
+    # LOOP TO SEE WHICH DATES LESS THAN TODAY
+    # for i in range(len(rentals_return_date)):
+    #     # TURN RETURN INTO DATETIME
+    #     datetime.datetime.strptime(rentals_return_date[i], '%d/%m/Y')
+        # int(rentals_return_date[i])
+        # print(type(date))
+        
+        # if rentals_return_date[i] < today:
+        #     print(i)
+        # print(rentals_return_date[i])
+
+   
+
+    # for date in rentals_return_date:
+    #     datetime.datetime.strptime(date, "%d/%m/%Y")
+    #     print(date)
+
+    # datetime_object = datetime.strptime('Jun 1 2005  1:33PM', '%b %d %Y %I:%M%p')
+        
+    # if rentals_return_date 
+    # overdue = [date for date in rentals_return_date if date < today]
+    # print(overdue)
+    # game_index = rentals_games.index(game) + 2
+    # print(f"from 291, game index is {game_index}")
+    # get return date list
+    # any in past??
+    # pass
 
 
 if __name__ == "__main__":
