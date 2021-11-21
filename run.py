@@ -439,8 +439,8 @@ def update_fines():
         # format_date = date.datetime.datetime.strftime("%d/%m/%Y")
         if today_date > return_date:
             print("IT IS LAAAAAATE")
-        else:
-            print("all good")
+        
+            
 
 
         # today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y")
