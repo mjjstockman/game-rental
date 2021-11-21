@@ -150,7 +150,7 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
 
 
 def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
-    """Checks wether the correct data for the customers first name has been entered
+    """Checks the correct data for the customers first name has been entered
     Args:
         fname (str) : Customers first name
         lname (str) : Customers last name
@@ -165,14 +165,25 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
     else:
         fname_index = worksheet_fnames.index(fname)
         print(fname_index)
-        # BRIAN, HOW FIX LINE LENGTH BELOW???
-        check_customer_lname(fname, lname, game, platform, worksheet_game_data, fname_index)
+        check_customer_lname(
+            fname,
+            lname,
+            game,
+            platform,
+            worksheet_game_data,
+            fname_index)
         print(worksheet_game_data)
 
 
 # BRIAN, HOW FIX LINE LENGTH BELOW???
-def check_customer_lname(fname, lname, game, platform, worksheet_game_data, fname_index):
-    """Checks wether the correct data for the customers last name has been entered
+def check_customer_lname(
+    fname,
+    lname,
+    game,
+    platform,
+    worksheet_game_data,
+    fname_index):
+    """Checks the correct data for the customers last name has been entered
     Args:
         fname (str) : Customers first name
         lname (str) : Customers last name
@@ -187,12 +198,24 @@ def check_customer_lname(fname, lname, game, platform, worksheet_game_data, fnam
     customer_dob = worksheet_dobs[fname_index]
     if customer_lname == lname:
         print("197 reached")
-        calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_dob)
+        calculate_dates(
+        fname,
+        lname,
+        game,
+        platform,
+        worksheet_game_data,
+        customer_dob)
     else:
         print("wrong last name")
 
 
-def calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_dob):
+def calculate_dates(
+    fname,
+    lname,
+    game,
+    platform,
+    worksheet_game_data,
+    customer_dob):
     """Gets todays date and the customers date of birth in correct format
     Args:
         fname (str) : Customers first name
@@ -206,10 +229,24 @@ def calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_
     today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
     today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y")
     dob_date = datetime.datetime.strptime(customer_dob, "%d/%m/%Y")
-    check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob_date)
+    check_age(
+        fname,
+        lname,
+        game,
+        platform,
+        worksheet_game_data,
+        today_date,
+        dob_date)
 
 
-def check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob_date):
+def check_age(
+    fname,
+    lname,
+    game,
+    platform,
+    worksheet_game_data,
+    today_date,
+    dob_date):
     """Checks if the customer is old enough to rent the selected game
     Args:
         fname (str) : Customers first name
@@ -224,7 +261,8 @@ def check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob
     print(f"dob_date is {type(dob_date)}")
     today = datetime.date.today()
     age_in_years = today.year - dob_date.year
-    if today.month < dob_date.month or (today.month == dob_date.month and today.day < dob_date.day):
+    if today.month < dob_date.month or (today.month == dob_date.month and 
+        today.day < dob_date.day):
         age_in_years -= 1
     if age_in_years >= int(worksheet_game_data[3]):
         calculate_return_date(fname, lname, game, platform, worksheet_game_data)
