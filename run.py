@@ -50,7 +50,7 @@ def make_choice():
         # HOW TIDY UP, BRIAN??
         if validate_chosen_action(chosen_action):
             if int(chosen_action) == 6:
-                update_fines()
+                get_overdue_items()
             elif int(chosen_action) == 5:
                 add_game()
             elif int(chosen_action) == 4:
@@ -426,7 +426,7 @@ def validate_add_game(new_game_info):
         return True
 
 
-def update_fines():
+def get_overdue_items():
     overdue_items = []
     today = datetime.datetime.now().date()
     today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
