@@ -438,12 +438,33 @@ def get_overdue_items():
     for date in rentals_return_date:
         return_date = datetime.datetime.strptime(date, "%d/%m/%Y").date()
         # format_date = date.datetime.datetime.strftime("%d/%m/%Y")
-        if today_date > return_date:
-            # print("IT IS LAAAAAATE")
-            # get row number
+        days_late = (today_date - return_date).days
+        # print(type(days_late))
+        if days_late > 0:
             int_overdue_row = int(rentals_return_date.index(date)) + 2
             overdue_items.append(int_overdue_row)
-            print(overdue_items)
+            # print(overdue_items)
+            calculate_fine(overdue_items, days_late)
+
+
+def calculate_fine(overdue_items, days_late):
+    print(f"from 451 index of overdue is {overdue_items}")
+    print(f"from 452 number of days {days_late}")
+    # need number of days
+
+           
+
+            # calculate_fine()
+        # print(type(days_late.days))
+        # days_late = today_date - return_date
+
+        # print(days_late)
+        # if days_late > 0:
+        #     print("IT IS LAAAAAATE")
+            # get row number
+            # int_overdue_row = int(rentals_return_date.index(date)) + 2
+            # overdue_items.append(int_overdue_row)
+            # print(overdue_items)
 
         
             
