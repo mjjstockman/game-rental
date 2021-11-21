@@ -39,6 +39,7 @@ SHEET = GSPREAD_CLIENT.open("game_rental")
 
 def make_choice():
     """Get choice of action as an input from user
+    
     """
     while True:
         print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
@@ -66,12 +67,7 @@ def make_choice():
 
 # MOVE INTO MAKE_CHOICE, 
 def validate_chosen_action(chosen_action):
-    """
-    Inside the try, convert user input to an integer.
-    Raises ValueError if input cannot be converted (ie, contains letter/s) 
-    or if is not an integer between 1 and 5
-    """
-    """Checks chosen_action input was an integer between 1 and 5
+    """Checks chosen_action input was an integer between 1 and 6
     Args:
         chosen_action (int) : The input the user entered when choosing 
             an action
@@ -95,11 +91,9 @@ def validate_chosen_action(chosen_action):
 def input_data(choice):
     """Asks user for customers first name, last name, game title and
       its platform (INDENT????????????????????????????????)
+      Calls the relevant function depending on wether choice was 1 or 2
     Args:
-        arg_name (data type) : Description of arg_name
-            indent next line of description if need to
-    Returns:
-        SHOULD THE PRINT RETURN BE HERE, OR JUST EXPLICIT RETURNS??????????????????????????
+        choice (int) : The chosen action from make_choice function
     """
     # print("input data called")
     fname = input("\nPlease enter the customer First Name:\n")
@@ -124,10 +118,6 @@ def input_data(choice):
 
 
 def is_game_in_sheet(fname, lname, game, platform):
-    """
-    See if the game to be rented is in the games worksheet
-    """
-
     """See if the game to be rented is in the games worksheet
     Args:
         fname (str) : Customers first name
@@ -166,22 +156,33 @@ def check_stock(fname, lname, game, platform):
 
 
 def check_platform(fname, lname, game, platform, worksheet_game_data):
-    """Description of what it does
+    """Checks wether the correct data for the platform has been entered
     Args:
         fname (str) : Customers first name
         lname (str) : Customers last name
         game (str) : The game the customer is trying to rent
         platform (str) : The platform (console type) the customer is trying 
             to rent
+        worksheet_game_data (list) : List of the chosen games data from the games worksheet
     """
     worksheet_platform = worksheet_game_data[1]
     if worksheet_platform == platform:
         check_customer_fname(fname, lname, game, platform, worksheet_game_data)
+        # print(type(worksheet_game_data))
     else:
         print("wrong platform")
 
 
 def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
+    """Checks wether the correct data for the customers first name has been entered
+    Args:
+        fname (str) : Customers first name
+        lname (str) : Customers last name
+        game (str) : The game the customer is trying to rent
+        platform (str) : The platform (console type) the customer is trying 
+            to rent
+        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+    """
     worksheet_fnames = SHEET.worksheet("customers").col_values(1)
     print(worksheet_fnames)
     if fname not in worksheet_fnames:
@@ -194,6 +195,16 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
 
 
 def check_customer_lname(fname, lname, game, platform, worksheet_game_data, fname_index):
+    """Checks wether the correct data for the customers last name has been entered
+    Args:
+        fname (str) : Customers first name
+        lname (str) : Customers last name
+        game (str) : The game the customer is trying to rent
+        platform (str) : The platform (console type) the customer is trying 
+            to rent
+        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        fname_index (int) : The row number of the customers first name
+    """
     worksheet_lnames = SHEET.worksheet("customers").col_values(2)
     customer_lname = worksheet_lnames[fname_index]
     worksheet_dobs = SHEET.worksheet("customers").col_values(3)
@@ -206,6 +217,16 @@ def check_customer_lname(fname, lname, game, platform, worksheet_game_data, fnam
 
 
 def calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_dob):
+    """Gets todays date and the customers date of birth in correct format
+    Args:
+        fname (str) : Customers first name
+        lname (str) : Customers last name
+        game (str) : The game the customer is trying to rent
+        platform (str) : The platform (console type) the customer is trying 
+            to rent
+        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        customer_dob (str) : The customers date of birth
+    """
     today = datetime.datetime.now().date()
     today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
     today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y")
@@ -214,6 +235,19 @@ def calculate_dates(fname, lname, game, platform, worksheet_game_data, customer_
 
 
 def check_age(fname, lname, game, platform, worksheet_game_data, today_date, dob_date):
+    """Checks if the customer is old enough to rent the selected game
+    Args:
+        fname (str) : Customers first name
+        lname (str) : Customers last name
+        game (str) : The game the customer is trying to rent
+        platform (str) : The platform (console type) the customer is trying 
+            to rent
+        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        today_date (datetime.datetime) : The date the programe is run
+        dob_date (datetime.datetime) : The customers date of birth
+    """
+    print(f"today_date is {type(today_date)}")
+    print(f"dob_date is {type(dob_date)}")
     today = datetime.date.today()
     age_in_years = today.year - dob_date.year
     if today.month < dob_date.month or (today.month == dob_date.month and today.day < dob_date.day):
@@ -232,6 +266,7 @@ def calculate_return_date(fname, lname, game, platform, worksheet_game_data):
         game (str) : The game the customer is trying to rent
         platform (str) : The platform (console type) the customer is trying 
             to rent
+        worksheet_game_data (list) : List of the chosen games data from the games worksheet
     """
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
@@ -240,6 +275,18 @@ def calculate_return_date(fname, lname, game, platform, worksheet_game_data):
    
 
 def reduce_stock(fname, lname, game, platform, worksheet_game_data, format_date):
+    """Reduces stock number by one
+    Args:
+        fname (str) : Customers first name
+        lname (str) : Customers last name
+        game (str) : The game the customer is trying to rent
+        platform (str) : The platform (console type) the customer is trying 
+            to rent
+        worksheet_game_data (list) : List of the chosen games data from the games worksheet
+        format_date (str) : The date the item is due to be returned
+    """
+    print(format_date)
+    print(type(format_date))
     current_stock = worksheet_game_data[4]
     updated_stock = int(current_stock) - 1
     worksheet_to_update = SHEET.worksheet("games")
@@ -256,7 +303,7 @@ def update_rental_worksheet(fname, lname, game, platform, format_date):
         platform (str) : The platform (console type) the customer is trying 
             to rent
         format_date (datetime) : The date the rental is due back,
-            formatted to DD/MM/YYYY
+            formatted to dd/mm/YYYY
     """
     print("Updating rentals worksheet...")
     rental_data = [fname, lname, game, platform, format_date]
