@@ -109,6 +109,8 @@ def is_game_in_sheet(fname, lname, game, platform):
         print("game is not in sheet")
 
 
+# CHECK LINK https://www.educba.com/python-print-table/
+# HOW TO PRINT IN TABLES
 def check_stock(fname, lname, game, platform):
     """Checks the game to be rented is in stock
     Args:
@@ -328,7 +330,10 @@ def return_sale(fname, lname, game, platform):
     # print(f"from 291, game index is {game_index}")
     worksheet_rental_data = rentals_worksheet.row_values(game_index)
     # print(worksheet_rental_data)
-    if worksheet_rental_data[0] == fname and worksheet_rental_data[1] == lname and worksheet_rental_data[2] == game and worksheet_rental_data[3] == platform:
+    if (worksheet_rental_data[0] == fname
+        and worksheet_rental_data[1] == lname
+        and worksheet_rental_data[2] == game
+        and worksheet_rental_data[3] == platform):
         # print("rental info is all in sheet!!!!!")
         rentals_worksheet.delete_rows(game_index)
         add_to_stock(game, platform)
