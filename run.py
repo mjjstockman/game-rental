@@ -48,7 +48,6 @@ def make_choice():
             break
 
 
-# MOVE INTO MAKE_CHOICE??
 def validate_chosen_action(chosen_action):
     """Checks chosen_action input was an integer between 1 and 6
     Args:
@@ -78,7 +77,6 @@ def input_data(choice):
     Args:
         choice (int) : The chosen action from make_choice function
     """
-    # print("input data called")
     fname = input("\nPlease enter the customer First Name:\n")
     lname = input("\nPlease enter the customer Last Name:\n")
     game = input("\nPlease enter the game title:\n")
@@ -88,12 +86,9 @@ def input_data(choice):
           f"Game: {game} \n Platform: {platform}")
     # ask for confirmation
     int_choice = int(choice)
-    # print(choice)
     if int_choice == 1:
-        # print("is_game_in_sheet called, MAKING SALE")
         is_game_in_sheet(fname, lname, game, platform)
     else:
-        # print("return_sale called, RETURNING SALE")
         return_sale(fname, lname, game, platform)
 
 
@@ -124,7 +119,6 @@ def check_stock(fname, lname, game, platform):
     worksheet_stock = SHEET.worksheet("games").col_values(1)
     game_index = worksheet_stock.index(game) + 1
     worksheet_game_data = SHEET.worksheet("games").row_values(game_index)
-    # print(f"from 185, worksheet_game_data is {worksheet_game_data}")
     stock = worksheet_game_data[4]
     stock_int = int(stock)
     if stock_int <= 0:
@@ -145,7 +139,6 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
     worksheet_platform = worksheet_game_data[1]
     if worksheet_platform == platform:
         check_customer_fname(fname, lname, game, platform, worksheet_game_data)
-        # print(type(worksheet_game_data))
     else:
         print("wrong platform")
 
@@ -166,24 +159,13 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
     else:
         fname_index = worksheet_fnames.index(fname)
         print(fname_index)
-        check_customer_lname(
-            fname,
-            lname,
-            game,
-            platform,
-            worksheet_game_data,
-            fname_index)
+        check_customer_lname(fname, lname, game, platform, worksheet_game_data,
+                             fname_index)
         print(worksheet_game_data)
 
 
-# BRIAN, HOW FIX LINE LENGTH BELOW???
-def check_customer_lname(
-        fname,
-        lname,
-        game,
-        platform,
-        worksheet_game_data,
-        fname_index):
+def check_customer_lname(fname, lname, game, platform, worksheet_game_data,
+                         fname_index):
     """Checks the correct data for the customers last name has been entered
     Args:
         fname (str) : Customers first name
@@ -199,24 +181,20 @@ def check_customer_lname(
     customer_dob = worksheet_dobs[fname_index]
     if customer_lname == lname:
         print("197 reached")
-        calculate_dates(
-            fname,
-            lname,
-            game,
-            platform,
-            worksheet_game_data,
-            customer_dob)
+        calculate_dates(fname, lname, game, platform, worksheet_game_data,
+                        customer_dob)
     else:
         print("wrong last name")
 
 
-def calculate_dates(
-        fname,
-        lname,
-        game,
-        platform,
-        worksheet_game_data,
-        customer_dob):
+def calculate_dates(fname, lname, game, platform, worksheet_game_data,
+                    customer_dob):
+        # fname,
+        # lname,
+        # game,
+        # platform,
+        # worksheet_game_data,
+        # customer_dob):
     """Gets todays date and the customers date of birth in correct format
     Args:
         fname (str) : Customers first name
@@ -272,12 +250,7 @@ def check_age(
         print("SORRY TOO YOUNG!!!!!!")
 
 
-def calculate_return_date(
-        fname,
-        lname,
-        game,
-        platform,
-        worksheet_game_data):
+def calculate_return_date(fname, lname, game, platform, worksheet_game_data):
     """Adds three days to todays date
     Args:
         fname (str) : Customers first name
