@@ -1,5 +1,5 @@
 # Your requirements go here
-import gspread
+gspread
+datetime
 from google.oauth2.service_account import Credentials
-import datetime
 from pprint import pprint
