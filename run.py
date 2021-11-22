@@ -383,6 +383,7 @@ def add_customer():
         dob = input("\nAdd date of birth\n")
 
         new_customer_info = [fname, lname, dob]
+        print("line 386")
 
         if validate_add_customer(new_customer_info):
             print(f"\nYou entered...\n First Name: {fname}\n "
@@ -404,7 +405,9 @@ def validate_add_customer(new_customer_info):
     Returns:
         bool : True if data validates, False if not
     """
+    print("line 408")
     while True:
+        print("line 410")
         if not all(new_customer_info):
             print("Missing element, please try again")
             return False
@@ -414,6 +417,7 @@ def validate_add_customer(new_customer_info):
             except:
                 print("wrong date format!!!")
                 return False
+        return True
 
 
 def add_game():
