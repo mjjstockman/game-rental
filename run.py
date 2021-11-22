@@ -29,8 +29,8 @@ def make_choice():
         print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
               "3) Print stock?\n 4) Add a new customer?\n "
               "5) Add a new title?\n 6) Update fines?\n")
-        chosen_action = input("Please select from above by entering the "
-                              "corresponding number and pressing Enter:\n")
+        chosen_action = input("Please select from above numbers "
+                              "and press Enter:\n")
         # HOW TIDY UP, BRIAN??
         if validate_chosen_action(chosen_action):
             if int(chosen_action) == 6:
