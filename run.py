@@ -45,6 +45,7 @@ def make_choice():
                 input_data(2)
             elif int(chosen_action) == 1:
                 input_data(1)
+            break
             
 
 
@@ -82,16 +83,34 @@ def input_data(choice):
     lname = input("\nPlease enter the customer Last Name:\n")
     game = input("\nPlease enter the game title:\n")
     platform = input("\nPlease enter platform:\n")
-    # ADD PLTFORM VALIDATION
-    print(f"\nYou entered:\n First Name: {fname} \n Last Name: {lname} \n "
-          f"Game: {game} \n Platform: {platform}")
-    # ask for confirmation
-    int_choice = int(choice)
-    if int_choice == 1:
-        is_game_in_sheet(fname, lname, game, platform)
-    else:
-        return_rental(fname, lname, game, platform)
 
+    data = [fname, lname, game, platform]
+    # ADD PLTFORM VALIDATION
+
+    if validate_data(data):
+        # print("from 90 all data entered!!!!!")
+        print(f"\nYou entered:\n First Name: {fname} \n Last Name: {lname} \n "
+              f"Game: {game} \n Platform: {platform}")
+        # print(f"from 94 choice is {choice}")
+        if choice == 1:
+            is_game_in_sheet(fname, lname, game, platform)
+        else:
+            return_rental(fname, lname, game, platform)
+
+
+def validate_data(data):
+    """Checks all data has been entered and is valid
+    Returns:
+        bool : True if data validates, False if not
+    """
+    # print("line 408")
+    while True:
+        # print("line 410")
+        if not all(data):
+            print("Missing element, please try again")
+            return False
+        else:
+            return True
 
 def is_game_in_sheet(fname, lname, game, platform):
     """See if the game to be rented is in the games worksheet
