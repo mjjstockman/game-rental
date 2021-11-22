@@ -26,12 +26,12 @@ def make_choice():
     """Get choice of action as an input from user
     """
     while True:
-        print("Do you want to:\n 1) Make a sale?\n 2) Return a sale?\n "
+        print("Do you want to:\n 1) Make a rental?\n 2) Return a rental?\n "
               "3) Print stock?\n 4) Add a new customer?\n "
               "5) Add a new title?\n 6) Update fines?\n")
         chosen_action = input("Please select from above numbers "
                               "and press Enter:\n")
-        # HOW TIDY UP, BRIAN??
+       
         if validate_chosen_action(chosen_action):
             if int(chosen_action) == 6:
                 get_overdue_items()
@@ -45,7 +45,7 @@ def make_choice():
                 input_data(2)
             elif int(chosen_action) == 1:
                 input_data(1)
-            break
+            
 
 
 # ELIF STATEMENT ABOVE FOR ANY WRONG INPUT INSTEAD OF BELOW FUNCTION????
@@ -90,7 +90,7 @@ def input_data(choice):
     if int_choice == 1:
         is_game_in_sheet(fname, lname, game, platform)
     else:
-        return_sale(fname, lname, game, platform)
+        return_rental(fname, lname, game, platform)
 
 
 def is_game_in_sheet(fname, lname, game, platform):
@@ -315,7 +315,7 @@ def update_worksheet(data, worksheet):
     print(f"\n{worksheet} updated successfully.")
 
 
-def return_sale(fname, lname, game, platform):
+def return_rental(fname, lname, game, platform):
     """Deletes the returned item from the rentals worksheet
     Args:
         fname (str) : Customers first name
