@@ -330,13 +330,13 @@ def return_sale(fname, lname, game, platform):
     # print(f"from 291, game index is {game_index}")
     worksheet_rental_data = rentals_worksheet.row_values(game_index)
     # print(worksheet_rental_data)
-    if (worksheet_rental_data[0] == fname
-        and worksheet_rental_data[1] == lname
-        and worksheet_rental_data[2] == game
-        and worksheet_rental_data[3] == platform):
-        # print("rental info is all in sheet!!!!!")
-        rentals_worksheet.delete_rows(game_index)
-        add_to_stock(game, platform)
+    # HOW VALIDATE PEP8 BELOW:???
+    if (worksheet_rental_data[0] == fname and
+        worksheet_rental_data[1] == lname and
+        worksheet_rental_data[2] == game and
+        worksheet_rental_data[3] == platform):
+            rentals_worksheet.delete_rows(game_index)
+            add_to_stock(game, platform)
     else:
         print("NOT IN SHEET")
 
@@ -374,11 +374,11 @@ def add_customer():
     while True:
         fname = input("\nAdd first name:\n")
         lname = input("\nAdd last name:\n")
-        # give example of format
+        print("\nDate of birth must be in dd/mm/YYYY format")
+        print("For example: 12/12/2006")
         dob = input("\nAdd date of birth\n")
 
         new_customer_info = [fname, lname, dob]
-        # print("line 386")
 
         if validate_add_customer(new_customer_info):
             print(f"\nYou entered...\n First Name: {fname}\n "
