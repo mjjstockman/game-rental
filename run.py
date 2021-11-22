@@ -48,6 +48,7 @@ def make_choice():
             break
 
 
+# ELIF STATEMENT ABOVE FOR ANY WRONG INPUT INSTEAD OF BELOW FUNCTION????
 def validate_chosen_action(chosen_action):
     """Checks chosen_action input was an integer between 1 and 6
     Args:
@@ -189,12 +190,6 @@ def check_customer_lname(fname, lname, game, platform, worksheet_game_data,
 
 def calculate_dates(fname, lname, game, platform, worksheet_game_data,
                     customer_dob):
-        # fname,
-        # lname,
-        # game,
-        # platform,
-        # worksheet_game_data,
-        # customer_dob):
     """Gets todays date and the customers date of birth in correct format
     Args:
         fname (str) : Customers first name
@@ -208,24 +203,19 @@ def calculate_dates(fname, lname, game, platform, worksheet_game_data,
     today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
     today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y")
     dob_date = datetime.datetime.strptime(customer_dob, "%d/%m/%Y")
-    check_age(
-        fname,
-        lname,
-        game,
-        platform,
-        worksheet_game_data,
-        today_date,
-        dob_date)
+    check_age(fname, lname, game, platform, worksheet_game_data,
+              today_date, dob_date)
+    # fname,
+    # lname,
+    # game,
+    # platform,
+    # worksheet_game_data,
+    # today_date,
+    # dob_date)
 
 
-def check_age(
-        fname,
-        lname,
-        game,
-        platform,
-        worksheet_game_data,
-        today_date,
-        dob_date):
+def check_age(fname, lname, game, platform, worksheet_game_data,
+              today_date, dob_date):
     """Checks if the customer is old enough to rent the selected game
     Args:
         fname (str) : Customers first name
