@@ -103,7 +103,7 @@ def is_game_in_sheet(fname, lname, game, platform):
     """
     worksheet_games = SHEET.worksheet("games").col_values(1)
     if game in worksheet_games:
-        print("GAME IS IN SHEET!!!!")
+        # print("GAME IS IN SHEET!!!!")
         check_stock(fname, lname, game, platform)
     else:
         print("game is not in sheet")
@@ -154,15 +154,15 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
         worksheet_game_data (list) : The chosen games data from games worksheet
     """
     worksheet_fnames = SHEET.worksheet("customers").col_values(1)
-    print(worksheet_fnames)
+    # print(worksheet_fnames)
     if fname not in worksheet_fnames:
         print("No record of customers First Name")
     else:
         fname_index = worksheet_fnames.index(fname)
-        print(fname_index)
+        # print(fname_index)
         check_customer_lname(fname, lname, game, platform, worksheet_game_data,
                              fname_index)
-        print(worksheet_game_data)
+        # print(worksheet_game_data)
 
 
 def check_customer_lname(fname, lname, game, platform, worksheet_game_data,
@@ -181,7 +181,7 @@ def check_customer_lname(fname, lname, game, platform, worksheet_game_data,
     worksheet_dobs = SHEET.worksheet("customers").col_values(3)
     customer_dob = worksheet_dobs[fname_index]
     if customer_lname == lname:
-        print("197 reached")
+        # print("197 reached")
         calculate_dates(fname, lname, game, platform, worksheet_game_data,
                         customer_dob)
     else:
@@ -226,8 +226,8 @@ def check_age(fname, lname, game, platform, worksheet_game_data,
         today_date (datetime.datetime) : The date the programe is run
         dob_date (datetime.datetime) : The customers date of birth
     """
-    print(f"today_date is {type(today_date)}")
-    print(f"dob_date is {type(dob_date)}")
+    # print(f"today_date is {type(today_date)}")
+    # print(f"dob_date is {type(dob_date)}")
     today = datetime.date.today()
     age_in_years = today.year - dob_date.year
     if today.month < dob_date.month or (today.month == dob_date.month and
@@ -267,8 +267,8 @@ def reduce_stock(fname, lname, game, platform, worksheet_game_data,
         worksheet_game_data (list) : The chosen games data from games worksheet
         format_date (str) : The date the item is due to be returned
     """
-    print(format_date)
-    print(type(format_date))
+    # print(format_date)
+    # print(type(format_date))
     current_stock = worksheet_game_data[4]
     updated_stock = int(current_stock) - 1
     worksheet_to_update = SHEET.worksheet("games")
@@ -323,13 +323,13 @@ def return_sale(fname, lname, game, platform):
     """
     rentals_worksheet = SHEET.worksheet("rentals")
     rentals_games = rentals_worksheet.col_values(3)
-    print(f"from 289, rentals_games is {rentals_games}")
+    # print(f"from 289, rentals_games is {rentals_games}")
     game_index = rentals_games.index(game) + 2
-    print(f"from 291, game index is {game_index}")
+    # print(f"from 291, game index is {game_index}")
     worksheet_rental_data = rentals_worksheet.row_values(game_index)
-    print(worksheet_rental_data)
+    # print(worksheet_rental_data)
     if worksheet_rental_data[0] == fname and worksheet_rental_data[1] == lname and worksheet_rental_data[2] == game and worksheet_rental_data[3] == platform:
-        print("rental info is all in sheet!!!!!")
+        # print("rental info is all in sheet!!!!!")
         rentals_worksheet.delete_rows(game_index)
         add_to_stock(game, platform)
     else:
@@ -373,7 +373,7 @@ def add_customer():
         dob = input("\nAdd date of birth\n")
 
         new_customer_info = [fname, lname, dob]
-        print("line 386")
+        # print("line 386")
 
         if validate_add_customer(new_customer_info):
             print(f"\nYou entered...\n First Name: {fname}\n "
@@ -395,9 +395,9 @@ def validate_add_customer(new_customer_info):
     Returns:
         bool : True if data validates, False if not
     """
-    print("line 408")
+    # print("line 408")
     while True:
-        print("line 410")
+        # print("line 410")
         if not all(new_customer_info):
             print("Missing element, please try again")
             return False
@@ -432,7 +432,7 @@ def add_game():
             confirm_strip_lcase = confirm.strip().lower()
             if confirm_strip_lcase == "n":
                 validate_add_game(new_game_info)
-                print("from 339 confirm says no")
+                print("from 435 confirm says no")
             elif confirm_strip_lcase == "y":
                 update_worksheet(new_game_info, "games")
                 break
@@ -480,7 +480,7 @@ def get_overdue_items():
     rentals_worksheet = SHEET.worksheet("rentals")
     rentals_return_date = rentals_worksheet.col_values(5)
     rentals_return_date.pop(0)
-    print(type(today_date))
+    # print(type(today_date))
     for date in rentals_return_date:
         return_date = datetime.datetime.strptime(date, "%d/%m/%Y").date()
         # format_date = date.datetime.datetime.strftime("%d/%m/%Y")
@@ -508,12 +508,12 @@ def calculate_fine(overdue_items_row, days_late_list):
     # print(type(days_late_list))
     fines_list = []
     fine_per_day = 4
-    print(f"from 451 index of overdue is {overdue_items_row}")
-    print(f"from 452 number of days {days_late_list}")
+    # print(f"from 451 index of overdue is {overdue_items_row}")
+    # print(f"from 452 number of days {days_late_list}")
     for days in days_late_list:
         amount = days * fine_per_day
         fines_list.append(amount)
-    print(fines_list)
+    # print(fines_list)
     add_fine(overdue_items_row, fines_list)
 
 
@@ -527,8 +527,8 @@ def add_fine(overdue_items_row, fines_list):
     # print(f"from 468, fines_list is {fines_list}")
     worksheet_to_update = SHEET.worksheet("rentals")
     for i in range(len(overdue_items_row)):
-        print(f"row is {overdue_items_row[i]}")
-        print(f"fine is {fines_list[i]}")
+        # print(f"row is {overdue_items_row[i]}")
+        # print(f"fine is {fines_list[i]}")
         worksheet_to_update.update_cell(overdue_items_row[i], 6, fines_list[i])
 
 
