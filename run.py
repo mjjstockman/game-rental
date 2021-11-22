@@ -177,12 +177,12 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
 
 # BRIAN, HOW FIX LINE LENGTH BELOW???
 def check_customer_lname(
-    fname,
-    lname,
-    game,
-    platform,
-    worksheet_game_data,
-    fname_index):
+        fname,
+        lname,
+        game,
+        platform,
+        worksheet_game_data,
+        fname_index):
     """Checks the correct data for the customers last name has been entered
     Args:
         fname (str) : Customers first name
@@ -199,23 +199,23 @@ def check_customer_lname(
     if customer_lname == lname:
         print("197 reached")
         calculate_dates(
-        fname,
-        lname,
-        game,
-        platform,
-        worksheet_game_data,
-        customer_dob)
+            fname,
+            lname,
+            game,
+            platform,
+            worksheet_game_data,
+            customer_dob)
     else:
         print("wrong last name")
 
 
 def calculate_dates(
-    fname,
-    lname,
-    game,
-    platform,
-    worksheet_game_data,
-    customer_dob):
+        fname,
+        lname,
+        game,
+        platform,
+        worksheet_game_data,
+        customer_dob):
     """Gets todays date and the customers date of birth in correct format
     Args:
         fname (str) : Customers first name
@@ -240,13 +240,13 @@ def calculate_dates(
 
 
 def check_age(
-    fname,
-    lname,
-    game,
-    platform,
-    worksheet_game_data,
-    today_date,
-    dob_date):
+        fname,
+        lname,
+        game,
+        platform,
+        worksheet_game_data,
+        today_date,
+        dob_date):
     """Checks if the customer is old enough to rent the selected game
     Args:
         fname (str) : Customers first name
@@ -261,16 +261,22 @@ def check_age(
     print(f"dob_date is {type(dob_date)}")
     today = datetime.date.today()
     age_in_years = today.year - dob_date.year
-    if today.month < dob_date.month or (today.month == dob_date.month and 
-        today.day < dob_date.day):
+    if today.month < dob_date.month or (today.month == dob_date.month and
+                                        today.day < dob_date.day):
         age_in_years -= 1
     if age_in_years >= int(worksheet_game_data[3]):
-        calculate_return_date(fname, lname, game, platform, worksheet_game_data)
+        calculate_return_date(fname, lname, game, platform,
+                              worksheet_game_data)
     else:
         print("SORRY TOO YOUNG!!!!!!")
 
 
-def calculate_return_date(fname, lname, game, platform, worksheet_game_data):
+def calculate_return_date(
+        fname,
+        lname,
+        game,
+        platform,
+        worksheet_game_data):
     """Adds three days to todays date
     Args:
         fname (str) : Customers first name
@@ -282,10 +288,12 @@ def calculate_return_date(fname, lname, game, platform, worksheet_game_data):
     today = datetime.datetime.now().date()
     return_date = today + datetime.timedelta(days=3)
     format_date = return_date.strftime("%d/%m/%Y")
-    reduce_stock(fname, lname, game, platform, worksheet_game_data, format_date)
+    reduce_stock(fname, lname, game, platform, worksheet_game_data,
+                 format_date)
 
 
-def reduce_stock(fname, lname, game, platform, worksheet_game_data, format_date):
+def reduce_stock(fname, lname, game, platform, worksheet_game_data,
+                 format_date):
     """Reduces stock number by one
     Args:
         fname (str) : Customers first name
@@ -444,9 +452,11 @@ def add_game():
         min_age = input("\nAdd minimum age:\n")
         quantity = input("\nAdd how many:\n")
         new_game_info = [title, platform, genre, min_age, quantity]
-        # REFRACTOR validate_add_customer AND validate_add_game INTO ONE FUNCTION?????
+        # REFRACTOR validate_add_customer AND validate_add_game
+        # INTO ONE FUNCTION?????
         if validate_add_game(new_game_info):
-            print(f"\nYou entered...\n Title: {title}\n Platform: {platform}\n "
+            print(f"\nYou entered...\n Title: {title}\n "
+                  f"Platform: {platform}\n Genre: {genre}\n "
                   f"Genre: {genre}\n Minimum age: {min_age}\n "
                   f"How many: {quantity}\n")
             print("Is this correct?\n")
@@ -470,7 +480,7 @@ def validate_add_game(new_game_info):
         return False
     if new_game_info[1] not in ("switch", "ps5", "xbox one"):
         print("Platform must be either switch, ps5 or xbox one. "
-        f"You entered {new_game_info[1]}")
+              f"You entered {new_game_info[1]}")
         print("Please enter info again")
         return False
     else:
@@ -487,7 +497,7 @@ def validate_add_game(new_game_info):
                 return False
         except:
             print("Platform must be either switch, PS5 or xbox one. "
-                f"You entered {new_game_info[1]}")
+                  f"You entered {new_game_info[1]}")
         return True
 
 
@@ -562,7 +572,8 @@ if __name__ == "__main__":
 
 # QUESTIONS FOR BRIAN
 # need try for every poss incorrect input?
-# probs searching just for fname (FIND WHERE). correct or add in README as limitation
+# probs searching just for fname (FIND WHERE). 
+# correct or add in README as limitation
 # tidy up choose_action
 # readme need flow chart for all action choices and outcomes??
 # how sort 80 chars max (   FIND EXAMPLES)
