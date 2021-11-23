@@ -55,18 +55,41 @@ def make_choice():
         #     break
             
 
-def input_customer_id():
-    print("Please enter Customer ID number\n")
+# def input_customer_id():
+#     print("Please enter Customer ID number\n")
 
 
 def make_rental():
-    get_customer_id()
-    # print("FROM 63")
+    input_customer_id()
+    
 
 
-def get_customer_id():
+
+def input_customer_id():
+    customer_id = input("Please enter Customer ID number:\n")
+    get_customer_info(customer_id)
+    # return customer_id
+    # return customer_id
     # ask for id
     # print("FROM 68")
+
+def get_customer_info(customer_id):
+    print(f"from 76, cust id is {customer_id}")
+    # CONNECT TO CUSTOMER SHEET
+    worksheet = SHEET.worksheet("customers")
+    # customer_id_list = worksheet.col_values(1)
+    # customer_id_list
+    # get row values
+    customer_info = worksheet.row_values(int(customer_id) + 1)
+    print(customer_info)
+
+
+    # worksheet_game_data = SHEET.worksheet("games").row_values(game_index)
+    # worksheet_lnames = SHEET.worksheet("customers").col_values(3)
+
+    # worksheet_games = SHEET.worksheet("games")
+
+
 
 # # ELIF STATEMENT ABOVE FOR ANY WRONG INPUT INSTEAD OF BELOW FUNCTION????
 # def validate_chosen_action(chosen_action):
