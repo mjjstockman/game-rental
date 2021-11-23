@@ -181,7 +181,7 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data, choi
         platform (str) : The platform the customer is trying to rent
         worksheet_game_data (list) : The chosen games data from games worksheet
     """
-    worksheet_fnames = SHEET.worksheet("customers").col_values(1)
+    worksheet_fnames = SHEET.worksheet("customers").col_values(2)
     # print(worksheet_fnames)
     if fname not in worksheet_fnames:
         print("No record of customers First Name")
@@ -207,9 +207,9 @@ def check_customer_lname(fname, lname, game, platform, worksheet_game_data,
         worksheet_game_data (list) : The chosen games data from games worksheet
         fname_index (int) : The row number of the customers first name
     """
-    worksheet_lnames = SHEET.worksheet("customers").col_values(2)
+    worksheet_lnames = SHEET.worksheet("customers").col_values(3)
     customer_lname = worksheet_lnames[fname_index]
-    worksheet_dobs = SHEET.worksheet("customers").col_values(3)
+    worksheet_dobs = SHEET.worksheet("customers").col_values(4)
     customer_dob = worksheet_dobs[fname_index]
     if customer_lname == lname:
         # print("197 reached")
@@ -465,15 +465,6 @@ def add_customer():
                 # print(new_customer_info)
                 break
 
-
-
-
-
-    # print(new_id)
-#     return new_id
-
-
-# create_id("customers")
 
 
 
