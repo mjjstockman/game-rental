@@ -86,10 +86,10 @@ def confirm_customer_details(customer_info):
         print("from 113 confirm says no")
     elif confirm_strip_lcase == "y":
         print("customer details confirmed")
-        input_game_details()
+        input_game_details(customer_info)
 
 
-def input_game_details():
+def input_game_details(customer_info):
     title = input("Please enter game title:\n")
     platform = input("Please enter game platform:\n")
 
@@ -98,7 +98,7 @@ def input_game_details():
 
     if check_for_missing_data(game_details):
         print("ALL DATA!!!")
-        confirm_game_details(title, platform)
+        confirm_game_details(title, platform, customer_info)
 
 
 def check_for_missing_data(game_details):
@@ -111,7 +111,7 @@ def check_for_missing_data(game_details):
             return True
 
 
-def confirm_game_details(title, platform):
+def confirm_game_details(title, platform, customer_info):
     print(f"Are the following details correct?\n "
             f"Game Title: {title}\n Platform: {platform}\n ") 
     print("Is this correct?\n")
@@ -122,13 +122,13 @@ def confirm_game_details(title, platform):
         # ask for games details again
     elif confirm_strip_lcase == "y":
         print("from 125 confirm says yes")
-        get_game_row(title, platform)
+        get_game_row(title, platform, customer_info)
         # check_stock(title, platform)
         # CHECK STOCK
         # GET GAME TITLE AND PLATFORM
         # input_game_details()
 
-def get_game_row(title, platform):
+def get_game_row(title, platform, customer_info):
     worksheet = SHEET.worksheet("games")
     # get all rows with title
     wanted_game_cell_list = worksheet.findall(title)
@@ -139,25 +139,30 @@ def get_game_row(title, platform):
         stock_platform = row_values[1]
         if platform == stock_platform:
             # print(row_num)
-            check_stock(row_num)
+            check_stock(row_num, customer_info)
 
 
-def check_stock(row_num):
+def check_stock(row_num, customer_info):
     worksheet = SHEET.worksheet("games")
     chosen_game_data = worksheet.row_values(row_num)
     stock = chosen_game_data[4]
     # print(type(stock))
     if int(stock) > 0:
-        print("in stock")
+        # print("in stock")
+        calculate_dates(row_num, customer_info)
+        # check_age(row_num, customer_info)
     else:
         print("not in stock")
 
 
-
-    # game_stock = stock_list[row_num]
-    # # stock = stock
-    # print(game_stock)
-
+def calculate_dates(row_num, customer_info):
+    # print(customer_info)
+    customer_dob = customer_info[3]
+    dob_date = datetime.datetime.strptime(customer_dob, "%d/%m/%Y")
+    today = datetime.datetime.now().date()
+    today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
+    today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y")
+    check_age(today_date, dob_date)
 
 
 
