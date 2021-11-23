@@ -88,12 +88,11 @@ def input_data(choice):
     # ADD PLTFORM VALIDATION
 
     if validate_data(choice, data):
-        # print("from 90 all data entered!!!!!")
         print(f"\nYou entered:\n First Name: {fname} \n Last Name: {lname} \n "
               f"Game: {game} \n Platform: {platform}")
         # print(f"from 94 choice is {choice}")
         if choice == 1:
-            is_game_in_sheet(fname, lname, game, platform)
+            is_game_in_sheet(fname, lname, game, platform, choice)
         else:
             return_rental(fname, lname, game, platform)
 
@@ -113,7 +112,7 @@ def validate_data(choice, data):
         else:
             return True
 
-def is_game_in_sheet(fname, lname, game, platform):
+def is_game_in_sheet(fname, lname, game, platform, choice):
     """See if the game to be rented is in the games worksheet
     Args:
         fname (str) : Customers first name
@@ -124,14 +123,16 @@ def is_game_in_sheet(fname, lname, game, platform):
     worksheet_games = SHEET.worksheet("games").col_values(1)
     if game in worksheet_games:
         # print("GAME IS IN SHEET!!!!")
-        check_stock(fname, lname, game, platform)
+        check_stock(fname, lname, game, platform, choice)
     else:
-        print("game is not in sheet")
+        print("\ngame is not in sheet, please try again")
+        input_data(choice)
+
 
 
 # CHECK LINK https://www.educba.com/python-print-table/
 # HOW TO PRINT IN TABLES
-def check_stock(fname, lname, game, platform):
+def check_stock(fname, lname, game, platform, choice):
     """Checks the game to be rented is in stock
     Args:
         fname (str) : Customers first name
@@ -145,12 +146,15 @@ def check_stock(fname, lname, game, platform):
     stock = worksheet_game_data[4]
     stock_int = int(stock)
     if stock_int <= 0:
-        print("from 184, game not in stock")
+        # print("from 184, game not in stock")
+        print("\nWe do usually have this game, but is currently out of stock.\n")
+        print("Please try again")
+        input_data(choice)
     else:
-        check_platform(fname, lname, game, platform, worksheet_game_data)
+        check_platform(fname, lname, game, platform, worksheet_game_data, choice)
 
 
-def check_platform(fname, lname, game, platform, worksheet_game_data):
+def check_platform(fname, lname, game, platform, worksheet_game_data, choice):
     """Checks wether the correct data for the platform has been entered
     Args:
         fname (str) : Customers first name
@@ -161,12 +165,14 @@ def check_platform(fname, lname, game, platform, worksheet_game_data):
     """
     worksheet_platform = worksheet_game_data[1]
     if worksheet_platform == platform:
-        check_customer_fname(fname, lname, game, platform, worksheet_game_data)
+        check_customer_fname(fname, lname, game, platform, worksheet_game_data, choice)
     else:
-        print("wrong platform")
+        print("\nWe do not have that game on that platform")
+        print("Please try again")
+        input_data(choice)
 
 
-def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
+def check_customer_fname(fname, lname, game, platform, worksheet_game_data, choice):
     """Checks the correct data for the customers first name has been entered
     Args:
         fname (str) : Customers first name
@@ -179,16 +185,19 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
     # print(worksheet_fnames)
     if fname not in worksheet_fnames:
         print("No record of customers First Name")
+        print("Please try again")
+        input_data(choice)
+
     else:
         fname_index = worksheet_fnames.index(fname)
         # print(fname_index)
         check_customer_lname(fname, lname, game, platform, worksheet_game_data,
-                             fname_index)
+                             fname_index, choice)
         # print(worksheet_game_data)
 
 
 def check_customer_lname(fname, lname, game, platform, worksheet_game_data,
-                         fname_index):
+                         fname_index, choice):
     """Checks the correct data for the customers last name has been entered
     Args:
         fname (str) : Customers first name
@@ -207,7 +216,9 @@ def check_customer_lname(fname, lname, game, platform, worksheet_game_data,
         calculate_dates(fname, lname, game, platform, worksheet_game_data,
                         customer_dob)
     else:
-        print("wrong last name")
+        print("Customer First Name and Last Name does not match")
+        print("Please try again")
+        input_data(choice)
 
 
 def calculate_dates(fname, lname, game, platform, worksheet_game_data,
@@ -329,8 +340,10 @@ def update_worksheet(data, worksheet):
         data[4] = int(data[4])
     print(f"\nUpdating {worksheet} worksheet...")
     worksheet_to_update = SHEET.worksheet(worksheet)
-    # id = create_id(worksheet)
-    # data.insert(0, id)
+    if worksheet == "customers":
+        id = create_id(worksheet)
+        data.insert(0, id)
+        print(data)
     worksheet_to_update.append_row(data)
     print(f"\n{worksheet} updated successfully.")
 
@@ -358,7 +371,8 @@ def return_rental(fname, lname, game, platform):
             rentals_worksheet.delete_rows(game_index)
             add_to_stock(game, platform)
     else:
-        print("NOT IN SHEET")
+        print("The return rental information is not correct")
+        print("Please try again")
 
 
 def add_to_stock(game, platform):
@@ -387,6 +401,39 @@ def print_stock():
     pprint(stock)
 
 
+def create_id(worksheet):
+    """
+    Create id for column 1 in worksheet.
+    EXPLAIN THE LOGIC???
+    """
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    get_id_list = worksheet_to_update.col_values(1)
+    if get_id_list == ["ID"]:
+        new_id = 1
+    else:
+        last_id = get_id_list[-1]
+        new_id = int(last_id) + 1
+    return new_id
+
+def validate_add_customer(new_customer_info):
+    """Checks all data has been entered and is valid
+    Returns:
+        bool : True if data validates, False if not
+    """
+    # print("line 408")
+    while True:
+        # print("line 410")
+        if not all(new_customer_info):
+            print("Missing element, please try again")
+            return False
+        else:
+            try:
+                datetime.datetime.strptime(new_customer_info[2], "%d/%m/%Y")
+            except:
+                print("wrong date format!!!")
+                return False
+        return True
+
 def add_customer():
     """Gets user input for first name, last name, date of birth.
     Asks for confirmation of data.
@@ -411,28 +458,23 @@ def add_customer():
             if confirm_strip_lcase == "n":
                 validate_add_customer(new_customer_info)
             elif confirm_strip_lcase == "y":
+                # create_id("customers")
                 update_worksheet(new_customer_info, "customers")
+                # new_customer_info.insert(0, new_id)
+                # array.insert(0,var)
+                # print(new_customer_info)
                 break
 
 
-def validate_add_customer(new_customer_info):
-    """Checks all data has been entered and is valid
-    Returns:
-        bool : True if data validates, False if not
-    """
-    # print("line 408")
-    while True:
-        # print("line 410")
-        if not all(new_customer_info):
-            print("Missing element, please try again")
-            return False
-        else:
-            try:
-                datetime.datetime.strptime(new_customer_info[2], "%d/%m/%Y")
-            except:
-                print("wrong date format!!!")
-                return False
-        return True
+
+
+
+    # print(new_id)
+#     return new_id
+
+
+# create_id("customers")
+
 
 
 def add_game():
