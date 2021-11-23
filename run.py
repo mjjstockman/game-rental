@@ -182,6 +182,21 @@ def check_stock(game_details, customer_info, row_num):
     # else:
     #     print("not in stock")
 
+# def calculate_return_date(fname, lname, game, platform, worksheet_game_data):
+#     """Adds three days to todays date
+#     Args:
+#         fname (str) : Customers first name
+#         lname (str) : Customers last name
+#         game (str) : The game the customer is trying to rent
+#         platform (str) : The platform the customer is trying to rent
+#         worksheet_game_data (list) : The chosen games data from games worksheet
+#     """
+#     today = datetime.datetime.now().date()
+#     return_date = today + datetime.timedelta(days=3)
+#     format_date = return_date.strftime("%d/%m/%Y")
+#     reduce_stock(fname, lname, game, platform, worksheet_game_data,
+#                  format_date)
+
 
 def calculate_dates(game_details, customer_info, row_num):
     # print(customer_info)
@@ -190,11 +205,12 @@ def calculate_dates(game_details, customer_info, row_num):
     today = datetime.datetime.now().date()
     today_string = datetime.datetime.strftime(today, "%d/%m/%Y")
     today_date = datetime.datetime.strptime(today_string, "%d/%m/%Y")
-    check_age(game_details, customer_info, row_num, today_date, dob_date)
-    # print("from 194")
+    return_date = today + datetime.timedelta(days=3)
+    format_return_date = return_date.strftime("%d/%m/%Y")
+    check_age(game_details, customer_info, row_num, today_date, dob_date, format_return_date)
 
 
-def check_age(game_details, customer_info, row_num, today_date, dob_date):
+def check_age(game_details, customer_info, row_num, today_date, dob_date, format_return_date):
     age_in_years = today_date.year - dob_date.year
     if today_date.month < dob_date.month or (today_date.month == dob_date.month and
                                         today_date.day < dob_date.day):
