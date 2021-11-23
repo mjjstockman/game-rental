@@ -32,7 +32,6 @@ def make_choice():
             "5) Add a new title?\n 6) Update fines?\n")
     chosen_action = input("Please select from above numbers and press Enter:\n")
 
-    print(type(chosen_action))
     if chosen_action == "1":
         make_rental()
         # if chosen_action == 1:
@@ -63,32 +62,110 @@ def make_rental():
     input_customer_id()
     
 
-
-
 def input_customer_id():
     customer_id = input("Please enter Customer ID number:\n")
     get_customer_info(customer_id)
-    # return customer_id
-    # return customer_id
-    # ask for id
-    # print("FROM 68")
+
 
 def get_customer_info(customer_id):
     print(f"from 76, cust id is {customer_id}")
-    # CONNECT TO CUSTOMER SHEET
     worksheet = SHEET.worksheet("customers")
-    # customer_id_list = worksheet.col_values(1)
-    # customer_id_list
-    # get row values
     customer_info = worksheet.row_values(int(customer_id) + 1)
-    print(customer_info)
+    confirm_customer_details(customer_info)
 
 
-    # worksheet_game_data = SHEET.worksheet("games").row_values(game_index)
-    # worksheet_lnames = SHEET.worksheet("customers").col_values(3)
+def confirm_customer_details(customer_info):
+    print(f"Are the following details correct?\n "
+            f"First Name: {customer_info[1]}\n Last Name: {customer_info[2]}\n " 
+            f"Date of Birth: {customer_info[3]}\n")
+    print("Is this correct?\n")
+    confirm = input("Enter Y for yes, N for No\n")
+    confirm_strip_lcase = confirm.strip().lower()
+    if confirm_strip_lcase == "n":
+        validate_add_game(new_game_info)
+        print("from 113 confirm says no")
+    elif confirm_strip_lcase == "y":
+        print("customer details confirmed")
+        # input_game_details()
 
-    # worksheet_games = SHEET.worksheet("games")
 
+
+
+# if validate_add_game(new_game_info):
+#             print(f"\nYou entered...\n Title: {title}\n "
+#                   f"Platform: {platform}\n Genre: {genre}\n "
+#                   f"Genre: {genre}\n Minimum age: {min_age}\n "
+#                   f"How many: {quantity}\n")
+#             print("Is this correct?\n")
+#             confirm = input("Enter Y for yes, N for No\n")
+#             confirm_strip_lcase = confirm.strip().lower()
+#             if confirm_strip_lcase == "n":
+#                 validate_add_game(new_game_info)
+#                 print("from 435 confirm says no")
+#             elif confirm_strip_lcase == "y":
+#                 update_worksheet(new_game_info, "games")
+#                 break
+
+
+
+# MAKE SO 1 AND 2 CHOICE CAN USE BELOW?
+# NEED TO REMOVE THE "PLATFORM: ETC PART??"
+
+    
+
+
+    # game_details.extend([title, platform])
+    # print(len(game_details))
+    # print(game_details)
+    # if len(game_details) == 2:
+    #     print("twooooooo")
+    # else:
+    #     print("not 2!!!!")
+        # element missing
+        # ask again
+
+
+
+    # confirm_game_details(title, platform)
+    # print(f"from 123, title is {title}, platform is {platform}")
+
+# def check_game_details(title, platform):
+#     print(f"from 126, title is {title}, platform is {platform}")
+#     # 
+
+
+
+    # ???????????????????? ADD BELOW ABOVE ??????????????????????  
+    # print(f"Are the following details correct?\n "
+    #         f"First input_game_detailsName: {customer_info[1]}\n Last Name: {customer_info[2]}\n " 
+    #         f"Date of Birth: {customer_info[3]}\n")
+    # print("Is this correct?\n")
+    # confirm = input("Enter Y for yes, N for No\n")
+    # confirm_strip_lcase = confirm.strip().lower()
+    # if confirm_strip_lcase == "n":
+    #     validate_add_game(new_game_info)
+    #     print("from 113 confirm says no")
+    # elif confirm_strip_lcase == "y":
+    #     # CHECK STOCK
+    #     # GET GAME TITLE AND PLATFORM
+    #     () 
+
+
+
+# confnirm = input("Enter Y for yes, N for No\n")
+#             confirm_strip_lcase = confirm.strip().lower()
+#             if confirm_strip_lcase == "n":
+#                 validate_add_game(new_game_info)
+#                 print("from 435 confirm says no")
+#             elif confirm_strip_lcase == "y":
+#                 update_worksheet(new_game_info, "games")
+
+
+
+# print(f"\nYou entered...\n Title: {title}\n "
+#                   f"Platform: {platform}\n Genre: {genre}\n "
+#                   f"Genre: {genre}\n Minimum age: {min_age}\n "
+#                   f"How many: {quantity}\n")
 
 
 # # ELIF STATEMENT ABOVE FOR ANY WRONG INPUT INSTEAD OF BELOW FUNCTION????
@@ -658,10 +735,10 @@ def get_customer_info(customer_id):
 #         worksheet_to_update.update_cell(overdue_items_row[i], 6, fines_list[i])
 
 
-if __name__ == "__main__":
-    """Calls make_choice to begin
-    """
-    make_choice()
+# if __name__ == "__main__":
+#     """Calls make_choice to begin
+#     """
+#     make_choice()
 
 
 # QUESTIONS FOR BRIAN
@@ -708,3 +785,5 @@ if __name__ == "__main__":
 #         last_id = get_id_list[-1]
 #         new_id = int(last_id) + 1
 #     return new_id
+
+make_choice()
