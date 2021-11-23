@@ -98,6 +98,7 @@ def input_game_details():
 
     if check_for_missing_data(game_details):
         print("ALL DATA!!!")
+        confirm_game_details(title, platform)
 
 
 def check_for_missing_data(game_details):
@@ -110,7 +111,19 @@ def check_for_missing_data(game_details):
             return True
 
 
-
+def confirm_game_details(title, platform):
+    print(f"Are the following details correct?\n "
+            f"Game Title: {title}\n Platform: {platform}\n ") 
+    print("Is this correct?\n")
+    confirm = input("Enter Y for yes, N for No\n")
+    confirm_strip_lcase = confirm.strip().lower()
+    if confirm_strip_lcase == "n":
+        print("from 123 confirm says no")
+    elif confirm_strip_lcase == "y":
+        print("from 125 confirm says yes")
+        # CHECK STOCK
+        # GET GAME TITLE AND PLATFORM
+        # input_game_details()
 
 # if validate_add_game(new_game_info):
 #             print(f"\nYou entered...\n Title: {title}\n "
