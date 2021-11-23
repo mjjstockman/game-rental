@@ -138,10 +138,27 @@ def get_game_row(title, platform):
         row_values = worksheet.row_values(row_num)
         stock_platform = row_values[1]
         if platform == stock_platform:
-        # print(row_values)
-            print(row_num)
-        # print(stock_platform)
-        # get row number for matching game and platform
+            # print(row_num)
+            check_stock(row_num)
+
+
+def check_stock(row_num):
+    worksheet = SHEET.worksheet("games")
+    chosen_game_data = worksheet.row_values(row_num)
+    stock = chosen_game_data[4]
+    # print(type(stock))
+    if int(stock) > 0:
+        print("in stock")
+    else:
+        print("not in stock")
+
+
+
+    # game_stock = stock_list[row_num]
+    # # stock = stock
+    # print(game_stock)
+
+
 
 
 
