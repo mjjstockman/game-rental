@@ -87,7 +87,7 @@ def input_data(choice):
     data = [fname, lname, game, platform]
     # ADD PLTFORM VALIDATION
 
-    if validate_data(data):
+    if validate_data(choice, data):
         # print("from 90 all data entered!!!!!")
         print(f"\nYou entered:\n First Name: {fname} \n Last Name: {lname} \n "
               f"Game: {game} \n Platform: {platform}")
@@ -98,7 +98,7 @@ def input_data(choice):
             return_rental(fname, lname, game, platform)
 
 
-def validate_data(data):
+def validate_data(choice, data):
     """Checks all data has been entered and is valid
     Returns:
         bool : True if data validates, False if not
@@ -108,6 +108,7 @@ def validate_data(data):
         # print("line 410")
         if not all(data):
             print("Missing element, please try again")
+            input_data(choice)
             return False
         else:
             return True
