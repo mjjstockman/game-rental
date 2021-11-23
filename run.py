@@ -82,11 +82,32 @@ def confirm_customer_details(customer_info):
     confirm = input("Enter Y for yes, N for No\n")
     confirm_strip_lcase = confirm.strip().lower()
     if confirm_strip_lcase == "n":
-        validate_add_game(new_game_info)
+        # validate_add_game(new_game_info)
         print("from 113 confirm says no")
     elif confirm_strip_lcase == "y":
         print("customer details confirmed")
-        # input_game_details()
+        input_game_details()
+
+
+def input_game_details():
+    title = input("Please enter game title:\n")
+    platform = input("Please enter game platform:\n")
+
+    game_details = [title, platform]
+    # check_game_details(game_details)
+
+    if check_for_missing_data(game_details):
+        print("ALL DATA!!!")
+
+
+def check_for_missing_data(game_details):
+    while True:
+        if not all(game_details):
+            print("game details missing")
+            return False
+        else:
+            print("ALL GAME DETAIULSN ARE THERE!!")
+            return True
 
 
 
