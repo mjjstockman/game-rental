@@ -119,11 +119,47 @@ def confirm_game_details(title, platform):
     confirm_strip_lcase = confirm.strip().lower()
     if confirm_strip_lcase == "n":
         print("from 123 confirm says no")
+        # ask for games details again
     elif confirm_strip_lcase == "y":
         print("from 125 confirm says yes")
+        get_game_row(title, platform)
+        # check_stock(title, platform)
         # CHECK STOCK
         # GET GAME TITLE AND PLATFORM
         # input_game_details()
+
+def get_game_row(title, platform):
+    worksheet = SHEET.worksheet("games")
+    # get all rows with title
+    wanted_game_cell_list = worksheet.findall(title)
+    # print(wanted_game_cell_list)
+    for game in wanted_game_cell_list:
+        row_num = game.row
+        row_values = worksheet.row_values(row_num)
+        stock_platform = row_values[1]
+        if platform == stock_platform:
+        # print(row_values)
+            print(row_num)
+        # print(stock_platform)
+        # get row number for matching game and platform
+
+
+
+# print(worksheet.row_values(2))
+        
+# print(worksheet.row_values(1))
+        # print(game.row)
+
+    # 
+    # for game in wanted_game_cell_list:
+    #     print(worksheet.row_values(1))
+
+    # FOR WANTED_GAME_CELL_LIST
+    # GET LISTED_PLATFORM
+    # IF PLATFORM = LISTED_PLATFORM
+    # GET ROW NUMBER
+
+
 
 # if validate_add_game(new_game_info):
 #             print(f"\nYou entered...\n Title: {title}\n "
