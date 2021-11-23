@@ -220,9 +220,49 @@ def check_age(game_details, customer_info, row_num, today_date, dob_date, format
     age_position = int(row_num) - 1
     game_min_age = min_age_list[age_position]
     if age_in_years > int(game_min_age):
-        print("OLD ENOUGH")
+        # print("OLD ENOUGH")
+        # update_worksheet("rentals")
+        get_all_rental_data(customer_info, game_details, format_return_date)
     else:
         print("too young")
+
+
+def get_all_rental_data(customer_info, game_details, return_date):
+    fname = customer_info[1]
+    lname = customer_info[2]
+    game = game_details[0]
+    platform = game_details[1]
+    rental_data = [fname, lname, game, platform, return_date]
+    update_worksheet(rental_data, "rentals")
+    # print(rental_data)
+
+    # rental_data = [customer_info(1), customer_info(2), game_details(0), game_details(1), format_return_date]
+    # print(rental_data)
+    # print(game_details)
+
+
+def update_worksheet(data, worksheet):
+    """Updates a worksheet
+    Args:
+        data (list) : The data to input into the worksheet
+        worksheet (str) : Name of the worksheet to update
+    Returns:
+        data_type : Optional description of return value
+        Extra lines are not indented
+    """
+    # if worksheet == "games":
+    #     data[3] = int(data[3])
+    #     data[4] = int(data[4])
+    print(f"\nUpdating {worksheet} worksheet...")
+    worksheet_to_update = SHEET.worksheet(worksheet)
+    # if worksheet == "customers":
+    #     id = create_id(worksheet)
+    #     data.insert(0, id)
+    #     print(data)
+    worksheet_to_update.append_row(data)
+    print(f"\n{worksheet} updated successfully.")
+
+
     # print(game_min_age)
     # print(min_age_list)
     # print(row_num)
