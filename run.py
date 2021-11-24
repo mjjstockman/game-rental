@@ -47,7 +47,7 @@ def make_choice():
                 input_data(1)
             break
 
-        
+
 def validate_chosen_action(chosen_action):
     """Checks chosen_action input was an integer between 1 and 6
     Args:
@@ -83,13 +83,10 @@ def input_data(choice):
     platform = input("\nPlease enter platform:\n")
 
     data = [fname, lname, game, platform]
-    # ADD PLTFORM VALIDATION
 
     if validate_data(data):
-        # print("from 90 all data entered!!!!!")
         print(f"\nYou entered:\n First Name: {fname} \n Last Name: {lname} \n "
               f"Game: {game} \n Platform: {platform}")
-        # print(f"from 94 choice is {choice}")
         if choice == 1:
             is_game_in_sheet(fname, lname, game, platform)
         else:
@@ -120,14 +117,11 @@ def is_game_in_sheet(fname, lname, game, platform):
     """
     worksheet_games = SHEET.worksheet("games").col_values(1)
     if game in worksheet_games:
-        # print("GAME IS IN SHEET!!!!")
         check_stock(fname, lname, game, platform)
     else:
-        print("game is not in sheet")
+        print("Sorry, we do not stock that game")
 
 
-# CHECK LINK https://www.educba.com/python-print-table/
-# HOW TO PRINT IN TABLES
 def check_stock(fname, lname, game, platform):
     """Checks the game to be rented is in stock
     Args:
@@ -173,15 +167,12 @@ def check_customer_fname(fname, lname, game, platform, worksheet_game_data):
         worksheet_game_data (list) : The chosen games data from games worksheet
     """
     worksheet_fnames = SHEET.worksheet("customers").col_values(1)
-    # print(worksheet_fnames)
     if fname not in worksheet_fnames:
         print("No record of customers First Name")
     else:
         fname_index = worksheet_fnames.index(fname)
-        # print(fname_index)
         check_customer_lname(fname, lname, game, platform, worksheet_game_data,
                              fname_index)
-        # print(worksheet_game_data)
 
 
 def check_customer_lname(fname, lname, game, platform, worksheet_game_data,
@@ -200,7 +191,6 @@ def check_customer_lname(fname, lname, game, platform, worksheet_game_data,
     worksheet_dobs = SHEET.worksheet("customers").col_values(3)
     customer_dob = worksheet_dobs[fname_index]
     if customer_lname == lname:
-        # print("197 reached")
         calculate_dates(fname, lname, game, platform, worksheet_game_data,
                         customer_dob)
     else:
@@ -238,8 +228,6 @@ def check_age(fname, lname, game, platform, worksheet_game_data,
         today_date (datetime.datetime) : The date the programe is run
         dob_date (datetime.datetime) : The customers date of birth
     """
-    # print(f"today_date is {type(today_date)}")
-    # print(f"dob_date is {type(dob_date)}")
     today = datetime.date.today()
     age_in_years = today.year - dob_date.year
     if today.month < dob_date.month or (today.month == dob_date.month and
@@ -317,8 +305,6 @@ def update_worksheet(data, worksheet):
         data[4] = int(data[4])
     print(f"\nUpdating {worksheet} worksheet...")
     worksheet_to_update = SHEET.worksheet(worksheet)
-    # id = create_id(worksheet)
-    # data.insert(0, id)
     worksheet_to_update.append_row(data)
     print(f"\n{worksheet} updated successfully.")
 
@@ -333,12 +319,8 @@ def return_rental(fname, lname, game, platform):
     """
     rentals_worksheet = SHEET.worksheet("rentals")
     rentals_games = rentals_worksheet.col_values(3)
-    # print(f"from 289, rentals_games is {rentals_games}")
     game_index = rentals_games.index(game) + 2
-    # print(f"from 291, game index is {game_index}")
     worksheet_rental_data = rentals_worksheet.row_values(game_index)
-    # print(worksheet_rental_data)
-    # HOW VALIDATE PEP8 BELOW:???
     if (worksheet_rental_data[0] == fname and
         worksheet_rental_data[1] == lname and
         worksheet_rental_data[2] == game and
@@ -393,7 +375,6 @@ def add_customer():
                   f"Last Name: {lname}\n "
                   f"Date of Birth: {dob}\n")
             print("Is this correct?\n")
-            # ADD FUNCTION FOR THIS AND VALIDATE_ADD_GAME, DRY
             confirm = input("Enter Y for yes, N for No:\n")
             confirm_strip_lcase = confirm.strip().lower()
             if confirm_strip_lcase == "n":
@@ -408,9 +389,7 @@ def validate_add_customer(new_customer_info):
     Returns:
         bool : True if data validates, False if not
     """
-    # print("line 408")
     while True:
-        # print("line 410")
         if not all(new_customer_info):
             print("Missing element, please try again")
             return False
@@ -433,8 +412,6 @@ def add_game():
         min_age = input("\nAdd minimum age:\n")
         quantity = input("\nAdd how many:\n")
         new_game_info = [title, platform, genre, min_age, quantity]
-        # REFRACTOR validate_add_customer AND validate_add_game
-        # INTO ONE FUNCTION?????
         if validate_add_game(new_game_info):
             print(f"\nYou entered...\n Title: {title}\n "
                   f"Platform: {platform}\n Genre: {genre}\n "
@@ -493,17 +470,13 @@ def get_overdue_items():
     rentals_worksheet = SHEET.worksheet("rentals")
     rentals_return_date = rentals_worksheet.col_values(5)
     rentals_return_date.pop(0)
-    # print(type(today_date))
     for date in rentals_return_date:
         return_date = datetime.datetime.strptime(date, "%d/%m/%Y").date()
-        # format_date = date.datetime.datetime.strftime("%d/%m/%Y")
         days_late = (today_date - return_date).days
-        # print(type(days_late))
         if days_late > 0:
             int_overdue_row = int(rentals_return_date.index(date)) + 2
             overdue_items_row.append(int_overdue_row)
             days_late_list.append(days_late)
-            # print(overdue_items)
             calculate_fine(overdue_items_row, days_late_list)
 
 
@@ -513,20 +486,11 @@ def calculate_fine(overdue_items_row, days_late_list):
         overdue_items_row (list) : The row number of overdue items
         days_late_list (list) : The number of days overdue
     """
-    # print(f"from 522, overdue items row is {overdue_items_row}")
-    # print(f"from 523, overdue items row type is {type(overdue_items_row)}")
-    # print(f"from 524, days late list is {days_late_list}")
-    # print(f"from 525, overdue items row type is {type(days_late_list)}")
-    # print(type(overdue_items_row))
-    # print(type(days_late_list))
     fines_list = []
     fine_per_day = 4
-    # print(f"from 451 index of overdue is {overdue_items_row}")
-    # print(f"from 452 number of days {days_late_list}")
     for days in days_late_list:
         amount = days * fine_per_day
         fines_list.append(amount)
-    # print(fines_list)
     add_fine(overdue_items_row, fines_list)
 
 
@@ -536,62 +500,12 @@ def add_fine(overdue_items_row, fines_list):
         overdue_items_row (list) : The row number of overdue items
         fines_list (list) : The amount of the fine
     """
-    # print(f"from 467, overdue_items_row is {overdue_items_row}")
-    # print(f"from 468, fines_list is {fines_list}")
     worksheet_to_update = SHEET.worksheet("rentals")
     for i in range(len(overdue_items_row)):
-        # print(f"row is {overdue_items_row[i]}")
-        # print(f"fine is {fines_list[i]}")
-        worksheet_to_update.update_cell(overdue_items_row[i], 6, fines_list[i])
+         worksheet_to_update.update_cell(overdue_items_row[i], 6, fines_list[i])
 
 
 if __name__ == "__main__":
     """Calls make_choice to begin
     """
     make_choice()
-
-
-# QUESTIONS FOR BRIAN
-# need try for every poss incorrect input?
-# probs searching just for fname (FIND WHERE). 
-# correct or add in README as limitation
-# tidy up choose_action
-# readme need flow chart for all action choices and outcomes??
-# how sort 80 chars max (   FIND EXAMPLES)
-
-
-# TO ADD
-#  confirmation of all inputs (enter Y or N??)
-
-
-# IS THIS BEING USED???
-# def get_game_id():
-#     data_list = SHEET.worksheet("games").col_values(1)
-#     id = data_list[-1]
-#     print(f"game id is {id}")
-#     update_rental_worksheet()
-
-
-# NOT BEING USED, NEED ID_NuMBERS???????????????????????????????
-# def get_customer_id():
-#     data_list = SHEET.worksheet("customers").col_values(1)
-#     id = data_list[-1]
-#     print(f"customer id is {id}")
-#     get_game_id()
-
-
-
-# NOT USED, NEED????????????????????
-# def create_id(worksheet):
-#     """
-#     Create id for column 1 in worksheet.
-#     EXPLAIN THE LOGIC???
-#     """
-#     worksheet_to_update = SHEET.worksheet(worksheet)
-#     get_id_list = worksheet_to_update.col_values(1)
-#     if get_id_list == ["id"]:
-#         new_id = 1
-#     else:
-#         last_id = get_id_list[-1]
-#         new_id = int(last_id) + 1
-#     return new_id
